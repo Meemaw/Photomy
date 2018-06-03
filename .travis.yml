@@ -27,4 +27,4 @@ before_script:
   - python manage.py migrate --noinput --settings=photomy.settings.travis
 
 script:
-  - python manage.py test --settings=photomy.settings.travis --noinput --keepdb
+  - python manage.py test --settings=photomy.settings.travis --noinput --keepdb --parallel
