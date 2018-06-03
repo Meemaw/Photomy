@@ -34,7 +34,7 @@ matrix:
       cache:
         yarn: true
         directories:
-          - node_modules
+          - $HOME/.npm
       script:
         - yarn test
 
