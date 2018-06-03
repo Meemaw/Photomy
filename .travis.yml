@@ -26,6 +26,8 @@ matrix:
       script:
         - python manage.py test --settings=photomy.settings.travis --noinput --keepdb --parallel
     - language: node_js
+      node_js:
+        - "8"
       before_script:
         - cd frontend
         - yarn install
