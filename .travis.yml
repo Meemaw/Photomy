@@ -1,0 +1,22 @@
+language: python
+
+python:
+  - "3.6"
+
+services: postgresql
+
+env:
+  global:
+  - DJANGO_SETTINGS_MODULE=photomy.settings.travis
+  - PYTHONPATH="/home/travis/build/meemaw/photomy"
+  - PIP_USE_MIRRORS=true
+
+install:
+  - pip install -r connfig/requirements.txt
+
+before_script:
+  - psql -c "CREATE DATABASE travisci;" -U postgres
+  - python manage.py migrate --noinput
+
+script:
+  - python manage.py test --settings=photomy.settings.travis --noinput --keepdb
