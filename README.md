@@ -13,7 +13,7 @@
   
   <a href="https://travis-ci.org/Meemaw/Photomy">
     <img
-       src="https://travis-ci.org/Meemaw/Photomy.svg?branch=master" />
+       src="https://api.travis-ci.org/Meemaw/Photomy.svg?branch=master" />
   </a>
 </span>
 
