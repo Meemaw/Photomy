@@ -1,0 +1,31 @@
+.vscode/
+
+
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+*__pycache__/*
+
+*.pyc
+*.pyo
+
+
+dump.rdb
+
+*.env
+
+
+*/node_modules/*
+*/yarn-error.log
+*/build/*
+*/package-lock.json
+
+
+deploy/
+
+*coverage*

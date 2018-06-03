@@ -1,0 +1,35 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: meemaw/photomy:1.0.0
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "config/requirements.txt" }}
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r config/requirements.txt
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "config/requirements.txt" }}
+
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            cd src && coverage run manage.py test --settings=photomy.settings.test --noinput && coverage xml
+      - store_artifacts:
+          path: src/coverage.xml
+          destination: tr1
+      - store_test_results:
+          path: src/coverage.xml

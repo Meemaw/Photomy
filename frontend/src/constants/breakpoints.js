@@ -1,0 +1,1 @@
+export const NAVBAR_GALLERY_TYPE_BREAKPOINT = 700;

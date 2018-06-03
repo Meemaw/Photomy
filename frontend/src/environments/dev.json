@@ -1,0 +1,14 @@
+{
+  "GoogleAnalytics": {
+    "debug": true,
+    "trackingId": "gaTrackingId"
+  },
+  "services": {
+    "baseUrl": "http://127.0.0.1:8000",
+    "cdnBaseUrl": "cdnBaseUrl"
+  },
+  "sentry": {
+    "dsn": "sentryDsn",
+    "env": "local-dev"
+  }
+}

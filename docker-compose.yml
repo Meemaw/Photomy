@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    restart: always
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: web
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+    entrypoint: /scripts/run_web.sh
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: /scripts/run_celery.sh
+    links:
+      - db
+      - redis
+    depends_on:
+      - redis
+  redis:
+    image: redis:4.0.9-alpine
+    hostname: redis
+
+volumes:
+  pgdata:
