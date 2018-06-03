@@ -12,7 +12,7 @@ env:
   - PIP_USE_MIRRORS=true
 
 install:
-  - pip install -r connfig/requirements.txt
+  - pip install -r config/requirements.txt
 
 before_script:
   - psql -c "CREATE DATABASE travisci;" -U postgres
