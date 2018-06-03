@@ -15,6 +15,12 @@
     <img
        src="https://api.travis-ci.org/Meemaw/Photomy.svg?branch=master" />
   </a>
+  
+  <a href="http://makeapullrequest.com">
+    <img
+         src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" />
+  </a>
+  
 </span>
 
 ## Deploy
