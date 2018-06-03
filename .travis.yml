@@ -26,11 +26,11 @@ matrix:
       script:
         - coverage run manage.py test --settings=photomy.settings.travis --noinput --keepdb --parallel
       after_success:
-        - bash <(curl -s https://codecov.io/bash) -t $CODECOV_UPLOAD_TOKEN
+        - bash <(curl -s https://codecov.io/bash) -cF python -t $CODECOV_UPLOAD_TOKEN
     - language: node_js
       node_js:
         - "node"
-      before_script:
+       before_script:
         - cd frontend
         - yarn install
       cache:
@@ -38,6 +38,9 @@ matrix:
         directories:
           - $HOME/.npm
       script:
-        - yarn test
+        - yarn test-coverage
+      after_success:
+        - codecov -cF javascript -t $CODECOV_UPLOAD_TOKEN
+        
 
 
