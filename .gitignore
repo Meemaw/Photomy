@@ -1,29 +1,25 @@
+### IDE ###
 .vscode/
-
 
 ### OSX ###
 .DS_Store
 .AppleDouble
 .LSOverride
 
-
 ### Python ###
 # Byte-compiled / optimized / DLL files
 *__pycache__/*
-
+*coverage*
 *.pyc
 *.pyo
 
-
-dump.rdb
-
-
+### Frontend ###
 */node_modules/*
 */yarn-error.log
 */build/*
 */package-lock.json
 
-
+### OTHER ###
 deploy/
+dump.rdb
 
-*coverage*
