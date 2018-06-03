@@ -1,5 +1,5 @@
 import React from 'react';
-import SavableInput from '../../../components/SavableInput';
+import SavableInput from '../../../components/common/SavableInput';
 import { Button, Input } from 'semantic-ui-react';
 import { mount } from 'enzyme';
 import { sandbox } from '../../utils';
