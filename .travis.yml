@@ -1,5 +1,8 @@
 language: python
-cache: pip
+
+cache:
+  directories:
+    - $HOME/.cache/pip
 
 python:
   - "3.6"
@@ -13,6 +16,7 @@ env:
   - PIP_USE_MIRRORS=true
 
 install:
+  - pip install -U pip wheel
   - pip install -r config/requirements.txt
 
 before_script:
