@@ -1,30 +1,38 @@
-language: python
+dist: trusty
+sudo: required
+matrix:
+  include:
+    - language: python
+      python:
+        - "3.6"
+      cache:
+        directories:
+          - $HOME/.cache/pip
+      services: 
+        - postgresql
+        - redis-server
+      env:
+        global:
+        - DJANGO_SETTINGS_MODULE=photomy.settings.travis
+        - PYTHONPATH="/home/travis/build/meemaw/photomy"
+        - PIP_USE_MIRRORS=true
+      install:
+        - pip install -U pip wheel
+        - pip install -r config/requirements.txt
+      before_script:
+        - psql -c "CREATE DATABASE travisci;" -U postgres
+        - cd src
+        - python manage.py migrate --noinput --settings=photomy.settings.travis
+      script:
+        - python manage.py test --settings=photomy.settings.travis --noinput --keepdb --parallel
+    - language: node_js
+      before_script:
+        - cd frontend
+        - yarn install
+      cache:
+        directories:
+          - "node_modules"
+      script:
+        - yarn test
 
-cache:
-  directories:
-    - $HOME/.cache/pip
 
-python:
-  - "3.6"
-
-services: 
-  - postgresql
-  - redis-server
-
-env:
-  global:
-  - DJANGO_SETTINGS_MODULE=photomy.settings.travis
-  - PYTHONPATH="/home/travis/build/meemaw/photomy"
-  - PIP_USE_MIRRORS=true
-
-install:
-  - pip install -U pip wheel
-  - pip install -r config/requirements.txt
-
-before_script:
-  - psql -c "CREATE DATABASE travisci;" -U postgres
-  - cd src
-  - python manage.py migrate --noinput --settings=photomy.settings.travis
-
-script:
-  - python manage.py test --settings=photomy.settings.travis --noinput --keepdb --parallel

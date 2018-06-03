@@ -2,8 +2,8 @@ import React from 'react';
 import IdentityTabContainer from '../../../components/IdentityTab';
 import IdentityTab from '../../../components/IdentityTab/IdentityTab';
 import configureStore from '../../../stores';
-import LoadingIcon from '../../../components/LoadingIcon';
-import SavableInput from '../../../components/SavableInput';
+import LoadingIcon from '../../../components/common/LoadingIcon';
+import SavableInput from '../../../components/common/SavableInput';
 import { mount, shallow } from 'enzyme';
 
 const IDENTITY = { identity: 'Matej' };
