@@ -9,7 +9,6 @@
 ### Python ###
 # Byte-compiled / optimized / DLL files
 *__pycache__/*
-*coverage*
 *.pyc
 *.pyo
 
@@ -19,7 +18,14 @@
 */build/*
 */package-lock.json
 
+
 ### OTHER ###
 deploy/
 dump.rdb
 
+
+
+# Unit test / coverage reports
+frontend/coverage*
+src/.coverage
+src/coverage.*
