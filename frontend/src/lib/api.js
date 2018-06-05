@@ -1,6 +1,7 @@
 // @flow
 import { injectParameters } from './urls';
 import { getAccessToken } from './auth';
+import { UNAUTHORIZED } from '../constants/statusCodes';
 
 class Api {
   GET = this._makeMethod('get');
@@ -50,6 +51,10 @@ class Api {
           })
           .then((responseBody: any) => {
             try {
+              if (response.status === UNAUTHORIZED) {
+                localStorage.clear();
+                window.location.reload();
+              }
               const parsedJSON = JSON.parse(responseBody);
               if (response.ok) return parsedJSON;
               if (response.status >= 500) {
