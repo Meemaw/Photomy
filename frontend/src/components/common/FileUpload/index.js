@@ -115,7 +115,7 @@ class FileUpload extends React.PureComponent<Props, State> {
                 <div className="Accepted">
                   {accepted.map((file, fileIx) => (
                     <Segment style={{ margin: '0px' }} key={file.name}>
-                      <GalleryImage image={{ image_url: file.preview }} />
+                      <GalleryImage src={file.preview} />
                       {this.renderIcon(fileIx)}
                     </Segment>
                   ))}

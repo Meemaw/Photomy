@@ -46,7 +46,7 @@ const PasswordChangeForm = ({
         errors={errors}
       />
       <SaveButton
-        content="Save chagnes"
+        content="Save changes"
         loading={isSubmitting}
         onClick={handleSubmit}
         disabled={old_password.length === 0}

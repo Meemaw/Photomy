@@ -50,12 +50,7 @@ const UserForm = ({
 
       <EmailFormField fluid value={email} errors={errors} readOnly />
 
-      <SaveButton
-        style={{ float: 'right' }}
-        loading={isSubmitting}
-        type="submit"
-        onClick={handleSubmit}
-      />
+      <SaveButton loading={isSubmitting} type="submit" onClick={handleSubmit} />
     </Form>
   );
 };

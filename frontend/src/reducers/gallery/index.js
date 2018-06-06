@@ -64,6 +64,9 @@ const gallery = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         [action.galleryType]: deleteImage(state[action.galleryType], action.image),
+        [FAVORITE_GALLERY]: action.image.favorite
+          ? deleteImage(state[FAVORITE_GALLERY], action.image)
+          : state[FAVORITE_GALLERY],
       };
 
     case actionTypes.UPLOAD_IMAGES:
@@ -73,7 +76,15 @@ const gallery = (state = INITIAL_STATE, action) => {
       };
     case actionTypes.FETCH_IMAGES:
       const gallery = state[action.galleryType];
-      const allImages = [...gallery.images, ...action.images];
+
+      let allImages;
+
+      if (action.galleryType === FAVORITE_GALLERY && !gallery.firstFetchDone) {
+        allImages = action.images;
+      } else {
+        allImages = [...gallery.images, ...action.images];
+      }
+
       const mergedDataMap = buildDataMap(allImages);
       const isEmpty = allImages.length === 0;
 
