@@ -53,7 +53,9 @@ class ImageReviewModal extends React.PureComponent<Props, State> {
     const rejected = imageReviews.filter(image => !image.confirmed);
     this.setState({ loading: true });
 
-    await Promise.all(confirmed.map(async confirmedImage => IdentityMatchApi.put(confirmedImage)));
+    await Promise.all(
+      confirmed.map(async confirmedImage => IdentityMatchApi.patch(confirmedImage)),
+    );
 
     this.setState({ loading: false });
 

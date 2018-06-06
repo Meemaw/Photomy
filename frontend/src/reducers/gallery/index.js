@@ -1,5 +1,5 @@
 import * as actionTypes from '../../constants/actionTypes';
-import { GALLERY_TYPES, ALL_PHOTOS_GALLERY } from '../../constants/galleryTypes';
+import { GALLERY_TYPES, ALL_PHOTOS_GALLERY, FAVORITE_GALLERY } from '../../constants/galleryTypes';
 
 const INITIAL_STATE = GALLERY_TYPES.reduce((galleries, gallery) => {
   galleries[gallery.galleryType] = {
@@ -39,18 +39,26 @@ const favoriteImage = (gallery, favoriteImage) => {
   const images = gallery.images.map(
     image => (image.image_id === favoriteImage.image_id ? favoriteImage : image),
   );
-  let dataMap = gallery.dataMap;
-  dataMap[favoriteImage.image_id] = favoriteImage;
+  const dataMap = buildDataMap(images);
 
   return { ...gallery, dataMap, images };
+};
+
+const fetchingImages = (gallery, fetchingImages) => {
+  return { ...gallery, fetchingImages };
 };
 
 const gallery = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionTypes.FAVORITE_IMAGE:
+      const updatedFavoriteGallery = action.image.favorite
+        ? uploadImages(state[FAVORITE_GALLERY], [action.image])
+        : deleteImage(state[FAVORITE_GALLERY], action.image);
+
       return {
         ...state,
-        [action.galleryType]: favoriteImage(state[action.galleryType], action.image),
+        [ALL_PHOTOS_GALLERY]: favoriteImage(state[ALL_PHOTOS_GALLERY], action.image),
+        [FAVORITE_GALLERY]: updatedFavoriteGallery,
       };
     case actionTypes.DELETE_IMAGE:
       return {
@@ -66,9 +74,10 @@ const gallery = (state = INITIAL_STATE, action) => {
     case actionTypes.FETCH_IMAGES:
       const gallery = state[action.galleryType];
       const allImages = [...gallery.images, ...action.images];
-      const mergedDataMap = { ...gallery.dataMap, ...action.dataMap };
+      const mergedDataMap = buildDataMap(allImages);
       const isEmpty = allImages.length === 0;
 
+      const hasMore = action.next !== null;
       const updatedGallery = {
         ...gallery,
         images: allImages,
@@ -77,12 +86,16 @@ const gallery = (state = INITIAL_STATE, action) => {
         next: action.next,
         totalCount: action.totalCount,
         updatedAt: action.updatedAt,
-        isEmpty: isEmpty,
+        hasMore,
+        isEmpty,
       };
 
       return { ...state, [action.galleryType]: updatedGallery };
-    case action.FETCHING_IMAGES:
-      return { ...state, fetchingImages: action.fetchingImages };
+    case actionTypes.FETCHING_IMAGES:
+      return {
+        ...state,
+        [action.galleryType]: fetchingImages(state[action.galleryType], action.fetchingImages),
+      };
     case actionTypes.LOGOUT:
       return INITIAL_STATE;
     default:

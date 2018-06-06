@@ -85,7 +85,7 @@ class UrlUpload extends React.Component<Props, State> {
         {preview && (
           <Card style={{ width: '100%', background: 'black' }}>
             <GalleryImage
-              image={{ image_url: url }}
+              src={url}
               width="100%"
               height="100%"
               style={{ maxHeight: URL_UPLAD_IMAGE_PREVIEW_HEIGHT }}

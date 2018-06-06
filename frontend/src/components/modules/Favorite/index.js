@@ -1,10 +1,9 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import Favorite from './Favorite';
-import { connect } from 'react-redux';
 import { FAVORITE_GALLERY } from '../../../constants/galleryTypes';
-import { fetchImages as fetchImagesAction } from '../../../actions';
 import { ImagesApi } from '../../../services';
+import { withImageHighlight } from '../../../hocs';
 
 type Props = {
   fetchImages: Function,
@@ -13,6 +12,8 @@ type Props = {
   count: number,
   dataMap: Object,
   isEmpty: boolean,
+  favoriteImage: Function,
+  deleteImage: Function,
 };
 type State = {};
 
@@ -24,11 +25,14 @@ class FavoriteContainer extends React.Component<Props, State> {
       fetchImages(ImagesApi.favorites, {});
     }
   }
+
   render() {
-    const { images, count, updatedAt, dataMap, isEmpty } = this.props;
+    const { images, count, updatedAt, dataMap, isEmpty, favoriteImage, deleteImage } = this.props;
     return (
       <Favorite
         images={images}
+        favoriteImage={favoriteImage}
+        deleteImage={deleteImage}
         count={count}
         updatedAt={updatedAt}
         dataMap={dataMap}
@@ -42,11 +46,4 @@ function mapStateToProps(state) {
   return { ...state.gallery[FAVORITE_GALLERY] };
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchImages: (fetchFunction, args) =>
-      dispatch(fetchImagesAction(fetchFunction, args, FAVORITE_GALLERY)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FavoriteContainer);
+export default withImageHighlight(FavoriteContainer, mapStateToProps, FAVORITE_GALLERY);

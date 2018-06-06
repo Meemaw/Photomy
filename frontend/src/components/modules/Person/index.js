@@ -154,6 +154,10 @@ class PersonContainer extends React.Component<Props, State> {
           <ClickableSpan fontWeight={500}>Remove from people album</ClickableSpan>
         </div>
         <Divider />
+        <div style={{ textAlign: 'center' }}>
+          <ClickableSpan fontWeight={500}>Merge itdentities</ClickableSpan>
+        </div>
+        <Divider />
       </Gallery>
     );
   }
@@ -167,4 +171,7 @@ const mapDispatchToProps = {
   setIdentity,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersonContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PersonContainer);

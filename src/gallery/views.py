@@ -166,6 +166,18 @@ def handle_image_upload(image, user):
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
+def get_lqip(image, image_id, user):
+    file_name = str(image_id) + '_' + str(user.id) + \
+        '.preview.' + image.format
+    lqip_f_thumb = storage.open(file_name, "w")
+
+    optimized_image = image.copy()
+    optimized_image.thumbnail((300, 300), PIL.Image.ANTIALIAS)
+
+    optimized_image.save(lqip_f_thumb, "JPEG", optimize=True, quality=90)
+    return lqip_f_thumb
+
+
 def save_image(image, user):
     image_id = uuid.uuid4()
     file_name = str(image_id) + '_' + str(user.id) + '.' + image.format
@@ -173,12 +185,16 @@ def save_image(image, user):
     image.save(f_thumb, "JPEG")
     width, height = image.size
 
+    lqip_f_thumb = get_lqip(image, image_id, user)
+
     new_image = Image.objects.create(
         id=image_id,
         user=user,
         width=width,
         height=height,
-        image_upload=f_thumb)
+        image_upload=f_thumb,
+        lqip_upload=lqip_f_thumb)
     f_thumb.close()
+    lqip_f_thumb.close()
 
     return new_image

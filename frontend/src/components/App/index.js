@@ -9,10 +9,12 @@ import { VERSION_INFO } from '../../version';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    Raven.config(CONFIG.sentry.dsn, {
-      environment: CONFIG.sentry.env,
-      release: VERSION_INFO.tag,
-    }).install();
+    if (CONFIG.sentry.enable) {
+      Raven.config(CONFIG.sentry.dsn, {
+        environment: CONFIG.sentry.env,
+        release: VERSION_INFO.tag,
+      }).install();
+    }
   }
 
   render() {

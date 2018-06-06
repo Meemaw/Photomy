@@ -34,6 +34,7 @@ def reidify_identity_match(identity_match_id):
 @app.task
 def idify_image(image_id):
     new_image = Image.objects.get(id=image_id)
+
     face_encodings = encode_image_faces(new_image)
 
     matches = ImageIdentityMatch.objects.select_related(

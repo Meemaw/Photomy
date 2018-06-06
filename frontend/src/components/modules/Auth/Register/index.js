@@ -3,6 +3,7 @@ import { withFormik } from 'formik';
 import { connect } from 'react-redux';
 import { AuthApi } from '../../../../services';
 import { setAuthUser } from '../../../../actions/auth';
+import { loginPath } from '../../../../lib/paths';
 
 const RegisterContainer = withFormik({
   validateOnChange: false,
@@ -33,12 +34,7 @@ const RegisterContainer = withFormik({
 
     AuthApi.register(payload)
       .then(resp => {
-        // TODO redirect to confirm email
-        /*
-        const payload = { ...resp, user: { ...resp.user, id: resp.user.pk } };
-        setAccessToken(payload);
-        props.setAuthUser(payload.user);
-        */
+        props.history.push({ pathname: loginPath, state: { register: true } });
       })
       .catch(err => {
         if (err.status === 400) {

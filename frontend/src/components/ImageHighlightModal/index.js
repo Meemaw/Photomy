@@ -55,7 +55,7 @@ class ImageHighlightModal extends React.PureComponent<Props, State> {
         height="100%"
         width="100%"
         style={{ maxHeight: triggerImageMaxHeight }}
-        image={initialImage}
+        src={initialImage.preview_url}
         onClick={() => this.setState({ imageSelectedIx: imageIx }, _ => handleOpen())}
       />
     );

@@ -16,6 +16,9 @@ type Props = {
   deleteImage: Function,
   favoriteImage: Function,
   isEmpty: boolean,
+  totalCount: number,
+  fetchingImages: boolean,
+  hasMore: boolean,
 };
 
 type State = {};
@@ -28,8 +31,25 @@ class AllPhotosContainer extends React.PureComponent<Props, State> {
     }
   }
 
+  loadMore = () => {
+    const { fetchImages, count, fetchingImages, hasMore } = this.props;
+    if (hasMore && !fetchingImages) {
+      fetchImages(ImagesApi.list_images, { ordering: '-uploaded_at', offset: count });
+    }
+  };
+
   render() {
-    const { count, updatedAt, images, dataMap, deleteImage, favoriteImage, isEmpty } = this.props;
+    const {
+      count,
+      updatedAt,
+      images,
+      dataMap,
+      deleteImage,
+      favoriteImage,
+      isEmpty,
+      fetchingImages,
+      hasMore,
+    } = this.props;
     return (
       <AllPhotos
         count={count}
@@ -39,6 +59,9 @@ class AllPhotosContainer extends React.PureComponent<Props, State> {
         deleteImage={deleteImage}
         favoriteImage={favoriteImage}
         isEmpty={isEmpty}
+        loadMore={this.loadMore}
+        fetchingImages={fetchingImages}
+        hasMore={hasMore}
       />
     );
   }

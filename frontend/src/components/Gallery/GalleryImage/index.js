@@ -2,25 +2,21 @@
 import * as React from 'react';
 import ProgressiveImage from '../../common/ProgressiveImage';
 import styled from 'styled-components';
-import type { Image } from '../../../meta/types/Image';
 import { Image as SemanticImage } from 'semantic-ui-react';
 import { onlyUpdateForKeys } from 'recompose';
+
 const PLACEHOLDER = require('../../../images/gallery_placeholder.png');
 
 type Props = {
-  image: Image,
+  src: string,
   withPlaceholder: boolean,
   children: (string, boolean) => Node,
   rest: any,
 };
 
-const GalleryImage = ({ image, withPlaceholder, children, ...rest }: Props) => {
+const GalleryImage = ({ src, withPlaceholder, children, ...rest }: Props) => {
   return (
-    <ProgressiveImage
-      src={image.image_url}
-      placeholder={PLACEHOLDER}
-      withPlaceholder={withPlaceholder}
-    >
+    <ProgressiveImage src={src} placeholder={PLACEHOLDER} withPlaceholder={withPlaceholder}>
       {(src, loading) => (
         <StyledImage {...rest} src={src} rounded style={{ objectFit: 'contain', ...rest.style }} />
       )}
@@ -37,4 +33,4 @@ const StyledImage = styled(SemanticImage)`
   }
 `;
 
-export default onlyUpdateForKeys(['image'])(GalleryImage);
+export default onlyUpdateForKeys(['src'])(GalleryImage);

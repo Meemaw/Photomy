@@ -12,7 +12,7 @@ class ImageReview extends React.Component<Props, State> {
     const { imageReviews, setImageReviews } = this.props;
     return (
       <div>
-        <Gallery.Image image={image} />
+        <Gallery.Image src={image.preview_url} />
         <Checkbox
           onClick={() => {
             setImageReviews(

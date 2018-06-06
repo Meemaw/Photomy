@@ -26,6 +26,7 @@ function setUser(state, user) {
 }
 
 function logout(state) {
+  localStorage.clear();
   return { ...state, user: {}, isLoggedIn: false };
 }
 

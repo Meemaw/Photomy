@@ -80,7 +80,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 100
+    'PAGE_SIZE': 50
 }
 
 REST_USE_JWT = True
@@ -120,6 +120,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 2621440 * 2  # 5 MB
 AUTH_USER_MODEL = 'authentication.User'
 
 ACCOUNT_EMAIL_REQUIRED = True

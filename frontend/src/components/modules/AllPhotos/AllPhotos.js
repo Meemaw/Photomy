@@ -1,9 +1,12 @@
 // @flow
 import * as React from 'react';
 import Gallery from '../../Gallery';
+import { FooterStyle } from '../../Gallery/FooterInfo';
 import ImageHighlightModal from '../../ImageHighlightModal';
+import LoadingIcon from '../../common/LoadingIcon';
 import type { Image } from '../../../meta/types/Image';
-import { Visibility } from 'semantic-ui-react';
+import ClickableSpan from '../../common/ClickableSpan';
+import { Visibility, Icon } from 'semantic-ui-react';
 import { ALL_PHOTOS_IMAGE_HEIGHT } from '../../../constants/gallerySizes';
 
 type Props = {
@@ -14,6 +17,9 @@ type Props = {
   deleteImage: Function,
   favoriteImage: Function,
   isEmpty: boolean,
+  loadMore: Function,
+  fetchingImages: boolean,
+  hasMore: boolean,
 };
 
 type State = {
@@ -65,11 +71,25 @@ class AllPhotos extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { count, updatedAt, images, dataMap, isEmpty } = this.props;
+    const {
+      count,
+      updatedAt,
+      images,
+      dataMap,
+      isEmpty,
+      loadMore,
+      fetchingImages,
+      hasMore,
+    } = this.props;
     const { stickySection } = this.state;
 
     return (
-      <Gallery handleContextRef={this.handleContextRef} isEmpty={isEmpty} galleryName="photos">
+      <Gallery
+        handleContextRef={this.handleContextRef}
+        isEmpty={isEmpty}
+        galleryName="photos"
+        loadMore={loadMore}
+      >
         {Object.keys(images).map(section => (
           <Visibility
             continuous={false}
@@ -88,7 +108,20 @@ class AllPhotos extends React.PureComponent<Props, State> {
           </Visibility>
         ))}
 
-        <Gallery.FooterInfo count={count} updatedAt={updatedAt} />
+        {!fetchingImages ? (
+          <React.Fragment>
+            <FooterStyle padding="0px">
+              {hasMore && (
+                <ClickableSpan onClick={loadMore}>
+                  <Icon name="refresh" /> Load More
+                </ClickableSpan>
+              )}
+            </FooterStyle>
+            <Gallery.FooterInfo count={count} updatedAt={updatedAt} loadMore={loadMore} />
+          </React.Fragment>
+        ) : (
+          <LoadingIcon />
+        )}
       </Gallery>
     );
   }

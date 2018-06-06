@@ -33,7 +33,10 @@ const SectionRow = ({
       {Array.from(Array(n_columns).keys()).map(columnIndex => {
         const image = images[startingIndex + columnIndex];
         return (
-          <Grid.Column key={image.image_id} style={{ width: columnWidth }}>
+          <Grid.Column
+            key={image.image_id}
+            style={{ width: columnWidth, display: 'flex', alignItems: 'center' }}
+          >
             {renderImage(image, dataMap)}
           </Grid.Column>
         );

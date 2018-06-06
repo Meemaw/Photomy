@@ -1,7 +1,8 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import Gallery from '../../Gallery';
 import type { Image } from '../../../meta/types/Image';
+import ImageHighlightModal from '../../ImageHighlightModal';
 
 type Props = {
   images: Array<Image>,
@@ -9,15 +10,37 @@ type Props = {
   updatedAt: Date,
   dataMap: Object,
   isEmpty: boolean,
+  favoriteImage: Function,
+  deleteImage: Function,
 };
 type State = {};
 
 class Favorite extends React.Component<Props, State> {
+  renderImage = (image: Image): React.Node => {
+    const imageIx = this.props.dataMap[image.image_id].ix;
+
+    return (
+      <ImageHighlightModal
+        imageIx={imageIx}
+        images={Object.values(this.props.dataMap)}
+        initialImage={image}
+        deleteImage={this.props.deleteImage}
+        favoriteImage={this.props.favoriteImage}
+      />
+    );
+  };
+
   render() {
     const { images, count, updatedAt, dataMap, isEmpty } = this.props;
     return (
-      <Gallery renderAddPhoto={false} isEmpty={isEmpty} galleryName="favorite">
+      <Gallery
+        renderAddPhoto={false}
+        isEmpty={isEmpty}
+        galleryName="favorite"
+        emptyInstructions="Favorite some photos in your gallery"
+      >
         <Gallery.Section
+          renderImage={this.renderImage}
           sectionHeader="Favorite images"
           images={images}
           isSticky={false}

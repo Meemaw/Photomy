@@ -46,7 +46,12 @@ const ImageHighlight = ({
 
   return (
     <Modal.Content style={contentStyle}>
-      <GalleryImage image={highlightedImage} height="100%" width="100%" withPlaceholder={false} />
+      <GalleryImage
+        src={highlightedImage.image_url}
+        height="100%"
+        width="100%"
+        withPlaceholder={false}
+      />
 
       {hovered && (
         <React.Fragment>

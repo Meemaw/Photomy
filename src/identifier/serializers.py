@@ -24,7 +24,9 @@ class ImageIdentityMatchSerializer(serializers.ModelSerializer):
 
     def to_representation(self, obj):
         image_url = obj.image_id.image_upload.url if obj.image_id.image_upload else None
+        preview_location = obj.image_id.lqip_upload.url if obj.image_id.lqip_upload else None
         return {"image_url": image_url,
+                "preview_url": preview_location,
                 "image_identity": obj.identity_group_id.identity,
                 "identity_group_id": obj.identity_group_id.id,
                 "image_id": obj.image_id.id,

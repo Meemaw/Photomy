@@ -15,8 +15,6 @@ UPLOAD_URL_VIEW = reverse('upload_url')
 OBAMA_IMAGE = f'{TEST_IMAGES_PATH}/obama.jpg'
 
 
-
-
 TEST_IMAGES = [
     {"width": 200, "height": 500},
     {"width": 200, "height": 200, "favorite": True},
@@ -144,7 +142,6 @@ class IdentityMatchTest(TestCase):
             "face_index": im.face_index,
             "image_id": str(im.image_id.id),
             "identity_group_id": im.identity_group_id.id,
-            "user": str(im.user.id),
             "confirmed": True
         }
 
@@ -158,7 +155,7 @@ class IdentityMatchTest(TestCase):
 
         update_payload = self._get_update_payload(self.im1)
 
-        client.put(
+        client.patch(
             identity_match_view,
             data=json.dumps(update_payload),
             content_type="application/json",

@@ -17,6 +17,7 @@ const Login = ({
 }) => {
   const { search, state } = rest.location;
   const passwordReset = Object.keys(errors).length === 0 && state && state.passwordReset;
+  const registerRedirect = Object.keys(errors).length === 0 && state && state.register;
   return (
     <AuthFormWrapper header="Sign in to Photomy">
       <Form size="large" onSubmit={handleSubmit}>
@@ -52,6 +53,12 @@ const Login = ({
           />
 
           {passwordReset && <Message positive content="Password successfuly channged" />}
+          {registerRedirect && (
+            <Message
+              positive
+              content="E-mail with verification instructions has been sent to you"
+            />
+          )}
           <Grid>
             <Grid.Row columns={2}>
               <Grid.Column width="10" textAlign="left" verticalAlign="middle">

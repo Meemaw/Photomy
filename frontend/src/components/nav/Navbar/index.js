@@ -32,10 +32,7 @@ type State = {};
 class NavbarContainer extends React.Component<Props, State> {
   logout = () => {
     AuthApi.logout()
-      .then(resp => {
-        localStorage.clear();
-        this.props.logout();
-      })
+      .then(resp => this.props.logout())
       .catch(err => console.log(err));
   };
 

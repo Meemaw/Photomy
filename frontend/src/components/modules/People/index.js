@@ -37,7 +37,12 @@ class PeopleContainer extends React.Component<Props, State> {
   render() {
     const { push, images, count, updatedAt, isEmpty } = this.props;
     return (
-      <Gallery renderAddPhoto={false} isEmpty={isEmpty} galleryName="people">
+      <Gallery
+        renderAddPhoto={false}
+        isEmpty={isEmpty}
+        galleryName="people"
+        emptyInstructions="Add some photos with people on it to your gallery"
+      >
         <People push={push} images={images} count={count} updatedAt={updatedAt} />
       </Gallery>
     );
@@ -55,4 +60,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withPush(PeopleContainer));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withPush(PeopleContainer));

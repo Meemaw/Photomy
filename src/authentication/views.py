@@ -17,7 +17,7 @@ def ok(request, pk):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class Me(generics.RetrieveUpdateAPIView):
+class Me(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):

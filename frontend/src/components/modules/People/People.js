@@ -25,11 +25,11 @@ class People extends React.Component<Props, State> {
 
   renderImage = (image: Image) => {
     return (
-      <React.Fragment>
+      <div style={{ position: 'relative', width: '100%' }}>
         <Gallery.Image
-          image={image}
+          src={image.preview_url}
           onClick={() => this.handleImageClick(image)}
-          height="100%"
+          height="auto"
           width="100%"
           style={{ objectFit: 'cover' }}
         />
@@ -49,7 +49,7 @@ class People extends React.Component<Props, State> {
             {image.image_identity}
           </ClickableSpan>
         )}
-      </React.Fragment>
+      </div>
     );
   };
 

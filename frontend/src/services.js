@@ -16,7 +16,7 @@ export const ImagesApi = {
 };
 
 export const IdentityMatchApi = {
-  put: PUT(`${CONFIG.services.baseUrl}/gallery/identity_match/:identity_match_id`),
+  patch: PATCH(`${CONFIG.services.baseUrl}/gallery/identity_match/:identity_match_id`),
   reject: GET(`${CONFIG.services.baseUrl}/gallery/identity_match/:identity_match_id/reject`),
 };
 
@@ -36,12 +36,9 @@ export const AuthApi = {
   authorize: GET(`${CONFIG.services.cdnBaseUrl}/authorize`, false),
 };
 
-export const CustomUrl = {
-  get: url => GET(url),
-};
-
 export const UserAuthApi = {
   get: GET(`${CONFIG.services.baseUrl}/auth/me`),
   update: PUT(`${CONFIG.services.baseUrl}/auth/me`),
+  delete: DELETE(`${CONFIG.services.baseUrl}/auth/me`),
   changePassword: POST(`${CONFIG.services.baseUrl}/rest-auth/password/change/`),
 };
