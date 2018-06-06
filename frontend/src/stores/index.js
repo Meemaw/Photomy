@@ -1,8 +1,10 @@
 import * as reducers from '../reducers';
 import createHistory from 'history/createBrowserHistory';
 import thunk from 'redux-thunk';
+import api from '../lib/api';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import { routerReducer as routing, routerMiddleware } from 'react-router-redux';
+import { logout } from '../actions';
 
 export const history = createHistory();
 
@@ -14,11 +16,17 @@ const composedEnhancers = compose(
   ...enhancers,
 );
 
-export default function configureStore(initialState = {}) {
+export default function initStore(initialState = {}) {
   const rootReducer = combineReducers({
     ...reducers,
     routing,
   });
 
-  return createStore(rootReducer, initialState, composedEnhancers);
+  const store = createStore(rootReducer, initialState, composedEnhancers);
+
+  api.on('401', url => {
+    store.dispatch(logout());
+  });
+
+  return store;
 }

@@ -3,7 +3,9 @@ import { injectParameters } from './urls';
 import { getAccessToken } from './auth';
 import { UNAUTHORIZED } from '../constants/statusCodes';
 
-class Api {
+import EventEmitter from 'events';
+
+class Api extends EventEmitter {
   GET = this._makeMethod('get');
   POST = this._makeMethod('post', true);
   PUT = this._makeMethod('put', true);
@@ -41,6 +43,7 @@ class Api {
     const credentials = url.includes('authorize') ? 'include' : '*omit'; // TODO fix
     return fetch(url, { method, headers, body, mode, credentials: credentials })
       .then(response => {
+        this.emit(`${response.status}`, url);
         return new Promise(resolve => resolve(response.text()))
           .catch(err => {
             Promise.reject({
@@ -51,10 +54,6 @@ class Api {
           })
           .then((responseBody: any) => {
             try {
-              if (response.status === UNAUTHORIZED) {
-                localStorage.clear();
-                window.location.reload();
-              }
               const parsedJSON = JSON.parse(responseBody);
               if (response.ok) return parsedJSON;
               if (response.status >= 500) {
@@ -93,4 +92,6 @@ class Api {
   }
 }
 
-export default new Api();
+const instance = new Api();
+
+export default instance;

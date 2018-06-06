@@ -69,11 +69,15 @@ class Gallery extends React.Component<Props, State> {
             <Waypoint
               onPositionChange={this.handlePositionChange}
               scrollableAncestor={this.contextRef}
-            />
+            >
+              <WaypointEl />
+            </Waypoint>
           )}
       </ContentContainer>
     );
   }
 }
+
+const WaypointEl = props => <div style={{ height: 4 }} ref={props.innerRef} />;
 
 export default Gallery;
