@@ -1,8 +1,6 @@
 // @flow
 import { injectParameters } from './urls';
 import { getAccessToken } from './auth';
-import { UNAUTHORIZED } from '../constants/statusCodes';
-
 import EventEmitter from 'events';
 
 class Api extends EventEmitter {
