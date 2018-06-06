@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import ContentContainer from '../../common/ContentContainer';
-import { Menu, Segment, Header, Container, Divider } from 'semantic-ui-react';
+import { Menu, Segment, Header, Container, Divider, Grid } from 'semantic-ui-react';
 import {
   GENERAL_SETTINGS_MENU_ITEMS,
   MENU_UI_NAME_MAP,
@@ -38,8 +38,8 @@ class Settings extends React.Component<Props, State> {
       <ContentContainer className="Settings">
         <Divider style={{ marginTop: '0px', paddingTop: '0px' }} />
         <Container style={{ display: 'flex' }}>
-          <Menu vertical style={{ marginBottom: '0px', minWidth: '50px' }}>
-            <Menu.Item>
+          <Menu pointing secondary vertical style={{ height: '100%' }}>
+            <Menu.Item style={{ marginRight: '-7px' }}>
               <Menu.Header>General</Menu.Header>
 
               <Menu.Menu>
@@ -67,7 +67,10 @@ class Settings extends React.Component<Props, State> {
               <Menu.Header>Support</Menu.Header>
             </Menu.Item>
           </Menu>
-          <Segment style={{ width: '100%', marginTop: '0px' }} className="SettingsContent">
+          <Segment
+            style={{ width: '100%', marginLeft: '30px', marginTop: '0px', height: '100%' }}
+            className="SettingsContent"
+          >
             <Header as="h3" content={menuContent} icon={menuIcon} />
             {renderContent()}
           </Segment>
