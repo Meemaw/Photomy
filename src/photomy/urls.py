@@ -1,8 +1,7 @@
-from django.contrib import admin
 from django.urls import include, path
-from django.contrib.auth.views import PasswordResetConfirmView
-from authentication.views import ConfirmEmailView, ok
 
+from authentication.views import ConfirmEmailView, ok
+from django.contrib.auth.views import PasswordResetConfirmView
 
 urlpatterns = [
     path('rest-auth/', include('rest_auth.urls')),

@@ -1,27 +1,17 @@
 import uuid
 
-from django.http import HttpResponse
-from rest_framework import status, generics
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from django.db.models import Q
-from rest_framework.decorators import api_view
-import numpy as np
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage as storage
-
-
 import PIL.Image
 import requests
-
+from django.core.files.storage import default_storage as storage
+from django.db.models import Q
 from rest_framework import filters
+from rest_framework import status, generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-
-from identifier.tasks import reidify_identity_match
 from identifier.models import ImageIdentityMatch, IdentityGroup
 from identifier.serializers import ImageIdentityMatchSerializer, IdentitySerializer
-
+from identifier.tasks import reidify_identity_match
 from .models import Image
 from .serializers import ImageSerializer
 
@@ -65,6 +55,7 @@ class IdentityDetail(generics.RetrieveUpdateAPIView):
         identity_id = self.kwargs.get('pk')
         return IdentityGroup.objects.filter(Q(id=identity_id) & Q(user=self.request.user))
 
+
 # PERSON
 
 
@@ -103,10 +94,12 @@ class NeighbourPeople(generics.ListAPIView):
             Q(identity_group_id=identity_id)).values('image_id')
 
         neighbours = ImageIdentityMatch.objects.filter(
-            Q(image_id__in=identity_images) & Q(confirmed=True)).exclude(identity_group_id=identity_id).values('identity_group_id').distinct()
+            Q(image_id__in=identity_images) & Q(confirmed=True)).exclude(identity_group_id=identity_id).values(
+            'identity_group_id').distinct()
 
         matches = ImageIdentityMatch.objects.filter(
-            Q(image_id__face_encodings__len=1) & Q(image_id__user=self.request.user) & Q(confirmed=True) & Q(identity_group_id__in=neighbours)).distinct()
+            Q(image_id__face_encodings__len=1) & Q(image_id__user=self.request.user) & Q(confirmed=True) & Q(
+                identity_group_id__in=neighbours)).distinct()
 
         people = {match.identity_group_id.id: match for match in matches}.values()
 
@@ -168,7 +161,7 @@ def handle_image_upload(image, user):
 
 def get_lqip(image, image_id, user):
     file_name = str(image_id) + '_' + str(user.id) + \
-        '.preview.' + image.format
+                '.preview.' + image.format
     lqip_f_thumb = storage.open(file_name, "w")
 
     optimized_image = image.copy()

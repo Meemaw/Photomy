@@ -1,7 +1,7 @@
 from django.db import models
 from django.dispatch.dispatcher import receiver
-from identifier.tasks import idify_image
 
+from identifier.tasks import idify_image
 from .models import Image
 
 

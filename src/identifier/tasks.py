@@ -1,14 +1,16 @@
 # Create your tasks here
 from __future__ import absolute_import, unicode_literals
-import os
-import PIL.Image
-import requests
+
 import itertools
-import numpy as np
+import os
+
+import PIL.Image
 import face_recognition
+import numpy as np
+import requests
+
 from photomy.celeryconf import app
 from .models import Image, ImageIdentityMatch, IdentityGroup
-
 
 STRICT_SIMILARITY_THRESHOLD = 0.52
 REVIEW_SIMILARITY_THRESHOLD = 0.58
@@ -25,7 +27,7 @@ def reidify_identity_match(identity_match_id):
 
     matches = ImageIdentityMatch.objects.select_related(
         'image_id', 'identity_group_id').exclude(
-            identity_group_id__in=identity_match.rejected_identities)
+        identity_group_id__in=identity_match.rejected_identities)
 
     match_face(face_index, np.array(face_encoding),
                matches, image, identity_match)
@@ -110,7 +112,8 @@ def new_identity_group_for(image, face_index, existing_match=None):
 
 def encode_image_faces(image):
     raw_image = PIL.Image.open(requests.get(
-        image.image_upload.url, stream=True, headers={os.environ['AWS_LAMBDA_SECRET_APP_KEY']: os.environ['AWS_LAMBDA_SECRET_APP_VALUE']}).raw)
+        image.image_upload.url, stream=True,
+        headers={os.environ['AWS_LAMBDA_SECRET_APP_KEY']: os.environ['AWS_LAMBDA_SECRET_APP_VALUE']}).raw)
 
     d_image = np.array(raw_image)
 

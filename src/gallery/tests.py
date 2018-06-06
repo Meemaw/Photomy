@@ -1,11 +1,8 @@
-from photomy.test_base import *
-
-from .models import Image
 from identifier.models import ImageIdentityMatch, IdentityGroup
-from .serializers import ImageSerializer
+from identifier.serializers import IdentityGroupSerializer
+from photomy.test_base import *
+from .models import Image
 from .views import _reject_identity_match, save_image
-from identifier.serializers import ImageIdentityMatchSerializer, IdentityGroupSerializer
-
 
 IMAGE_VIEW = reverse('images')
 PEOPLE_VIEW = reverse('people')
@@ -13,7 +10,6 @@ FAVORITES_VIEW = reverse('favorites')
 UPLOAD_FILE_VIEW = reverse('upload_file')
 UPLOAD_URL_VIEW = reverse('upload_url')
 OBAMA_IMAGE = f'{TEST_IMAGES_PATH}/obama.jpg'
-
 
 TEST_IMAGES = [
     {"width": 200, "height": 500},
@@ -79,7 +75,8 @@ class SaveImageTest(TestCase):
 
         response = client.post(
             UPLOAD_URL_VIEW,
-            data={'image_url': 'https://assets.vogue.com/photos/59726f1974b72106b2ef2a5d/master/pass/00-lede-prince-george-4th-birthday-portrait.jpg'},
+            data={
+                'image_url': 'https://assets.vogue.com/photos/59726f1974b72106b2ef2a5d/master/pass/00-lede-prince-george-4th-birthday-portrait.jpg'},
             **auth_headers(self.test_users[1])
         )
 
@@ -122,16 +119,19 @@ class IdentityMatchTest(TestCase):
             id=uuid.uuid4(), username=user.get('username'), email=user.get('email')) for user in TEST_USERS]
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
-            'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES for user in self.test_users]
+            'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
+                            for user in self.test_users]
 
         self.identities = [IdentityGroup.objects.create(identity=identity.get(
             'name'), user=self.test_users[0]) for identity in TEST_IDENTITIES]
 
         self.im1 = ImageIdentityMatch.objects.create(
-            user=self.test_users[0], identity_group_id=self.identities[0], image_id=self.test_images[0], face_index=0, confirmed=False)
+            user=self.test_users[0], identity_group_id=self.identities[0], image_id=self.test_images[0], face_index=0,
+            confirmed=False)
 
         self.im2 = ImageIdentityMatch.objects.create(
-            user=self.test_users[1], identity_group_id=self.identities[0], image_id=self.test_images[0], face_index=0, confirmed=False)
+            user=self.test_users[1], identity_group_id=self.identities[0], image_id=self.test_images[0], face_index=0,
+            confirmed=False)
 
     def test_view_is_protected(self):
         self.assertTrue(is_protected(
@@ -199,7 +199,8 @@ class PersonTest(TestCase):
             id=uuid.uuid4(), username=user.get('username'), email=user.get('email')) for user in TEST_USERS]
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
-            'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES for user in self.test_users]
+            'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
+                            for user in self.test_users]
 
         self.identities = [IdentityGroup.objects.create(identity=identity.get(
             'name'), user=self.test_users[0]) for identity in TEST_IDENTITIES]
@@ -241,7 +242,8 @@ class ImageTest(TestCase):
             id=uuid.uuid4(), username=user.get('username'), email=user.get('email')) for user in TEST_USERS]
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
-            'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES for user in self.test_users]
+            'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
+                            for user in self.test_users]
 
     def test_view_is_protected(self):
         self.assertTrue(is_protected(IMAGE_VIEW))
@@ -294,7 +296,8 @@ class FavoriteTest(TestCase):
             id=uuid.uuid4(), username=user.get('username'), email=user.get('email')) for user in TEST_USERS]
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
-            'width'), height=image.get('height'), favorite=image.get('favorite', False)) for image in TEST_IMAGES for user in self.test_users]
+            'width'), height=image.get('height'), favorite=image.get('favorite', False)) for image in TEST_IMAGES for
+                            user in self.test_users]
 
     def test_view_is_protected(self):
         self.assertTrue(is_protected(FAVORITES_VIEW))
@@ -397,7 +400,8 @@ class PeopleTest(TestCase):
             id=uuid.uuid4(), username=user.get('username'), email=user.get('email')) for user in TEST_USERS]
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
-            'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES for user in self.test_users]
+            'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
+                            for user in self.test_users]
 
         candidate_images = [image for image in self.test_images if image.face_encodings and len(
             image.face_encodings) == 1 and image.user == self.test_users[0]]
@@ -425,11 +429,13 @@ class PeopleTest(TestCase):
             user=self.test_users[0], identity_group_id=self.identities[2], image_id=candidate_images[3], face_index=0)
 
         ImageIdentityMatch.objects.create(
-            user=self.test_users[0], identity_group_id=self.identities[2], image_id=candidate_images[2], face_index=0, confirmed=False)
+            user=self.test_users[0], identity_group_id=self.identities[2], image_id=candidate_images[2], face_index=0,
+            confirmed=False)
 
         # Identity 4
         ImageIdentityMatch.objects.create(
-            user=self.test_users[0], identity_group_id=self.identities[3], image_id=candidate_images[1], face_index=0, confirmed=False)
+            user=self.test_users[0], identity_group_id=self.identities[3], image_id=candidate_images[1], face_index=0,
+            confirmed=False)
         ImageIdentityMatch.objects.create(
             user=self.test_users[0], identity_group_id=self.identities[3], image_id=candidate_images[3], face_index=0)
 
@@ -439,7 +445,8 @@ class PeopleTest(TestCase):
 
         # Identity 6
         ImageIdentityMatch.objects.create(
-            user=self.test_users[0], identity_group_id=self.identities[5], image_id=candidate_images[3], face_index=0, confirmed=False)
+            user=self.test_users[0], identity_group_id=self.identities[5], image_id=candidate_images[3], face_index=0,
+            confirmed=False)
 
     def test_is_protected(self):
         self.assertTrue(is_protected(PEOPLE_VIEW))
@@ -471,7 +478,7 @@ class PeopleTest(TestCase):
     def _test_identity_neighbours(self, credentials, identity_id, expected_length):
         response = client.get(
             reverse('identity_neighbours', kwargs={
-                    'identity_id': identity_id}),
+                'identity_id': identity_id}),
             **credentials
         )
         res = results(response)

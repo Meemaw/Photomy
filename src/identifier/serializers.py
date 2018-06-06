@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from .models import IdentityGroup, ImageIdentityMatch
-from gallery.models import Image
 
 
 class IdentitySerializer(serializers.ModelSerializer):
@@ -17,7 +16,6 @@ class IdentityGroupSerializer(serializers.ModelSerializer):
 
 
 class ImageIdentityMatchSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ImageIdentityMatch
         fields = ('__all__')

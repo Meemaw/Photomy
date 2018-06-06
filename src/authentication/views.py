@@ -1,15 +1,13 @@
-from django.shortcuts import render, redirect
-from rest_framework import generics, filters, status
-from .serializers import UserSerializer
-from django.views.generic.base import TemplateResponseMixin, TemplateView, View
-from allauth.account.models import EmailAddress, EmailConfirmation, EmailConfirmationHMAC
-from django.http import (
-    Http404,
-    HttpResponsePermanentRedirect,
-    HttpResponseRedirect,
-)
+from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
 from django.conf import settings
+from django.http import Http404
+from django.shortcuts import redirect
+from django.views.generic.base import TemplateResponseMixin, View
+from rest_framework import generics, status
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .serializers import UserSerializer
 
 
 @api_view(['GET'])

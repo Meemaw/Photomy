@@ -10,21 +10,20 @@ import os
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+
 User = get_user_model()
 import PIL.Image
-
 
 # DRF imports
 from rest_framework import status
 from rest_framework_jwt.settings import api_settings
+
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
 
-
 # Initialize the APIClient app
 client = Client()
-
 
 UNAUTHORIZED_STATUS_CODE = 401
 
