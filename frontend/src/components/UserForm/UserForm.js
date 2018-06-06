@@ -2,8 +2,10 @@
 import React from 'react';
 import SaveButton from '../common/SaveButton';
 import FormInputField, { EmailFormField } from '../common/FormInputField';
-import { Form } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
 import type { User } from '../../meta/types/User';
+import DeleteAccount from '../modules/Settings/DeleteAccount';
+import withWidth from '../../hocs/WithWidth';
 
 type Props = {
   handleChange: Function,
@@ -11,6 +13,7 @@ type Props = {
   isSubmitting: boolean,
   handleSubmit: Function,
   errors: Object,
+  width: number,
 };
 
 const UserForm = ({
@@ -18,6 +21,7 @@ const UserForm = ({
   isSubmitting,
   errors,
   handleChange,
+  width,
   values: { first_name, last_name, email },
 }: Props) => {
   return (
@@ -49,9 +53,25 @@ const UserForm = ({
       </Form.Group>
 
       <EmailFormField fluid value={email} errors={errors} readOnly />
-
-      <SaveButton loading={isSubmitting} type="submit" onClick={handleSubmit} />
+      <ProgressiveButtons narrowThreshold={300} width={width}>
+        <SaveButton loading={isSubmitting} type="submit" onClick={handleSubmit} />
+        <DeleteAccount />
+      </ProgressiveButtons>
     </Form>
+  );
+};
+
+const ProgressiveButtons = ({ width, narrowThreshold, children }) => {
+  return width >= narrowThreshold ? (
+    <Button.Group>
+      {children.map((child, index) => {
+        return [child, index !== children.length - 1 && <Button.Or key={index} />];
+      })}
+    </Button.Group>
+  ) : (
+    <Button.Group vertical fluid>
+      {children}
+    </Button.Group>
   );
 };
 

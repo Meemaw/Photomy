@@ -20,7 +20,7 @@ const PasswordChangeForm = ({
   values: { old_password, new_password1, new_password2 },
 }: Props) => {
   return (
-    <Form size="small" style={{ width: '400px' }}>
+    <Form size="small">
       <PasswordFormField
         label="Current password"
         placeholder="Current password"

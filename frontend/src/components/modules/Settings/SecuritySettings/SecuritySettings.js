@@ -17,11 +17,7 @@ class SecuritySettings extends React.Component {
             </React.Fragment>
           )}
           icon="key"
-          renderContent={() => (
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}>
-              <PasswordChangeForm />
-            </div>
-          )}
+          renderContent={() => <PasswordChangeForm />}
         />
       </React.Fragment>
     );
