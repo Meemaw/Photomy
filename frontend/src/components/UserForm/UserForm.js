@@ -5,7 +5,6 @@ import FormInputField, { EmailFormField } from '../common/FormInputField';
 import { Form, Button } from 'semantic-ui-react';
 import type { User } from '../../meta/types/User';
 import DeleteAccount from '../modules/Settings/DeleteAccount';
-import withWidth from '../../hocs/WithWidth';
 
 type Props = {
   handleChange: Function,

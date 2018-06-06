@@ -10,9 +10,14 @@ import {
   registerPath,
   passwordResetPath,
   confirmationSentPath,
+  galleryPath,
 } from '../lib/paths';
 import { Switch } from 'react-router-dom';
 import Loadable from './common/Loadable';
+
+const AsyncHome = Loadable({
+  loader: () => import('./modules/Home'),
+});
 
 const AsyncLogin = Loadable({
   loader: () => import('./modules/Auth/Login'),
@@ -49,6 +54,8 @@ const AsyncGallery = Loadable({
 export default () => {
   return (
     <Switch>
+      <BaseRoute exact path={rootPath} component={withTracker(AsyncHome)} />
+
       <BaseRoute exact path={loginPath} component={withTracker(AsyncLogin)} />
       <BaseRoute exact path={registerPath} component={withTracker(AsyncRegister)} />
       <BaseRoute
@@ -67,7 +74,7 @@ export default () => {
         component={withTracker(AsyncPasswordReset)}
       />
       <MainContent>
-        <AuthRoute exact path={rootPath} component={withTracker(AsyncGallery)} />
+        <AuthRoute exact path={galleryPath} component={withTracker(AsyncGallery)} />
         <AuthRoute exact path={`${peoplePath}/:identity_id`} component={withTracker(AsyncPerson)} />
         <AuthRoute exact path={settingsPath} component={withTracker(AsyncSettinngs)} />
       </MainContent>

@@ -7,3 +7,4 @@ export const passwordResetPath = '/auth/password/reset';
 
 export const confirmationSentPath = '/auth/password/confirmationSent';
 export const settingsPath = '/settings';
+export const galleryPath = '/gallery';

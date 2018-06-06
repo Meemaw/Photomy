@@ -21,7 +21,10 @@ const AuthFormWrapper = props => {
 
 const Style = styled.div`
   background-color: #1b1c1d;
-  min-height: calc(100vh + 20px);
+  min-height: 100vh;
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
 
   .ui.center.aligned.grid {
     height: 100%;

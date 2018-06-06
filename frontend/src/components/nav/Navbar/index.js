@@ -5,7 +5,7 @@ import withPush from '../../../hocs/Router';
 import { connect } from 'react-redux';
 import { setGalleryType, logout } from '../../../actions';
 import { AuthApi } from '../../../services';
-import { peoplePath, rootPath } from '../../../lib/paths';
+import { peoplePath, galleryPath } from '../../../lib/paths';
 import type { User } from '../../../meta/types/User';
 
 function mapStateToProps(state) {
@@ -40,7 +40,7 @@ class NavbarContainer extends React.Component<Props, State> {
     const { galleryType, setGalleryType, location, identity, push, user } = this.props;
 
     const peoplePage = location.pathname.includes(peoplePath);
-    const isGallery = location.pathname === rootPath;
+    const isGallery = location.pathname === galleryPath;
 
     return (
       <Navbar
