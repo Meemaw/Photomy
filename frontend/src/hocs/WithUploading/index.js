@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { uploadImages } from '../../actions';
+import { uploadImages, setGalleryType } from '../../actions';
 
 const mapDispatchToProps = {
   uploadImages,
+  setGalleryType,
 };
 
 const withUploading = WrappedComponent => {

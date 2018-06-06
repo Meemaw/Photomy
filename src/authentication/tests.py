@@ -1,8 +1,52 @@
 from photomy.test_base import *
 
 from gallery.models import Image
+from allauth.account.models import EmailAddress
+
 from identifier.models import IdentityGroup, ImageIdentityMatch
 ME_VIEW = reverse('me')
+
+
+class AuthenticationTest(TestCase):
+
+    def setUp(self):
+        self.login_url = 'http://127.0.0.1:8000/rest-auth/login/'
+        self.register_url = 'http://127.0.0.1:8000/rest-auth/registration/'
+        self.ETA = 10
+
+        self.user_data = {'email': 'ematej.snuderl@gmail.com',
+                          'password1': 'abacabada', 'password2': 'abacabada'}
+
+        response = client.post(
+            self.register_url,
+            data=json.dumps(self.user_data),
+            content_type='application/json',
+        )
+
+    def test_login_unverified(self):
+        response = client.post(
+            self.login_url,
+            data={'email': self.user_data['email'],
+                  'password': self.user_data.get('password1')}
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data.get('non_field_errors')[0],
+                         "E-mail is not verified.")
+
+    def test_login_when_verified(self):
+        EmailAddress.objects.all().update(verified=True)
+        td1 = datetime.datetime.now()
+
+        response = client.post(
+            self.login_url,
+            data={'email': self.user_data['email'],
+                  'password': self.user_data.get('password1')}
+        )
+
+        td2 = get_token_valid_to(response.data.get(
+            'token')) + datetime.timedelta(0, self.ETA)
+        self.assertEqual((td2 - td1).days, 7)
+        self.assertEqual(response.status_code, 200)
 
 
 class MeTest(TestCase):

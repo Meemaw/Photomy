@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import ContentContainer from '../../common/ContentContainer';
-import { Menu, Segment, Header, Container, Divider, Grid } from 'semantic-ui-react';
+import { Menu, Segment, Header, Container, Divider } from 'semantic-ui-react';
 import {
   GENERAL_SETTINGS_MENU_ITEMS,
   MENU_UI_NAME_MAP,

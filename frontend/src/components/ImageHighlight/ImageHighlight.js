@@ -92,6 +92,10 @@ const ImageHighlight = ({
               )}
             </Menu.Item>
 
+            <Menu.Item style={{ color: 'white' }} onClick={() => {}}>
+              <Icon name="download" /> Download
+            </Menu.Item>
+
             <Menu.Menu position="right">
               <Menu.Item style={{ opacity: 0.8 }}>Options</Menu.Item>
             </Menu.Menu>

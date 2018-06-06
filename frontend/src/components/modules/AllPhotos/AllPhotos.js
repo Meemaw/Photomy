@@ -119,9 +119,11 @@ class AllPhotos extends React.PureComponent<Props, State> {
             </FooterStyle>
             <Gallery.FooterInfo count={count} updatedAt={updatedAt} loadMore={loadMore} />
           </React.Fragment>
-        ) : (
-          <LoadingIcon />
-        )}
+        ) : updatedAt !== null ? (
+          <FooterStyle>
+            <LoadingIcon />
+          </FooterStyle>
+        ) : null}
       </Gallery>
     );
   }
