@@ -161,7 +161,7 @@ def handle_image_upload(image, user):
 
 def get_lqip(image, image_id, user):
     file_name = str(image_id) + '_' + str(user.id) + \
-                '.preview.' + image.format
+        '.preview.' + image.format
     lqip_f_thumb = storage.open(file_name, "w")
 
     optimized_image = image.copy()

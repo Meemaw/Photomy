@@ -120,7 +120,7 @@ class IdentityMatchTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-                            for user in self.test_users]
+            for user in self.test_users]
 
         self.identities = [IdentityGroup.objects.create(identity=identity.get(
             'name'), user=self.test_users[0]) for identity in TEST_IDENTITIES]
@@ -200,7 +200,7 @@ class PersonTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-                            for user in self.test_users]
+            for user in self.test_users]
 
         self.identities = [IdentityGroup.objects.create(identity=identity.get(
             'name'), user=self.test_users[0]) for identity in TEST_IDENTITIES]
@@ -243,7 +243,7 @@ class ImageTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-                            for user in self.test_users]
+            for user in self.test_users]
 
     def test_view_is_protected(self):
         self.assertTrue(is_protected(IMAGE_VIEW))
@@ -297,7 +297,7 @@ class FavoriteTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), favorite=image.get('favorite', False)) for image in TEST_IMAGES for
-                            user in self.test_users]
+            user in self.test_users]
 
     def test_view_is_protected(self):
         self.assertTrue(is_protected(FAVORITES_VIEW))
@@ -393,6 +393,86 @@ class IdentityTest(TestCase):
             id=self.identities[0].id).identity, "Updated identity!")
 
 
+class TestNeighbours(TestCase):
+
+    def setUp(self):
+        self.test_user = User.objects.create(
+            username="matej", email="ematej.snuderl@gmail.com")
+
+        self.matej_image = Image.objects.create(
+            width=300, height=300, user=self.test_user, face_encodings=[[1.0]])
+
+        self.miha_image = Image.objects.create(
+            width=300, height=300, user=self.test_user, face_encodings=[[1.0]])
+
+        self.marko_image = Image.objects.create(
+            width=300, height=300, user=self.test_user, face_encodings=[[1.0]])
+
+        self.matej_and_miha_image = Image.objects.create(
+            width=300, height=300, user=self.test_user, face_encodings=[[1.0], [1.0]])
+
+        self.matej_and_marko_image = Image.objects.create(
+            width=300, height=300, user=self.test_user, face_encodings=[[1.0], [1.0]])
+
+        self.matej_and_marjana_image = Image.objects.create(
+            width=300, height=300, user=self.test_user, face_encodings=[[1.0], [1.0]])
+
+        self.marko_identity = IdentityGroup.objects.create(
+            identity='Marko', user=self.test_user)
+        marko_match = ImageIdentityMatch.objects.create(
+            user=self.test_user, image_id=self.marko_image, identity_group_id=self.marko_identity, face_index=0, confirmed=True)
+
+        self.miha_identity = IdentityGroup.objects.create(
+            identity='Miha', user=self.test_user)
+        miha_match = ImageIdentityMatch.objects.create(
+            user=self.test_user, image_id=self.miha_image, identity_group_id=self.miha_identity, face_index=0, confirmed=True)
+
+        self.matej_identity = IdentityGroup.objects.create(
+            identity='Matej', user=self.test_user)
+        matej_match = ImageIdentityMatch.objects.create(
+            user=self.test_user, image_id=self.matej_image, identity_group_id=self.matej_identity, face_index=0, confirmed=True)
+        matej_match_with_miha = ImageIdentityMatch.objects.create(
+            user=self.test_user, image_id=self.matej_and_miha_image, identity_group_id=self.matej_identity, face_index=0, confirmed=True)
+        miha_match_with_matej = ImageIdentityMatch.objects.create(
+            user=self.test_user, image_id=self.matej_and_miha_image, identity_group_id=self.miha_identity, face_index=1, confirmed=True)
+
+        matej_match_with_marko = ImageIdentityMatch.objects.create(
+            user=self.test_user, image_id=self.matej_and_marko_image, identity_group_id=self.matej_identity, face_index=0, confirmed=True)
+        marko_match_with_matej = ImageIdentityMatch.objects.create(
+            user=self.test_user, image_id=self.matej_and_marko_image, identity_group_id=self.marko_identity, face_index=1, confirmed=True)
+
+        self.marjana_identity = IdentityGroup.objects.create(
+            identity='Marjana', user=self.test_user)
+        marjana_match_with_matej = ImageIdentityMatch.objects.create(
+            user=self.test_user, image_id=self.matej_and_marjana_image, identity_group_id=self.marjana_identity, face_index=0, confirmed=True)
+        matej_match_with_marjana = ImageIdentityMatch.objects.create(
+            user=self.test_user, image_id=self.matej_and_marjana_image, identity_group_id=self.matej_identity, face_index=1, confirmed=True)
+
+    def test_is_protected(self):
+        self.assertTrue(is_protected(reverse('identity_neighbours', kwargs={
+            'identity_id': self.matej_identity.id})))
+
+    def test_neighbours(self):
+        credentials = auth_headers(self.test_user)
+
+        self._test_neighbours(
+            credentials, self.matej_identity, 2, ['Marko', 'Miha'])
+        self._test_neighbours(credentials, self.marko_identity, 1, ['Matej'])
+        self._test_neighbours(credentials, self.marjana_identity, 1, ['Matej'])
+
+    def _test_neighbours(self, credentials, identity, expected_length, expected_identities):
+        response = client.get(
+            reverse('identity_neighbours', kwargs={
+                'identity_id': identity.id}),
+            **credentials
+        )
+        res = results(response)
+        self.assertEqual(len(res), expected_length)
+
+        for idx, identity_name in enumerate(expected_identities):
+            self.assertEqual(res[idx].get('image_identity'), identity_name)
+
+
 class PeopleTest(TestCase):
 
     def setUp(self):
@@ -401,7 +481,7 @@ class PeopleTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-                            for user in self.test_users]
+            for user in self.test_users]
 
         candidate_images = [image for image in self.test_images if image.face_encodings and len(
             image.face_encodings) == 1 and image.user == self.test_users[0]]
@@ -450,8 +530,6 @@ class PeopleTest(TestCase):
 
     def test_is_protected(self):
         self.assertTrue(is_protected(PEOPLE_VIEW))
-        self.assertTrue(is_protected(
-            reverse('identity_neighbours', kwargs={'identity_id': self.identities[0].id})))
 
     def test_people_returns_only_confirmed_and_portrait_images(self):
         credentials = auth_headers(self.test_users[0])
@@ -463,29 +541,6 @@ class PeopleTest(TestCase):
         self.assertEqual(len(res), 5)
 
         for match in res:
-            self.assertTrue(match.get('confirmed'))
-            self.assertEqual(len(Image.objects.get(
-                id=match.get('image_id')).face_encodings), 1)
-
-    def test_identity_neighbours(self):
-        credentials = auth_headers(self.test_users[0])
-
-        self._test_identity_neighbours(credentials, self.identities[0].id, 2)
-        self._test_identity_neighbours(credentials, self.identities[4].id, 2)
-        self._test_identity_neighbours(credentials, self.identities[3].id, 4)
-        self._test_identity_neighbours(credentials, self.identities[5].id, 3)
-
-    def _test_identity_neighbours(self, credentials, identity_id, expected_length):
-        response = client.get(
-            reverse('identity_neighbours', kwargs={
-                'identity_id': identity_id}),
-            **credentials
-        )
-        res = results(response)
-        self.assertEqual(len(res), expected_length)
-
-        for match in res:
-            self.assertTrue(match.get('identity_group_id') != identity_id)
             self.assertTrue(match.get('confirmed'))
             self.assertEqual(len(Image.objects.get(
                 id=match.get('image_id')).face_encodings), 1)
