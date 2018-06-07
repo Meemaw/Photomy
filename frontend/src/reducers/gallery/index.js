@@ -15,7 +15,7 @@ const INITIAL_STATE = GALLERY_TYPES.reduce((galleries, gallery) => {
   return galleries;
 }, {});
 
-const buildDataMap = images => {
+export const buildDataMap = images => {
   return images.reduce((acc, image, ix) => {
     acc[image.image_id] = { ...image, ix };
     return acc;

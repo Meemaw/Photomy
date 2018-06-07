@@ -9,6 +9,7 @@ from gallery.models import Image
 class IdentityGroup(models.Model):
     id = models.AutoField(primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     identity = models.CharField(
         max_length=30, blank=True, null=True, default=None)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -23,6 +24,7 @@ class ImageIdentityMatch(models.Model):
         Image, on_delete=models.CASCADE, related_name='image_matches')
     identity_group_id = models.ForeignKey(
         IdentityGroup, on_delete=models.CASCADE, related_name='identity_group')
+    updated_at = models.DateTimeField(auto_now=True)
     face_index = models.IntegerField(validators=[MinValueValidator(0)])
     matched_at = models.DateTimeField(auto_now_add=True)
     confirmed = models.BooleanField(default=True)

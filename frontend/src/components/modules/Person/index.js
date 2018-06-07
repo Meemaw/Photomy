@@ -5,12 +5,14 @@ import ClickableSpan from '../../common/ClickableSpan';
 import ImageReviewModal from '../../ImageReviewModal';
 import Gallery from '../../Gallery';
 import ImageHighlightModal from '../../ImageHighlightModal';
+import MergeIdentities from '../../MergeIdentities';
 import type { Image } from '../../../meta/types/Image';
 import { ImagesApi, IdentityApi } from '../../../services';
 import { connect } from 'react-redux';
 import { setIdentity } from '../../../actions';
 import { Divider } from 'semantic-ui-react';
 import { PERSON_PHOTOS_IMAGE_HEIGHT } from '../../../constants/gallerySizes';
+import { buildDataMap } from '../../../reducers/gallery';
 
 type State = {
   images: Array<Image>,
@@ -47,6 +49,28 @@ class PersonContainer extends React.Component<Props, State> {
 
   dataMap = {};
 
+  addMergedImages = newImages => {
+    const newConfirmedImages = newImages.filter(image => image.confirmed);
+    const newUnconfirmedImages = newImages.filter(image => !image.confirmed);
+
+    const { images, unconfirmedImages } = this.state;
+
+    const mergedConfirmedImages = [...images, ...newConfirmedImages];
+    const mergedUnconfirmedImages = [...unconfirmedImages, ...newUnconfirmedImages];
+
+    this.dataMap = buildDataMap(mergedConfirmedImages);
+
+    this.setState({
+      images: mergedConfirmedImages,
+      unconfirmedImages: mergedUnconfirmedImages,
+      count: mergedConfirmedImages.length,
+    });
+    const { identity } = this.props;
+    if (identity.identity !== newConfirmedImages[0].image_identity) {
+      this.props.setIdentity({ ...identity, identity: newConfirmedImages[0].image_identity });
+    }
+  };
+
   async loadIdentity(identity_id) {
     const friends = await IdentityApi.getNeighbours({ identity_id });
     const data = await ImagesApi.person({ identity_id });
@@ -54,10 +78,7 @@ class PersonContainer extends React.Component<Props, State> {
     const confirmedPictures = data.results.filter(image => image.confirmed);
     const unconfirmedImages = data.results.filter(image => !image.confirmed);
 
-    this.dataMap = confirmedPictures.reduce((acc, image, ix) => {
-      acc[image.image_id] = { ...image, ix };
-      return acc;
-    }, {});
+    this.dataMap = buildDataMap(confirmedPictures);
 
     this.setState(
       {
@@ -155,7 +176,7 @@ class PersonContainer extends React.Component<Props, State> {
         </div>
         <Divider />
         <div style={{ textAlign: 'center' }}>
-          <ClickableSpan fontWeight={500}>Merge itdentities</ClickableSpan>
+          <MergeIdentities identity={identity} addMergedImages={this.addMergedImages} />
         </div>
         <Divider />
       </Gallery>

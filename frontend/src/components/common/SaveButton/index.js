@@ -5,12 +5,12 @@ const SaveButton = props => {
   const onClick = props.loading || props.disabled ? null : props.onClick;
   return (
     <Button
-      {...props}
-      onClick={onClick}
       color="green"
       icon="save"
       type="submit"
       content={props.content || 'Save changes'}
+      {...props}
+      onClick={onClick}
     />
   );
 };

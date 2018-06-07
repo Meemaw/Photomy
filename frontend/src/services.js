@@ -18,12 +18,20 @@ export const ImagesApi = {
 export const IdentityMatchApi = {
   patch: PATCH(`${CONFIG.services.baseUrl}/gallery/identity_match/:identity_match_id`),
   reject: GET(`${CONFIG.services.baseUrl}/gallery/identity_match/:identity_match_id/reject`),
+  mergeIdentities: GET(
+    `${
+      CONFIG.services.baseUrl
+    }/gallery/identity_match/merge_identities/:base_identity_id/:join_identity_id`,
+  ),
 };
 
 export const IdentityApi = {
   get: GET(`${CONFIG.services.baseUrl}/gallery/identity/:identity_id`),
   put: PUT(`${CONFIG.services.baseUrl}/gallery/identity/:id`),
-
+  list: GET(`${CONFIG.services.baseUrl}/gallery/identity`),
+  getRepresentatives: GET(
+    `${CONFIG.services.baseUrl}/gallery/identity/:identity_id/representatives`,
+  ),
   getNeighbours: GET(`${CONFIG.services.baseUrl}/gallery/identity/:identity_id/neighbours`),
 };
 

@@ -20,4 +20,9 @@ urlpatterns = [
          views.IdentityMatchDetail.as_view(), name='identity_match'),
     path('identity/<int:identity_id>/images',
          views.PersonList.as_view(), name='person'),
+    path('identity_match/merge_identities/<int:base_identity_id>/<int:join_identity_id>', views.merge_identities,
+         name='merge_identities'),
+    path("identity", views.IdentityList.as_view(), name='identity_list'),
+    path("identity/<int:identity_id>/representatives",
+         views.get_representatives, name='representatives')
 ]

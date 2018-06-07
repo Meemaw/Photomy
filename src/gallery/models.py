@@ -21,6 +21,7 @@ class Image(models.Model):
         models.IntegerField(), null=True, blank=True)
 
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     face_locations = ArrayField(
         ArrayField(
             models.IntegerField(validators=[MinValueValidator(0)]),

@@ -18,6 +18,7 @@ type Props = {
   width: number,
   minImageWidth: number,
   dataMap: Object,
+  isSelected: boolean,
 };
 
 const GallerySection = ({
@@ -29,6 +30,7 @@ const GallerySection = ({
   width,
   minImageWidth,
   dataMap,
+  isSelected,
 }: Props) => {
   let num_items_per_row = Math.floor(width / minImageWidth);
   if (num_items_per_row < 1) {
@@ -46,7 +48,12 @@ const GallerySection = ({
         />
       )}
 
-      <Grid key={sectionHeader} textAlign="left" padded>
+      <Grid
+        key={sectionHeader}
+        textAlign="left"
+        padded
+        style={isSelected ? { border: 'solid black 1px' } : {}}
+      >
         {sectionHeader && (
           <Grid.Row columns={1} style={{ padding: '0px' }}>
             <Grid.Column>
@@ -80,6 +87,7 @@ const GallerySection = ({
 };
 
 GallerySection.defaultProps = {
+  isSelected: false,
   isSticky: false,
   sectionHeader: '',
   dataMap: {},

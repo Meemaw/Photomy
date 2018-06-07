@@ -4,6 +4,7 @@ import PIL.Image
 import requests
 from django.core.files.storage import default_storage as storage
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from rest_framework import filters
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
@@ -23,6 +24,33 @@ class IdentityMatchDetail(generics.UpdateAPIView):
     def get_queryset(self, **kwargs):
         identity_match_id = self.kwargs.get('pk')
         return ImageIdentityMatch.objects.filter(Q(id=identity_match_id) & Q(user=self.request.user))
+
+
+@api_view(['GET'])
+def merge_identities(request, base_identity_id, join_identity_id):
+    if not base_identity_id or not join_identity_id or base_identity_id == join_identity_id:
+        return Response(data={}, status=status.HTTP_400_BAD_REQUEST)
+
+    join_identity = IdentityGroup.objects.get(Q(user=request.user) & Q(id=join_identity_id))
+    base_identity = IdentityGroup.objects.get(Q(user=request.user) & Q(id=base_identity_id))
+
+    if not base_identity.identity and join_identity.identity:
+        base_identity.identity = join_identity.identity
+        base_identity.save()
+
+    matches_to_join = ImageIdentityMatch.objects.filter(
+        Q(user=request.user) & Q(identity_group_id=join_identity_id))
+
+    ids = list(matches_to_join.values_list('id', flat=True))
+
+    matches_to_join.update(identity_group_id=base_identity_id)
+    join_identity.delete()
+
+    updated_matches = ImageIdentityMatch.objects.filter(id__in=ids)
+
+    serializer = ImageIdentityMatchSerializer(updated_matches, many=True)
+
+    return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -54,6 +82,23 @@ class IdentityDetail(generics.RetrieveUpdateAPIView):
     def get_queryset(self, **kwargs):
         identity_id = self.kwargs.get('pk')
         return IdentityGroup.objects.filter(Q(id=identity_id) & Q(user=self.request.user))
+
+
+class IdentityList(generics.ListAPIView):
+    serializer_class = IdentitySerializer
+
+    def get_queryset(self, **kwargs):
+        return IdentityGroup.objects.filter(user=self.request.user)
+
+
+@api_view(['GET'])
+def get_representatives(request, identity_id):
+    images = ImageIdentityMatch.objects.filter(Q(identity_group_id=identity_id) & Q(user=request.user) & Q(
+        confirmed=True) & Q(image_id__face_encodings__len=1)).distinct()[:4]
+
+    serializer = ImageIdentityMatchSerializer(images, many=True)
+
+    return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 # PERSON

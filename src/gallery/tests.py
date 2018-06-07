@@ -125,6 +125,14 @@ class IdentityMatchTest(TestCase):
         self.identities = [IdentityGroup.objects.create(identity=identity.get(
             'name'), user=self.test_users[0]) for identity in TEST_IDENTITIES]
 
+        self.match_merged1 = ImageIdentityMatch.objects.create(
+            user=self.test_users[0], identity_group_id=self.identities[1], image_id=self.test_images[0], face_index=0,
+            confirmed=False)
+
+        self.match_merged2 = ImageIdentityMatch.objects.create(
+            user=self.test_users[0], identity_group_id=self.identities[1], image_id=self.test_images[0], face_index=0,
+            confirmed=False)
+
         self.im1 = ImageIdentityMatch.objects.create(
             user=self.test_users[0], identity_group_id=self.identities[0], image_id=self.test_images[0], face_index=0,
             confirmed=False)
@@ -190,6 +198,22 @@ class IdentityMatchTest(TestCase):
 
         self.assertEqual(ImageIdentityMatch.objects.get(
             id=self.im2.id).rejected_identities, [self.im2.identity_group_id.id])
+
+    def test_merge_identities(self):
+        credentials = auth_headers(self.test_users[0])
+        response = client.get(
+            reverse('merge_identities', kwargs={
+                    "base_identity_id": self.identities[0].id, "join_identity_id": self.identities[1].id}),
+            **credentials
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 2)
+        for match in response.data:
+            self.assertEqual(match.get('identity_group_id'),
+                             self.identities[0].id)
+        self.assertFalse(IdentityGroup.objects.filter(
+            id=self.identities[1].id).exists())
 
 
 class PersonTest(TestCase):
