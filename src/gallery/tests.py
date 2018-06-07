@@ -469,8 +469,10 @@ class TestNeighbours(TestCase):
         res = results(response)
         self.assertEqual(len(res), expected_length)
 
-        for idx, identity_name in enumerate(expected_identities):
-            self.assertEqual(res[idx].get('image_identity'), identity_name)
+        identities = [identity.get('image_identity') for identity in res]
+
+        for identity_name in expected_identities:
+            self.assertTrue(identity_name in identities)
 
 
 class PeopleTest(TestCase):
