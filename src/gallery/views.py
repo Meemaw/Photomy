@@ -4,7 +4,6 @@ import PIL.Image
 import requests
 from django.core.files.storage import default_storage as storage
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
 from rest_framework import filters
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
@@ -208,7 +207,7 @@ def handle_image_upload(image, user):
 
 def get_lqip(image, image_id, user, size=(300, 300)):
     file_name = str(image_id) + '_' + str(user.id) + \
-        '.preview.' + image.format
+                '.preview.' + image.format
     lqip_f_thumb = storage.open(file_name, "w")
 
     optimized_image = image.copy()

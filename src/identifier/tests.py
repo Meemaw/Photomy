@@ -1,10 +1,11 @@
-from photomy.test_base import *
-
-from gallery.models import Image
 import face_recognition
 
+from gallery.models import Image
+from photomy.test_base import *
 from .models import IdentityGroup, ImageIdentityMatch
-from .tasks import _encode_image_faces, create_new_identity, match_face, STRICT_SIMILARITY_THRESHOLD, REVIEW_SIMILARITY_THRESHOLD, idify_image
+from .tasks import _encode_image_faces, create_new_identity, match_face, STRICT_SIMILARITY_THRESHOLD, \
+    REVIEW_SIMILARITY_THRESHOLD
+
 OBAMA_IMAGE = f'{TEST_IMAGES_PATH}/obama.jpg'
 OBAMA2_IMAGE = f'{TEST_IMAGES_PATH}/obama2.jpg'
 OBAMA3_IMAGE = f'{TEST_IMAGES_PATH}/obama3.jpg'
@@ -126,7 +127,8 @@ class MatchFaceTest(TestCase):
             identity_group_id=self.obama_identity.id).count(), 2)
 
         identity, _, identity_match = match_face(0, encoding,
-                                                 ImageIdentityMatch.objects.all(), new_image, existing_match=existing_match)
+                                                 ImageIdentityMatch.objects.all(), new_image,
+                                                 existing_match=existing_match)
         self.assertEqual(identity_match.id, existing_match.id)
         self.assertEqual(ImageIdentityMatch.objects.filter(
             identity_group_id=self.obama_identity.id).count(), 2)
