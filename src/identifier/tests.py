@@ -40,7 +40,7 @@ class EncodeFacesTest(TestCase):
         self.assertTrue(model_image.face_locations == None)
         face_encodings = _encode_image_faces(model_image, raw_image)
         if first_value:
-            self.assertEqual(face_encodings[0][0], first_value)
+            self.assertAlmostEqual(face_encodings[0][0], first_value)
         self.assertEqual(len(face_encodings), num_faces)
         self.assertTrue(Image.objects.get(
             id=model_image.id).face_encodings != None)
