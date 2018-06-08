@@ -31,8 +31,10 @@ def merge_identities(request, base_identity_id, join_identity_id):
     if not base_identity_id or not join_identity_id or base_identity_id == join_identity_id:
         return Response(data={}, status=status.HTTP_400_BAD_REQUEST)
 
-    join_identity = IdentityGroup.objects.get(Q(user=request.user) & Q(id=join_identity_id))
-    base_identity = IdentityGroup.objects.get(Q(user=request.user) & Q(id=base_identity_id))
+    join_identity = IdentityGroup.objects.get(
+        Q(user=request.user) & Q(id=join_identity_id))
+    base_identity = IdentityGroup.objects.get(
+        Q(user=request.user) & Q(id=base_identity_id))
 
     if not base_identity.identity and join_identity.identity:
         base_identity.identity = join_identity.identity
@@ -204,15 +206,15 @@ def handle_image_upload(image, user):
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
-def get_lqip(image, image_id, user):
+def get_lqip(image, image_id, user, size=(300, 300)):
     file_name = str(image_id) + '_' + str(user.id) + \
         '.preview.' + image.format
     lqip_f_thumb = storage.open(file_name, "w")
 
     optimized_image = image.copy()
-    optimized_image.thumbnail((300, 300), PIL.Image.ANTIALIAS)
+    optimized_image.thumbnail(size, PIL.Image.ANTIALIAS)
 
-    optimized_image.save(lqip_f_thumb, "JPEG", optimize=True, quality=90)
+    optimized_image.save(lqip_f_thumb, "JPEG", optimize=True, quality=85)
     return lqip_f_thumb
 
 

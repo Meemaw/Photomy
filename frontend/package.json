@@ -36,7 +36,6 @@
     "dirty-chai": "^2.0.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "faker": "^4.1.0",
     "fetch-mock": "^6.4.2",
     "flow-bin": "^0.73.0",
     "gulp": "^3.9.1",

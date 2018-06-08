@@ -38,7 +38,7 @@ class Api extends EventEmitter {
 
   _makeRequest(method: string, url: string, headers: Object, body: ?any) {
     const mode = url.includes('authorize') ? 'no-cors' : 'cors'; // TODO fix
-    const credentials = url.includes('authorize') ? 'include' : '*omit'; // TODO fix
+    const credentials = url.includes('authorize') ? 'include' : 'omit'; // TODO fix
     return fetch(url, { method, headers, body, mode, credentials: credentials })
       .then(response => {
         this.emit(`${response.status}`, url);

@@ -35,8 +35,11 @@ class EmptyGallery extends React.Component<Props, State> {
     if (uploading) return;
 
     this.setState({ uploading: true });
-    await Promise.all(acceptedFiles.map(file => this.uploadFile(file)));
+
+    const [first, ...rest] = acceptedFiles;
+    await this.uploadFile(first);
     this.props.setGalleryType(ALL_PHOTOS_GALLERY);
+    await Promise.all(rest.map(file => this.uploadFile(file)));
   };
 
   render() {
