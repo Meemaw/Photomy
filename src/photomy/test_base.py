@@ -5,6 +5,7 @@ import uuid
 import datetime
 from django.conf import settings
 import os
+import numpy as np
 
 # Django core imports
 from django.test import TestCase, Client

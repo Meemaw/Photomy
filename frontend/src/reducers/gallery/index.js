@@ -1,5 +1,10 @@
 import * as actionTypes from '../../constants/actionTypes';
-import { GALLERY_TYPES, ALL_PHOTOS_GALLERY, FAVORITE_GALLERY } from '../../constants/galleryTypes';
+import {
+  GALLERY_TYPES,
+  ALL_PHOTOS_GALLERY,
+  FAVORITE_GALLERY,
+  PEOPLE_GALLERY,
+} from '../../constants/galleryTypes';
 
 const INITIAL_STATE = GALLERY_TYPES.reduce((galleries, gallery) => {
   galleries[gallery.galleryType] = {
@@ -46,6 +51,17 @@ const favoriteImage = (gallery, favoriteImage) => {
 
 const fetchingImages = (gallery, fetchingImages) => {
   return { ...gallery, fetchingImages };
+};
+
+const updateIdentity = (gallery, identity) => {
+  const image_identity = identity.identity;
+  console.log(identity);
+  console.log(gallery.images);
+  const images = gallery.images.map(
+    image => (image.identity_group_id === identity.id ? { ...image, image_identity } : image),
+  );
+  console.log(images);
+  return { ...gallery, images };
 };
 
 const gallery = (state = INITIAL_STATE, action) => {
@@ -109,6 +125,11 @@ const gallery = (state = INITIAL_STATE, action) => {
       };
     case actionTypes.LOGOUT:
       return INITIAL_STATE;
+    case actionTypes.SET_IDENTITY:
+      return {
+        ...state,
+        [PEOPLE_GALLERY]: updateIdentity(state[PEOPLE_GALLERY], action.identity),
+      };
     default:
       return state;
   }

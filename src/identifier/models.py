@@ -42,3 +42,7 @@ class ImageIdentityMatch(models.Model):
 
     def __repr__(self):
         return self.__str__()
+
+    @property
+    def face_encoding(self):
+        return self.image_id.face_encodings[self.face_index]

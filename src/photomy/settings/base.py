@@ -132,8 +132,6 @@ OLD_PASSWORD_FIELD_ENABLED = True
 LOGOUT_ON_PASSWORD_CHANGE = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
-EMAIL_CONFIRMATION_REDIRECT_URL = "http://localhost:3000/confirmed"
-
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -180,7 +178,7 @@ AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_S3_CUSTOM_DOMAIN = os.environ['AWS_CLOUDFRONT_DOMAIN']
 
-AWS_STORAGE_BUCKET_NAME = 'idify-content'
+AWS_STORAGE_BUCKET_NAME = 'cdn.photomy'
 AWS_QUERYSTRING_AUTH = False
 AWS_MEDIA_LOCATION = 'media/'
 
