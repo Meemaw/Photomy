@@ -1,4 +1,4 @@
-FROM meemaw/photomy:1.0.0
+FROM meemaw/face_recognition:1.0.0
 
 # Install python dependencies
 RUN mkdir /config
