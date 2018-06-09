@@ -1,7 +1,7 @@
 <!-- Name -->
 
-<h1 align="center" href="https://www.photomy.si/">
-  <a href="">Photomy</a>
+<h1 align="center">
+  <a href="https://www.photomy.si/">Photomy</a>
 </h1>
 
 <!-- Badges -->
