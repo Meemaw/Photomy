@@ -1,6 +1,6 @@
 // @flow
 
-const CDN_DOMAIN = '.homster.si';
+const CDN_DOMAIN = '.photomy.si';
 
 export const setCookie = (
   name: string,

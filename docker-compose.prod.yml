@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  db:
+    ports:
+      - "5432:5432"
+    env_file:
+      -  /home/ubuntu/photomy/config/.env
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  web:
+    restart: always
+    command: uwsgi --ini /etc/uwsgi/conf.d/uwsgi.ini
+    expose:
+      - "8000"
+    env_file:
+      -  /home/ubuntu/photomy/config/.env
+    volumes:
+      - /home/ubuntu/photomy/config/uwsgi:/etc/uwsgi/conf.d
+      - /tmp/uwsgi:/tmp/uwsgi
+  nginx:
+    restart: always
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /home/ubuntu/photomy/config/nginx:/etc/nginx/conf.d
+      - /home/ubuntu/photomy/config/uwsgi:/etc/uwsgi/conf.d
+    depends_on:
+      - web

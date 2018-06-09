@@ -3,20 +3,19 @@ import json
 import re
 import uuid
 import datetime
-from django.conf import settings
 import os
+import numpy as np
+import PIL.Image
 
-# Django core imports
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
-User = get_user_model()
-import PIL.Image
-
-# DRF imports
 from rest_framework import status
 from rest_framework_jwt.settings import api_settings
+
+User = get_user_model()
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER

@@ -1,3 +1,5 @@
+{% load account %}{% load i18n %}
+
 <!DOCTYPE html>
 <html>
 
@@ -112,7 +114,7 @@
 
   <!-- HIDDEN PREHEADER TEXT -->
   <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-    We're thrilled to have you here! Get ready to dive into {{ site_name }}.
+    We're thrilled to have you here! Get ready to dive into {{ current_site.name }}.
   </div>
 
   <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -127,7 +129,7 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
           <tr>
             <td align="center" valign="top" style="padding: 40px 10px 40px 10px;">
-              <a href="{{ site_domain }}" target="_blank">
+              <a href="{{ current_site.domain }}" target="_blank">
                 <img alt="Logo" src="https://www.thoughtspacedesigns.com/wp-content/uploads/2013/07/icon@2x.png" width="40" height="40" style="display: block; width: 40px; max-width: 40px; min-width: 40px; font-family: 'Lato', Helvetica, Arial, sans-serif; color: #ffffff; font-size: 18px;"
                   border="0">
               </a>
@@ -226,7 +228,7 @@
           <tr>
             <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
               <p style="margin: 0;">Cheers,
-                <br>The {{ site_name }} Team</p>
+                <br>The {{ current_site.name }} Team</p>
             </td>
           </tr>
         </table>
@@ -306,7 +308,8 @@
                 <tr>
                   <td style="padding: 0px 40px 40px 40px; font-family: sans-serif; font-size: 12px; line-height: 18px; color: #666666; text-align: center; font-weight:normal;">
                     <p style="margin: 0;">Copyright &copy; 2015-2017
-                      <b>{{ site_name }}</b>, All Rights Reserved.</p>
+                      <b></b>{{ current_site.name }}, All Rights Reserved.
+                    </p>
                   </td>
                 </tr>
 

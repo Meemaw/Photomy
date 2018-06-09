@@ -80,7 +80,7 @@ const NavbarFixedMenu = ({ sidebarOpened, toggleSidebar, closeSidebar }) => {
   return (
     <Menu inverted pointing secondary size="large">
       <Menu.Item as={Link} to={rootPath} active onClick={closeSidebar}>
-        Homster
+        Photomy
       </Menu.Item>
 
       <Menu.Menu position="right">

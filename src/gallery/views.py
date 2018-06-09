@@ -1,10 +1,10 @@
+import logging
 import uuid
 
 import PIL.Image
 import requests
 from django.core.files.storage import default_storage as storage
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
 from rest_framework import filters
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
@@ -15,6 +15,8 @@ from identifier.serializers import ImageIdentityMatchSerializer, IdentitySeriali
 from identifier.tasks import reidify_identity_match
 from .models import Image
 from .serializers import ImageSerializer
+
+logger = logging.getLogger(__name__)
 
 
 # IDENTITY_MATCH
@@ -28,6 +30,7 @@ class IdentityMatchDetail(generics.UpdateAPIView):
 
 @api_view(['GET'])
 def merge_identities(request, base_identity_id, join_identity_id):
+    logger.info("merge_identities")
     if not base_identity_id or not join_identity_id or base_identity_id == join_identity_id:
         return Response(data={}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -57,6 +60,7 @@ def merge_identities(request, base_identity_id, join_identity_id):
 
 @api_view(['GET'])
 def reject_identity_match(request, pk):
+    logger.info("reject_identity_match")
     identity_match = ImageIdentityMatch.objects.select_related('image_id').get(
         Q(image_id__user=request.user) & Q(id=pk))
 
@@ -95,6 +99,7 @@ class IdentityList(generics.ListAPIView):
 
 @api_view(['GET'])
 def get_representatives(request, identity_id):
+    logger.info("get_representatives")
     images = ImageIdentityMatch.objects.filter(Q(identity_group_id=identity_id) & Q(user=request.user) & Q(
         confirmed=True) & Q(image_id__face_encodings__len=1)).distinct()[:4]
 
@@ -184,6 +189,7 @@ class ImageDetails(generics.RetrieveUpdateDestroyAPIView):
 
 @api_view(['POST'])
 def upload_image_file(request):
+    logger.info("upload_image_file")
     uploaded_file = request.FILES.get('file')
     image = PIL.Image.open(uploaded_file).convert('RGB')
     image.format = image.format if image.format else 'JPEG'
@@ -192,10 +198,12 @@ def upload_image_file(request):
 
 @api_view(['POST'])
 def upload_url(request):
+    logger.info("upload_url")
     image_url = request.data.get('image_url', '')
     try:
         image = PIL.Image.open(requests.get(image_url, stream=True).raw)
-    except OSError:
+    except OSError as e:
+        logger.error(e)
         return Response(status=status.HTTP_400_BAD_REQUEST)
     return handle_image_upload(image, request.user)
 
@@ -208,7 +216,7 @@ def handle_image_upload(image, user):
 
 def get_lqip(image, image_id, user, size=(300, 300)):
     file_name = str(image_id) + '_' + str(user.id) + \
-        '.preview.' + image.format
+                '.preview.' + image.format
     lqip_f_thumb = storage.open(file_name, "w")
 
     optimized_image = image.copy()

@@ -1,12 +1,17 @@
+import logging
+
 from django.db import models
 from django.dispatch.dispatcher import receiver
 
 from identifier.tasks import idify_image
 from .models import Image
 
+logger = logging.getLogger(__name__)
+
 
 @receiver(models.signals.pre_delete, sender=Image)
 def delete_file(sender, instance, *args, **kwargs):
+    logger.info("delete_image")
     if instance.image_upload:
         instance.image_upload.delete()
     if instance.lqip_upload:

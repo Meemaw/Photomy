@@ -6,6 +6,10 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
 DEFAULT_FILE_STORAGE = 'gallery.storage_backends.TestStorage'
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+]
+
 
 DATABASES = {
     'default': {
