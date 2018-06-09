@@ -9,10 +9,9 @@ from rest_framework.response import Response
 
 from .serializers import UserSerializer
 
+import logging
 
-@api_view(['GET'])
-def ok(request, pk):
-    return Response(status=status.HTTP_204_NO_CONTENT)
+logger = logging.getLogger(__name__)
 
 
 class Me(generics.RetrieveUpdateDestroyAPIView):
@@ -31,6 +30,7 @@ class ConfirmEmailView(TemplateResponseMixin, View):
         return self.post(*args, **kwargs)
 
     def post(self, *args, **kwargs):
+        logger.info("ConfirmEmailView")
         confirmation = self.get_object()
         confirmation.confirm(self.request)
         return redirect(settings.EMAIL_CONFIRMATION_REDIRECT_URL)

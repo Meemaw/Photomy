@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import itertools
+import logging
 import os
 
 import PIL.Image
@@ -16,9 +17,12 @@ REVIEW_SIMILARITY_THRESHOLD = 0.58
 CDN_SECRET_KEY = os.environ['AWS_LAMBDA_SECRET_APP_KEY']
 CDN_SECRET_VALUE = os.environ['AWS_LAMBDA_SECRET_APP_VALUE']
 
+logger = logging.getLogger(__name__)
+
 
 @app.task
 def reidify_identity_match(identity_match_id):
+    logger.info("reidify_identity_match task")
     identity_match = ImageIdentityMatch.objects.select_related(
         'image_id').get(id=identity_match_id)
 
@@ -36,6 +40,7 @@ def reidify_identity_match(identity_match_id):
 
 @app.task
 def idify_image(image_id):
+    logger.info("idify_image task")
     new_image = Image.objects.get(id=image_id)
 
     face_encodings = encode_image_faces(new_image)
