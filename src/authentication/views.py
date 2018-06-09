@@ -14,6 +14,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+@api_view(['GET'])
+def ok(request, pk):
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 class Me(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
