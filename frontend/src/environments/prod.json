@@ -1,0 +1,15 @@
+{
+  "GoogleAnalytics": {
+    "debug": false,
+    "trackingId": "gaTrackingId"
+  },
+  "services": {
+    "baseUrl": "yourServicesUrl",
+    "cdnBaseUrl": "cdnBaseUrl"
+  },
+  "sentry": {
+    "dsn": "sentryDsn",
+    "env": "production",
+    "enable": true
+  }
+}
