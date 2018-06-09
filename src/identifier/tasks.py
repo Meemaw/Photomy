@@ -9,11 +9,14 @@ import face_recognition
 import numpy as np
 import requests
 
+from django.db.models import Q
+
+
 from photomy.celeryconf import app
 from .models import Image, ImageIdentityMatch, IdentityGroup
 
 STRICT_SIMILARITY_THRESHOLD = 0.52
-REVIEW_SIMILARITY_THRESHOLD = 0.58
+REVIEW_SIMILARITY_THRESHOLD = 0.59
 CDN_SECRET_KEY = os.environ['AWS_LAMBDA_SECRET_APP_KEY']
 CDN_SECRET_VALUE = os.environ['AWS_LAMBDA_SECRET_APP_VALUE']
 
@@ -31,7 +34,7 @@ def reidify_identity_match(identity_match_id):
     face_encoding = image.face_encodings[face_index]
 
     matches = ImageIdentityMatch.objects.select_related(
-        'image_id', 'identity_group_id').exclude(
+        'image_id', 'identity_group_id').filter(user=identity_match.user).exclude(
         identity_group_id__in=identity_match.rejected_identities)
 
     match_face(face_index, np.array(face_encoding),
@@ -46,7 +49,7 @@ def idify_image(image_id):
     face_encodings = encode_image_faces(new_image)
 
     matches = ImageIdentityMatch.objects.select_related(
-        'image_id', 'identity_group_id').all()
+        'image_id', 'identity_group_id').filter(user=new_image.user).all()
 
     _ = [match_face(face_index, np.array(face_encoding), matches, new_image)
          for face_index, face_encoding in enumerate(face_encodings)]
@@ -60,6 +63,7 @@ def match_face(face_index, face_encoding, all_matches, new_image, existing_match
 
     identity_id, similarity = min(
         face_similarities, key=lambda x: x[1], default=(None, 1))
+    logger.debug(f"Similarity: ${similarity}")
 
     identity_match = existing_match if existing_match else ImageIdentityMatch()
 

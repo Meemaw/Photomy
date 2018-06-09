@@ -27,11 +27,11 @@ class MergeIdentities extends React.Component {
     const data = await IdentityApi.list();
     const identity_ids = data.results.map(x => x.id);
 
-    let results = await Promise.all(
+    let results = (await Promise.all(
       identity_ids.map(async identity_id => {
         return await IdentityApi.getRepresentatives({ identity_id });
       }),
-    );
+    )).filter(x => x.length > 0);
 
     results = results.filter(
       identityMatches => identityMatches[0].identity_group_id !== this.props.identity.id,

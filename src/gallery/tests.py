@@ -120,7 +120,7 @@ class IdentityMatchTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-                            for user in self.test_users]
+            for user in self.test_users]
 
         self.identities = [IdentityGroup.objects.create(identity=identity.get(
             'name'), user=self.test_users[0]) for identity in TEST_IDENTITIES]
@@ -224,7 +224,7 @@ class PersonTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-                            for user in self.test_users]
+            for user in self.test_users]
 
         self.identities = [IdentityGroup.objects.create(identity=identity.get(
             'name'), user=self.test_users[0]) for identity in TEST_IDENTITIES]
@@ -267,7 +267,7 @@ class ImageTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-                            for user in self.test_users]
+            for user in self.test_users]
 
     def test_view_is_protected(self):
         self.assertTrue(is_protected(IMAGE_VIEW))
@@ -321,7 +321,7 @@ class FavoriteTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), favorite=image.get('favorite', False)) for image in TEST_IMAGES for
-                            user in self.test_users]
+            user in self.test_users]
 
     def test_view_is_protected(self):
         self.assertTrue(is_protected(FAVORITES_VIEW))
@@ -516,7 +516,7 @@ class PeopleTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-                            for user in self.test_users]
+            for user in self.test_users]
 
         candidate_images = [image for image in self.test_images if image.face_encodings and len(
             image.face_encodings) == 1 and image.user == self.test_users[0]]
