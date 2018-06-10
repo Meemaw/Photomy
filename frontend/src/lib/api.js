@@ -4,11 +4,11 @@ import { getAccessToken } from './auth';
 import EventEmitter from 'events';
 
 class Api extends EventEmitter {
-  GET = this._makeMethod('get');
-  POST = this._makeMethod('post', true);
-  PUT = this._makeMethod('put', true);
-  DELETE = this._makeMethod('delete');
-  PATCH = this._makeMethod('patch', true);
+  GET = this._makeMethod('GET');
+  POST = this._makeMethod('POST', true);
+  PUT = this._makeMethod('PUT', true);
+  DELETE = this._makeMethod('DELETE');
+  PATCH = this._makeMethod('PATCH', true);
 
   _makeMethod(method: string, hasBody: boolean = false) {
     return (urlTemplate: string, withAuth: boolean = true) => {

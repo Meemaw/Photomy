@@ -8,7 +8,7 @@ const clean = require('gulp-clean');
 const ENVIRONMENTS = {
   DEV: 'dev',
   TEST: 'test',
-  PROD: 'production',
+  PROD: 'prod',
 };
 
 gulp.task('clean', function() {
