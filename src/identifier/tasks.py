@@ -16,7 +16,7 @@ from photomy.celeryconf import app
 from .models import Image, ImageIdentityMatch, IdentityGroup
 
 STRICT_SIMILARITY_THRESHOLD = 0.52
-REVIEW_SIMILARITY_THRESHOLD = 0.59
+REVIEW_SIMILARITY_THRESHOLD = 0.6
 CDN_SECRET_KEY = os.environ['AWS_LAMBDA_SECRET_APP_KEY']
 CDN_SECRET_VALUE = os.environ['AWS_LAMBDA_SECRET_APP_VALUE']
 
@@ -35,7 +35,7 @@ def reidify_identity_match(identity_match_id):
 
     matches = ImageIdentityMatch.objects.select_related(
         'image_id', 'identity_group_id').filter(user=identity_match.user).exclude(
-        identity_group_id__in=identity_match.rejected_identities)
+        identity_group_id__in=identity_match.rejected_identities).order_by('identity_group_id__id')
 
     match_face(face_index, np.array(face_encoding),
                matches, image, identity_match)
@@ -49,7 +49,7 @@ def idify_image(image_id):
     face_encodings = encode_image_faces(new_image)
 
     matches = ImageIdentityMatch.objects.select_related(
-        'image_id', 'identity_group_id').filter(user=new_image.user).all()
+        'image_id', 'identity_group_id').filter(user=new_image.user).all().order_by('identity_group_id__id')
 
     _ = [match_face(face_index, np.array(face_encoding), matches, new_image)
          for face_index, face_encoding in enumerate(face_encodings)]

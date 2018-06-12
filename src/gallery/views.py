@@ -118,7 +118,7 @@ class PersonList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         identity_id = self.kwargs.get('identity_id')
         return ImageIdentityMatch.objects.select_related('image_id').filter(
-            Q(identity_group_id__id=identity_id) & Q(user=self.request.user))
+            Q(identity_group_id__id=identity_id) & Q(user=self.request.user)).distinct()
 
 
 # PEOPLE
