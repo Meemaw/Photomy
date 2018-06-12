@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import BaseModal from '../../common/BaseModal';
 import AddPhoto from '../AddPhoto';
 import { Button, Modal } from 'semantic-ui-react';

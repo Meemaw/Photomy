@@ -23,6 +23,7 @@ const Style = styled.div`
   background-color: #1b1c1d;
   min-height: 100vh;
   position: fixed;
+  -webkit-backface-visibility: hidden;
   overflow: hidden;
   width: 100%;
 

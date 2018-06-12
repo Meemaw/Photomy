@@ -6,9 +6,8 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 DEBUG = False
-ALLOWED_HOSTS = ["photomy.si"]
-CORS_ORIGIN_ALLOW_ALL = False
-
+ALLOWED_HOSTS = ["*"]
+CORS_ORIGIN_ALLOW_ALL = True
 
 EMAIL_CONFIRMATION_REDIRECT_URL = "http://photomy.si/confirmed"
 

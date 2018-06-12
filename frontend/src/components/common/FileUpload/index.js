@@ -5,13 +5,15 @@ import GalleryImage from '../../Gallery/GalleryImage';
 import styled from 'styled-components';
 import type { File } from '../../../meta/types/File';
 import LoadingIcon from '../../common/LoadingIcon';
-import { Button, Message, Icon, Segment } from 'semantic-ui-react';
+import { Button, Icon, Grid } from 'semantic-ui-react';
+import withWidth from '../../../hocs/WithWidth';
 
 type Props = {
   disabled?: boolean,
   accept: string,
   error: ?string,
   uploadFile: File => Promise<*>,
+  width: number,
 };
 
 type State = {
@@ -91,45 +93,41 @@ class FileUpload extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { disabled, error, accept } = this.props;
-    const { accepted, uploading, successMessage } = this.state;
+    const { disabled, error, accept, width } = this.props;
+    const { accepted, uploading } = this.state;
     const actualError = this.state.error || error;
-    const hasSuccessMessage = successMessage !== null;
+
+    let num_items_per_row = Math.floor(width / 220);
+    if (num_items_per_row < 1) {
+      num_items_per_row = 1;
+    }
+    const num_rows = Math.ceil((accepted.length + 1) / num_items_per_row);
+    const columnWidth = width / num_items_per_row;
 
     return (
       <React.Fragment>
-        {hasSuccessMessage && (
-          <Message content={successMessage} positive style={{ margin: '0px' }} />
-        )}
-        <DropzoneStyle className="FileUpload">
-          <Dropzone
-            disabled={disabled}
-            onDrop={this.handleDrop}
-            accept={accept}
-            className="Dropzone"
-          >
-            {actualError ? (
-              <p style={{ color: 'red' }}>{actualError}</p>
-            ) : accepted.length > 0 ? (
-              <React.Fragment>
-                <div className="Accepted">
-                  {accepted.map((file, fileIx) => (
-                    <Segment style={{ margin: '0px' }} key={file.name}>
-                      <GalleryImage src={file.preview} />
-                      {this.renderIcon(fileIx)}
-                    </Segment>
-                  ))}
-                </div>
-              </React.Fragment>
-            ) : (
-              <Message icon size="tiny">
-                <Icon name="pointing down" />
-                <Message.Content>
-                  <Message.Header>Drop files</Message.Header>
-                </Message.Content>
-              </Message>
-            )}
-          </Dropzone>
+        <DropzoneStyle className="FileUpload" width={`${columnWidth}px`}>
+          <Grid columns={num_rows} doubling stackable style={{ width: '100%', margin: '0px' }}>
+            {accepted.map((file, fileIx) => (
+              <div style={{ position: 'relative' }} key={fileIx}>
+                <GalleryImage src={file.preview} width={columnWidth} />
+                {this.renderIcon(fileIx)}
+              </div>
+            ))}
+
+            <Dropzone
+              disabled={disabled}
+              onDrop={this.handleDrop}
+              accept={accept}
+              className="Dropzone"
+            >
+              {actualError ? (
+                <p style={{ color: 'red' }}>{actualError}</p>
+              ) : (
+                <Icon name="plus" style={{ width: '100%' }} size="large" />
+              )}
+            </Dropzone>
+          </Grid>
         </DropzoneStyle>
 
         {accepted.length > 0 && (
@@ -161,16 +159,18 @@ const iconStyle = {
 };
 
 const DropzoneStyle = styled.section`
-  height: 100%;
-  width: 100%;
+  display: flex;
 
   .Dropzone {
-    width: 100%;
-    min-height: 200px;
-    border-width: 2px;
-    border-color: rgb(102, 102, 102);
-    border-style: dashed;
-    border-radius: 5px;
+    min-height: ${props => props.height || '220px'};
+    min-width: ${props => props.width || '220px'};
+    border: 2px dashed #dddfe2;
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
   }
 
   .Dropzone:hover {
@@ -178,10 +178,9 @@ const DropzoneStyle = styled.section`
   }
 
   .Accepted {
-    width: 100%;
     padding: 20px;
     display: flex;
   }
 `;
 
-export default FileUpload;
+export default withWidth(FileUpload);
