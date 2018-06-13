@@ -51,3 +51,5 @@ sqlparse==0.2.4
 urllib3==1.22
 uWSGI==2.0.17
 vine==1.1.4
+pytest-django
+pytest-mock
