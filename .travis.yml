@@ -2,7 +2,8 @@ dist: trusty
 sudo: required
 matrix:
   include:
-    - language: python
+    - stage: test
+      language: python
       python:
         - "3.6"
       cache:
@@ -28,11 +29,9 @@ matrix:
         - coverage run manage.py test --settings=photomy.settings.travis --noinput --keepdb
       after_success:
         - bash <(curl -s https://codecov.io/bash) -F python -t $CODECOV_UPLOAD_TOKEN
-        - cd .. && docker build . -t meemaw/photomy:1.1.0
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push meemaw/photomy:1.1.0
         
-    - language: node_js
+    - stage: test
+      language: node_js
       node_js:
         - "node"
       before_script:
@@ -46,6 +45,16 @@ matrix:
         - yarn test-coverage
       after_success:
         - codecov -F javascript -t $CODECOV_UPLOAD_TOKEN
+
+    - stage: build
+      script:
+        - cd .. && docker build . -t meemaw/photomy:1.1.0
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push meemaw/photomy:1.1.0
         
 
 
+
+stages:
+  - test
+  - build
