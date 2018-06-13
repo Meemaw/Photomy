@@ -11,6 +11,7 @@ matrix:
       services: 
         - postgresql
         - redis-server
+        - docker
       env:
         global:
         - DJANGO_SETTINGS_MODULE=photomy.settings.travis
@@ -27,6 +28,10 @@ matrix:
         - coverage run manage.py test --settings=photomy.settings.travis --noinput --keepdb
       after_success:
         - bash <(curl -s https://codecov.io/bash) -F python -t $CODECOV_UPLOAD_TOKEN
+        - docker build . -t meemaw/photomy:1.1.0
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push meemaw/photomy:1.1.0
+        
     - language: node_js
       node_js:
         - "node"
