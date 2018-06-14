@@ -46,7 +46,7 @@ Thanks goes to these people ([emoji key][emojis]):
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
 | [<img src="https://avatars2.githubusercontent.com/u/8524109?s=460&v=4" width="100px;"/><br /><sub><b>Meemaw</b></sub>](https://github.com/Meemaw)<br />[💻](https://github.com/Meemaw/Photomy/commits?author=Meemaw "Code") [📖](https://github.com/Meemaw/Photomy/commits?author=Meemaw "Documentation") [🚇](#infra-stereobooster "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/Meemaw/Photomy/commits?author=Meemaw "Tests") |
-[<img src="https://avatars1.githubusercontent.com/u/1046834?s=460&v=4" width="100px;"/><br /><sub><b>snuderl</b></sub>](https://github.com/snuderl)<br />[💻](https://github.com/Meemaw/Photomy/commits?author=snuderl "Code") |
+[<img src="https://avatars1.githubusercontent.com/u/1046834?s=460&v=4" width="100px;"/><br /><sub><b>snuderl</b></sub>](https://github.com/snuderl)<br />[⚠️](https://github.com/Meemaw/Photomy/commits?author=snuderl "Tests") |
 | :---: | :---: |
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
