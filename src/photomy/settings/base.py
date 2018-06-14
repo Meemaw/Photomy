@@ -15,12 +15,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'silk',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
     'storages',
-    'raven.contrib.django.raven_compat',
     'authentication.apps.AuthenticationConfig',
     'gallery.apps.GalleryConfig',
     'identifier.apps.IdentifierConfig',
@@ -32,7 +30,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'silk.middleware.SilkyMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -187,54 +184,4 @@ AWS_MEDIA_LOCATION = 'media/'
 
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=604800',
-}
-
-
-RAVEN_CONFIG = {
-    'dsn': 'https://c1ed9a5bae464c6bb70d7ebd26ac9344@sentry.io/1218374',
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'root': {
-        'level': 'WARNING',
-        'handlers': ['sentry'],
-    },
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s '
-                      '%(process)d %(thread)d %(message)s'
-        },
-    },
-    'handlers': {
-        'sentry': {
-            # To capture more than ERROR, change to WARNING, INFO, etc.
-            'level': 'ERROR',
-            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
-            'tags': {'custom-tag': 'x'},
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'django.db.backends': {
-            'level': 'ERROR',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'raven': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'sentry.errors': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-    },
 }

@@ -8,6 +8,13 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 CORS_ORIGIN_ALLOW_ALL = True
 
+INSTALLED_APPS += [
+    'silk'
+]
+MIDDLEWARE += [
+    'silk.middleware.SilkyMiddleware'
+]
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
