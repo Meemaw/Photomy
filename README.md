@@ -39,7 +39,7 @@
 Our [CONTRIBUTING.md][contributing] is a step-by-step setup and development guide.
 
 
-## Contributors
+### Contributors[contributors]
 
 Thanks goes to these people ([emoji key][emojis]):
 
@@ -58,4 +58,5 @@ Contributions of any kind welcome!
 [contributing]: https://github.com/Meemaw/Photomy/blob/master/CONTRIBUTING.md
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
+[contributors]: https://github.com/Meemaw/Photomy#contributors
 
