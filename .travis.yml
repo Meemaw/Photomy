@@ -67,4 +67,3 @@ stages:
   - test
   - build
   - deploy
-  if: tag IS present
