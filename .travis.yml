@@ -60,6 +60,11 @@ matrix:
         - "node"
       before_script:
         - cd frontend
+        - yarn install
+      cache:
+        yarn: true
+        directories:
+          - $HOME/.npm
       script:
         - gulp setDev
         - yarn build
