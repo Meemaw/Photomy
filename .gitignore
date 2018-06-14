@@ -12,6 +12,7 @@
 *__pycache__/*
 *.pyc
 *.pyo
+*pytest_cache*
 
 ### Frontend ###
 */node_modules/*
@@ -23,6 +24,7 @@
 ### OTHER ###
 deploy/
 dump.rdb
+
 
 
 
