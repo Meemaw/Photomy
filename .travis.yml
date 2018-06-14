@@ -55,7 +55,7 @@ matrix:
         - docker push meemaw/photomy:1.1.0
 
     - stage: deploy
-      if: branch = master AND tag IS present
+      if: tag IS present
       language: node_js
       node_js:
         - "node"
