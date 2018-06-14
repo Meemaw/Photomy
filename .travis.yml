@@ -61,7 +61,6 @@ matrix:
       before_script:
         - cd frontend
         - yarn install
-        - apt-get install python python-dev py-pip
         - pip install awscli
       cache:
         yarn: true
