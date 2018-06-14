@@ -39,7 +39,7 @@
 Our [CONTRIBUTING.md][contributing] is a step-by-step setup and development guide.
 
 
-### Contributors[contributors]
+### [Contributors][contributors]
 
 Thanks goes to these people ([emoji key][emojis]):
 
