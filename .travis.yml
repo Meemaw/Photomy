@@ -68,10 +68,11 @@ matrix:
         directories:
           - $HOME/.npm
       script:
-        - gulp setDev
+        - gulp setProd
         - yarn build
         - aws s3 sync build s3://photomy.si --delete
-        - aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_DISTRIBUTION --paths "/*"
+      after_success:
+        - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
       
 
 stages:
