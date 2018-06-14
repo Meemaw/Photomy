@@ -22,6 +22,11 @@ user_data = {'email': 'ematej.snuderl@gmail.com',
 pytestmark = pytest.mark.django_db
 
 
+@pytest.fixture
+def test_user():
+    yield User.objects.create(id=uuid.uuid4(), username='Matej', email='ematej.snuderl@gmail.com')
+
+
 @pytest.fixture(autouse=True)
 def init_user_data(client):
     client.post(
@@ -40,7 +45,8 @@ def test_login_unverified(client):
               'password': user_data.get('password1')}
     )
     assert response.status_code == 400
-    assert response.data.get('non_field_errors')[0] == "E-mail is not verified."
+    assert response.data.get('non_field_errors')[
+        0] == "E-mail is not verified."
 
 
 def test_login_when_verified(client):
@@ -57,11 +63,6 @@ def test_login_when_verified(client):
         'token')) + datetime.timedelta(0, ETA)
     assert (td2 - td1).days == 7
     assert response.status_code == 200
-
-
-@pytest.fixture
-def test_user():
-    yield User.objects.create(id=uuid.uuid4(), username='Matej', email='ematej.snuderl@gmail.com')
 
 
 def test_me_is_protected():
@@ -95,7 +96,7 @@ def test_delete_user(test_user, mocker):
     im1 = Image.objects.create(user=test_user, width=0, height=0)
     id1 = IdentityGroup.objects.create(identity="Matej", user=test_user)
     im_match1 = ImageIdentityMatch.objects.create(
-            image_id=im1, identity_group_id=id1, user=test_user, face_index=0)
+        image_id=im1, identity_group_id=id1, user=test_user, face_index=0)
 
     User.objects.filter(id=test_user.id).exists()
     response = client.delete(
