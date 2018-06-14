@@ -3,6 +3,7 @@ version: '3'
 services:
   worker:
     image: meemaw/photomy:1.1.0
+    entrypoint: /scripts/run_celery.sh
   db:
     env_file:
       -  /home/ubuntu/photomy/config/.env

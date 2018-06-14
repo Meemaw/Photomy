@@ -21,7 +21,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    entrypoint: /scripts/run_celery.sh
+    entrypoint: /scripts/run_celery_docker.sh
     links:
       - db
       - redis
