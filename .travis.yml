@@ -42,6 +42,7 @@ matrix:
         directories:
           - $HOME/.npm
       script:
+        - yarn lint
         - yarn test-coverage
       after_success:
         - codecov -F javascript -t $CODECOV_UPLOAD_TOKEN
