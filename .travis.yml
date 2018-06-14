@@ -61,6 +61,8 @@ matrix:
       before_script:
         - cd frontend
         - yarn install
+        - apk add --update python python-dev py-pip
+        - pip install awscli
       cache:
         yarn: true
         directories:
@@ -68,6 +70,9 @@ matrix:
       script:
         - gulp setDev
         - yarn build
+        - aws s3 sync build s3://photomy.si --delete
+        - aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_DISTRIBUTION --paths "/*"
+      
 
 stages:
   - test
