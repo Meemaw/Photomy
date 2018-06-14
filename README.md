@@ -28,6 +28,9 @@
 
 </span>
 
-## Deploy
+### [Contributing][1]
 
-##
+Our [CONTRIBUTING.md][1] is a step-by-step setup and development guide.
+
+
+[1]: https://github.com/Meemaw/Photomy/blob/master/CONTRIBUTING.md
