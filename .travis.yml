@@ -54,10 +54,10 @@ matrix:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push meemaw/photomy:1.1.0
 
-  - stage: deploy
-    language: bash
-    script:
-      - echo "HELLO!"
+    - stage: deploy
+      language: bash
+      script:
+        - echo "HELLO!"
 
         
 
