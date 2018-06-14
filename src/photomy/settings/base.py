@@ -100,6 +100,8 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+ADMINS = [('Matej', 'ematej.snuderl@gmail.com')]
+
 
 WSGI_APPLICATION = 'photomy.wsgi.application'
 
