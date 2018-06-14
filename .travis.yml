@@ -55,13 +55,14 @@ matrix:
         - docker push meemaw/photomy:1.1.0
 
     - stage: deploy
-      language: bash
+      language: node_js
+      node_js:
+        - "node"
+      before_script:
+        - cd frontend
       script:
-        - echo "HELLO!"
-
-        
-
-
+        - gulp setDev
+        - yarn build
 
 stages:
   - test
