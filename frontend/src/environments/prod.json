@@ -1,14 +1,14 @@
 {
   "GoogleAnalytics": {
     "debug": false,
-    "trackingId": "gaTrackingId"
+    "trackingId": "UA-115091334-1"
   },
   "services": {
-    "baseUrl": "yourServicesUrl",
-    "cdnBaseUrl": "cdnBaseUrl"
+    "baseUrl": "https://services.photomy.si",
+    "cdnBaseUrl": "https://cdn.photomy.si"
   },
   "sentry": {
-    "dsn": "sentryDsn",
+    "dsn": "https://c1ed9a5bae464c6bb70d7ebd26ac9344@sentry.io/1218374",
     "env": "production",
     "enable": true
   }
