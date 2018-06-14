@@ -1,7 +1,7 @@
 from .docker import *
 
 
-DEBUG = False
+DEBUG = True
 
 EMAIL_CONFIRMATION_REDIRECT_URL = "http://photomy.si/confirmed"
 
