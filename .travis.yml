@@ -26,7 +26,7 @@ matrix:
         - cd src
         - python manage.py migrate --noinput --settings=photomy.settings.travis
       script:
-        - coverage run manage.py test --settings=photomy.settings.travis --noinput --keepdb
+        - coverage run manage.py test --settings=photomy.settings.travis --noinput
       after_success:
         - bash <(curl -s https://codecov.io/bash) -F python -t $CODECOV_UPLOAD_TOKEN
         
@@ -42,6 +42,7 @@ matrix:
         directories:
           - $HOME/.npm
       script:
+        - yarn lint
         - yarn test-coverage
       after_success:
         - codecov -F javascript -t $CODECOV_UPLOAD_TOKEN

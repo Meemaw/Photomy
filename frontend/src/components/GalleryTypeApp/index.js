@@ -21,4 +21,7 @@ const GalleryTypeApp = ({ galleryType, ...rest }) => {
   return <GalleryComponent {...rest} />;
 };
 
-export default connect(mapStateToProps, null)(GalleryTypeApp);
+export default connect(
+  mapStateToProps,
+  null,
+)(GalleryTypeApp);
