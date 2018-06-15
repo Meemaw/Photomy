@@ -1,8 +1,6 @@
 from .base import *
 
 
-TEST_RUNNER = 'photomy.runner.PytestTestRunner'
-
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
