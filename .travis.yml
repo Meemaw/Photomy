@@ -22,11 +22,10 @@ matrix:
       install:
         - pip install pipenv --upgrade
         - pipenv install --dev --skip-lock
-        - pipenv shell
       before_script:
         - psql -c "CREATE DATABASE travisci;" -U postgres
         - cd src
-        - python manage.py migrate --noinput --settings=photomy.settings.travis
+        - pipenv run ./manage.py migrate --noinput --settings=photomy.settings.travis
       script:
         - coverage run manage.py test --settings=photomy.settings.travis --noinput
       after_success:
