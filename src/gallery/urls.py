@@ -6,6 +6,8 @@ urlpatterns = [
     path('upload_url', views.upload_url, name='upload_url'),
     path('upload_file', views.upload_image_file, name='upload_file'),
     path('favorites', views.FavoritesList.as_view(), name='favorites'),
+    path('albums', views.AlbumListView.as_view(), name='albums'),
+    path('albums/<uuid:pk>', views.AlbumDetailView.as_view(), name='album_detail'),
     path('images', views.ImagesList.as_view(), name='images'),
     path('images/<uuid:pk>',
          views.ImageDetails.as_view(), name='image_detail'),

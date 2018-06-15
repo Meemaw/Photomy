@@ -1,6 +1,3 @@
-import pytest
-
-
 from photomy.test_base import *
 
 from gallery.models import Image

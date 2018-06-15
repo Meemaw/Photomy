@@ -13,10 +13,27 @@ from rest_framework.response import Response
 from identifier.models import ImageIdentityMatch, IdentityGroup
 from identifier.serializers import ImageIdentityMatchSerializer, IdentitySerializer
 from identifier.tasks import reidify_identity_match
-from .models import Image
-from .serializers import ImageSerializer
+from .models import Image, Album
+from .serializers import ImageSerializer, AlbumSerializer
 
 logger = logging.getLogger(__name__)
+
+
+# ALBUM
+
+class AlbumListView(generics.ListAPIView):
+    serializer_class = AlbumSerializer
+
+    def get_queryset(self):
+        return Album.objects.filter(Q(user=self.request.user))
+
+
+class AlbumDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = AlbumSerializer
+
+    def get_queryset(self):
+        album_id = self.kwargs.get('pk')
+        return Album.objects.filter(Q(user=self.request.user) & Q(id=album_id))
 
 
 # IDENTITY_MATCH

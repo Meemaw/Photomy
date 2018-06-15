@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Image
+from .models import Image, Album
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -20,3 +20,10 @@ class ImageSerializer(serializers.ModelSerializer):
                 "favorite": obj.favorite,
                 "preview_url": preview_location
                 }
+
+
+
+class AlbumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Album
+        fields = ('__all__')
