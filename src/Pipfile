@@ -1,0 +1,33 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+celery = "*"
+django-dotenv = "*"
+djangorestframework = "*"
+django-rest-auth = "*"
+django-storages = "*"
+django-allauth = "*"
+pillow = "*"
+"psycopg2-binary" = "*"
+"psycopg2" = "*"
+face-recognition = "*"
+djangorestframework-jwt = "*"
+django-filter = "*"
+raven = "*"
+django-cors-headers = "*"
+redis = "*"
+"boto3" = "*"
+
+[dev-packages]
+django-silk = "*"
+"autopep8" = "*"
+pytest = "*"
+pytest-django = "*"
+pytest-mock = "*"
+
+[requires]
+python_version = "3.6"

@@ -10,9 +10,13 @@ https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
-from raven.contrib.django.raven_compat.middleware.wsgi import Sentry
-
+from django.conf import settings
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "photomy.settings")
 
-application = Sentry(get_wsgi_application())
+
+if hasattr(settings, 'RAVEN_CONFIG'):
+    from raven.contrib.django.raven_compat.middleware.wsgi import Sentry
+    application = Sentry(get_wsgi_application())
+else:
+    application = get_wsgi_application()
