@@ -18,9 +18,11 @@ matrix:
         - DJANGO_SETTINGS_MODULE=photomy.settings.travis
         - PYTHONPATH="/home/travis/build/meemaw/photomy"
         - PIP_USE_MIRRORS=true
+        - PIPENV_IGNORE_VIRTUALENVS=1
       install:
         - pip install pipenv --upgrade
         - pipenv install --dev --skip-lock
+        - pipenv shell
       before_script:
         - psql -c "CREATE DATABASE travisci;" -U postgres
         - cd src
