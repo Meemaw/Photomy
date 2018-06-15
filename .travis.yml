@@ -20,7 +20,7 @@ matrix:
         - PIP_USE_MIRRORS=true
       install:
         - pip install pipenv --upgrade
-        - pipenv install --dev --system --deploy --ignore-pipfile
+        - pipenv install --dev --system --deploy --ignore-pipfile --skip-lock
       before_script:
         - psql -c "CREATE DATABASE travisci;" -U postgres
         - cd src
