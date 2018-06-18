@@ -1,6 +1,6 @@
 import React from 'react';
 import IdentityTabContainer from '../../../components/IdentityTab';
-import IdentityTab from '../../../components/IdentityTab/IdentityTab';
+import SavableTab from '../../../components/common/SavableTab';
 import configureStore from '../../../stores';
 import LoadingIcon from '../../../components/common/LoadingIcon';
 import SavableInput from '../../../components/common/SavableInput';
@@ -10,7 +10,7 @@ const IDENTITY = { identity: 'Matej' };
 
 describe('IdentityTab', () => {
   it('Renders set a name when no identityName', () => {
-    const wrapper = shallow(<IdentityTab identityLoading={false} />);
+    const wrapper = shallow(<SavableTab loading={false} />);
     expect(wrapper.children().text()).to.equal('Set a name');
   });
 
