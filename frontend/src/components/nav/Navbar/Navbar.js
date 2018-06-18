@@ -1,12 +1,13 @@
 // @flow
 import React from 'react';
 import IdentityTab from '../../IdentityTab';
+import AlbumTab from '../../AlbumTab';
 import { Menu, Header, Dropdown, Icon, Grid, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { NAVBAR_HEIGHT } from '../../../constants/gallerySizes';
 import { GALLERY_TYPES } from '../../../constants/galleryTypes';
 import { onlyUpdateForKeys } from 'recompose';
-import { rootPath, settingsPath } from '../../../lib/paths';
+import { rootPath, settingsPath, galleryPath } from '../../../lib/paths';
 import { withWidth } from '../../../hocs';
 import { NAVBAR_GALLERY_TYPE_BREAKPOINT } from '../../../constants/breakpoints';
 import type { User } from '../../../meta/types/User';
@@ -22,6 +23,8 @@ type Props = {
   isGallery: boolean,
   pathname: string,
   user: User,
+  albumPage: boolean,
+  album: Object,
 };
 
 const Navbar = ({
@@ -35,20 +38,24 @@ const Navbar = ({
   setMenu,
   pathname,
   user,
+  albumPage,
+  album,
 }: Props) => {
   return (
     <Menu className="Navbar" fixed="top" secondary style={{ height: NAVBAR_HEIGHT }} as={Grid}>
       <Grid.Row columns={3}>
-        <Grid.Column as={Link} to={rootPath} verticalAlign="middle">
+        <Grid.Column as={Link} to={galleryPath} verticalAlign="middle">
           <Header as="h4">
-            {peoplePage && (
+            {(peoplePage || albumPage) && (
               <Icon name="chevron left" style={{ fontSize: '1rem', height: '100%' }} />
             )}Photomy
           </Header>
         </Grid.Column>
 
         <Grid.Column textAlign="center">
-          {peoplePage ? (
+          {albumPage ? (
+            <AlbumTab album={album} />
+          ) : peoplePage ? (
             <IdentityTab identity={identity} />
           ) : (
             <Button.Group size="tiny">
@@ -95,6 +102,12 @@ const Navbar = ({
   );
 };
 
-export default onlyUpdateForKeys(['galleryType', 'peoplePage', 'identity', 'isGallery', 'user'])(
-  withWidth(Navbar),
-);
+export default onlyUpdateForKeys([
+  'galleryType',
+  'peoplePage',
+  'identity',
+  'isGallery',
+  'user',
+  'album',
+  'albumPage',
+])(withWidth(Navbar));

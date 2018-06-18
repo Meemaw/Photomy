@@ -4,9 +4,10 @@ import ContentContainer from '../common/ContentContainer';
 import GallerySection from './GallerySection';
 import GalleryImage from './GalleryImage';
 import FooterInfo from './FooterInfo';
-import AddPhoto from '../AddPhoto';
+import AddImages from '../AddImages';
 import Waypoint from 'react-waypoint';
 import EmptyGallery from '../common/EmptyGallery';
+import WaypointEl from '../common/WaypointEl';
 import { debounce } from 'lodash';
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
   handleContextRef?: Function,
   children: any,
   isEmpty: boolean,
-  loadMore?: Function,
+  loadMore?: ?Function,
   galleryName?: string,
   emptyInstructions?: string,
 };
@@ -62,7 +63,7 @@ class Gallery extends React.Component<Props, State> {
     return (
       <ContentContainer className="ImageGalleryContainer" innerRef={this.handleContextRef}>
         {isEmpty ? <EmptyGallery instructions={emptyInstructions} /> : children}
-        {renderAddPhoto && <AddPhoto />}
+        {renderAddPhoto && <AddImages />}
 
         {loadMore &&
           this.contextRef && (
@@ -77,7 +78,5 @@ class Gallery extends React.Component<Props, State> {
     );
   }
 }
-
-const WaypointEl = props => <div style={{ height: 4 }} ref={props.innerRef} />;
 
 export default Gallery;

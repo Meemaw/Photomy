@@ -5,17 +5,23 @@ import isSameDay from 'date-fns/is_same_day';
 import isAfter from 'date-fns/is_after';
 
 const TODAY = new Date();
+const TODAY_STR = 'Today';
 
 const YESTERDAY: Date = subDays(TODAY, 1);
+const YESTERDAY_STR = 'Yesterday';
 
 const WEEK_OLD: Date = subDays(TODAY, 7);
+
+const HOUR_FORMAT: string = 'HH:MM';
+const DAY_FORMAT: string = 'DD MMM YYYY';
+const DAY_HOUR_FORMAT: string = 'DD MMM YYYY HH:MM';
 
 export const toReadableDate = (date: Date): string => {
   if (!date) return '';
   if (isSameDay(TODAY, date)) {
-    return 'Today';
+    return TODAY_STR;
   } else if (isSameDay(YESTERDAY, date)) {
-    return 'Yesterday';
+    return YESTERDAY_STR;
   } else if (isAfter(date, WEEK_OLD)) {
     return format(date, 'dddd');
   } else {
@@ -23,14 +29,18 @@ export const toReadableDate = (date: Date): string => {
   }
 };
 
-export const getNowString = (dateFormat: String = 'HH:MM') => {
+export const getNowString = (dateFormat: string = HOUR_FORMAT) => {
   return format(new Date(), dateFormat);
 };
 
-export const toReadableHighlightDate = (date: Date): string => {
-  return toFormatedDate(date, 'DD MMM YYYY HH:MM');
+export const toReadableAlbumDate = (date: Date): string => {
+  return toFormatedDate(date, DAY_FORMAT);
 };
 
-export const toFormatedDate = (date: Date, dateFormat: string = 'HH:MM') => {
+export const toReadableHighlightDate = (date: Date): string => {
+  return toFormatedDate(date, DAY_HOUR_FORMAT);
+};
+
+export const toFormatedDate = (date: Date, dateFormat: string = HOUR_FORMAT) => {
   return format(date, dateFormat);
 };

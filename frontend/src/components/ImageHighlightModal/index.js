@@ -11,10 +11,10 @@ type Props = {
   initialImage: Image,
   imageIx: number,
   images: Array<Image>,
-  highlightHeaderProvider: void => string,
+  highlightHeaderProvider: Function,
   triggerImageMaxHeight: number,
-  deleteImage: Function,
-  favoriteImage: Function,
+  deleteImage?: Function,
+  favoriteImage?: Function,
 };
 
 type State = { imageSelectedIx: number };

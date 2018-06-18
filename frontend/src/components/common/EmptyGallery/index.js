@@ -17,6 +17,10 @@ type State = { uploading: boolean };
 class EmptyGallery extends React.Component<Props, State> {
   state = { uploading: false };
 
+  static defaultProps = {
+    instructions: 'Drag some photos to your gallery',
+  };
+
   handleDrop = (accepted: Array<any>, rejected: Array<any>) => {
     this.handleUpload(accepted);
   };
@@ -74,9 +78,5 @@ class EmptyGallery extends React.Component<Props, State> {
     );
   }
 }
-
-EmptyGallery.defaultProps = {
-  instructions: 'Drag some photos to your gallery',
-};
 
 export default withUploading(EmptyGallery);

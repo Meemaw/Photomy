@@ -55,5 +55,5 @@ class Album(models.Model):
                              on_delete=models.CASCADE)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, blank=True)
     images = models.ManyToManyField(Image, blank=True)

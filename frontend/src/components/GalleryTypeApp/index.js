@@ -1,15 +1,35 @@
 // @flow
 import React from 'react';
-import AllPhotos from '../modules/AllPhotos';
-import People from '../modules/People';
-import Favorite from '../modules/Favorite';
+import Loadable from '../common/Loadable';
 import { connect } from 'react-redux';
-import { ALL_PHOTOS_GALLERY, PEOPLE_GALLERY, FAVORITE_GALLERY } from '../../constants/galleryTypes';
+import {
+  ALL_PHOTOS_GALLERY,
+  PEOPLE_GALLERY,
+  FAVORITE_GALLERY,
+  ALBUM_GALLERY,
+} from '../../constants/galleryTypes';
+
+const AsyncAllPhotos = Loadable({
+  loader: () => import('../modules/AllPhotos'),
+});
+
+const AsyncPeople = Loadable({
+  loader: () => import('../modules/People'),
+});
+
+const AsyncFavorite = Loadable({
+  loader: () => import('../modules/Favorite'),
+});
+
+const AsyncAlbums = Loadable({
+  loader: () => import('../modules/Albums'),
+});
 
 const GALLERY_MAP = {
-  [ALL_PHOTOS_GALLERY]: AllPhotos,
-  [PEOPLE_GALLERY]: People,
-  [FAVORITE_GALLERY]: Favorite,
+  [ALL_PHOTOS_GALLERY]: AsyncAllPhotos,
+  [PEOPLE_GALLERY]: AsyncPeople,
+  [FAVORITE_GALLERY]: AsyncFavorite,
+  [ALBUM_GALLERY]: AsyncAlbums,
 };
 
 function mapStateToProps(state) {

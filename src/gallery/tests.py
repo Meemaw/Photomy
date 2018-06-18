@@ -32,6 +32,15 @@ TEST_IDENTITIES = [
     {"name": "Identity 6"}
 ]
 
+
+class UUIDEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, UUID):
+            # if the obj is uuid, we simply return the value of uuid
+            return obj.hex
+        return json.JSONEncoder.default(self, obj)
+
+
 ALBUM_NAMES = ['Paris', 'London', 'Budapest']
 
 
@@ -50,15 +59,38 @@ pytestmark = pytest.mark.django_db
 
 
 def test_get_albums(client, test_user):
-    [Album.objects.create(user=test_user, name=album_name)
+    albums = [Album.objects.create(user=test_user, name=album_name)
      for album_name in ALBUM_NAMES]
+
+    album = albums[0]
+    im1 =Image.objects.create(user=test_user, width=0, height=0)
+    album.images.add(im1)
+    album.save()
+
+
     response = client.get(
         ALBUMS_VIEW,
         **auth_headers(test_user)
     )
-    assert response.status_code == 200
-    assert len(response.data.get('results')) == 3
 
+    print(response.data)
+    assert response.status_code == 200
+    assert len(response.data) == 3
+
+
+def test_create_empty_album(client, test_user):
+    create_payload = {
+        "name": 'Pariz 2015',
+        "user": str(test_user.id)
+    }
+
+    response = client.post(
+        ALBUMS_VIEW,
+        data=json.dumps(create_payload),
+        content_type="application/json",
+        **auth_headers(test_user)
+    )
+    assert response.status_code == 201
 
 def test_get_album(client, test_user, album):
     response = client.get(
@@ -185,7 +217,7 @@ class IdentityMatchTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-            for user in self.test_users]
+                            for user in self.test_users]
 
         self.identities = [IdentityGroup.objects.create(identity=identity.get(
             'name'), user=self.test_users[0]) for identity in TEST_IDENTITIES]
@@ -289,7 +321,7 @@ class PersonTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-            for user in self.test_users]
+                            for user in self.test_users]
 
         self.identities = [IdentityGroup.objects.create(identity=identity.get(
             'name'), user=self.test_users[0]) for identity in TEST_IDENTITIES]
@@ -332,7 +364,7 @@ class ImageTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-            for user in self.test_users]
+                            for user in self.test_users]
 
     def test_view_is_protected(self):
         self.assertTrue(is_protected(IMAGE_VIEW))
@@ -386,7 +418,7 @@ class FavoriteTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), favorite=image.get('favorite', False)) for image in TEST_IMAGES for
-            user in self.test_users]
+                            user in self.test_users]
 
     def test_view_is_protected(self):
         self.assertTrue(is_protected(FAVORITES_VIEW))
@@ -581,7 +613,7 @@ class PeopleTest(TestCase):
 
         self.test_images = [Image.objects.create(user=user, width=image.get(
             'width'), height=image.get('height'), face_encodings=image.get('face_encodings')) for image in TEST_IMAGES
-            for user in self.test_users]
+                            for user in self.test_users]
 
         candidate_images = [image for image in self.test_images if image.face_encodings and len(
             image.face_encodings) == 1 and image.user == self.test_users[0]]

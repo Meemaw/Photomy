@@ -12,7 +12,7 @@ export const isTokenValid = (token: string) => {
 
 export const getData = (token: string) => jwt_decode(token);
 
-export const getAccessToken = () => {
+export const getAccessToken = (): Object => {
   const tokenData = localStorage.getItem(ACCESS_TOKEN);
   return tokenData ? JSON.parse(tokenData) : {};
 };

@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import IdentityTab from './IdentityTab';
+import SavableTab from '../common/SavableTab';
 import { IdentityApi } from '../../services';
 import { connect } from 'react-redux';
 import { setIdentity } from '../../actions';
@@ -41,17 +41,18 @@ class IdentityTabContainer extends React.PureComponent<Props, State> {
 
   render() {
     const { identity } = this.props;
+    const { savingIdentity } = this.state;
     const identityName = identity.identity;
 
     const identityLoading = Object.keys(identity).length === 0;
 
     return (
-      <IdentityTab
-        {...this.state}
-        identityLoading={identityLoading}
-        identityName={identityName}
-        saveIdentity={this.saveIdentity}
-        setSavingIdentity={this.setSavingIdentity}
+      <SavableTab
+        value={identityName}
+        loading={identityLoading}
+        setSavingValue={this.setSavingIdentity}
+        saveValue={this.saveIdentity}
+        savingValue={savingIdentity}
       />
     );
   }

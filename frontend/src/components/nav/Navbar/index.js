@@ -5,11 +5,16 @@ import withPush from '../../../hocs/Router';
 import { connect } from 'react-redux';
 import { setGalleryType, logout } from '../../../actions';
 import { AuthApi } from '../../../services';
-import { peoplePath, galleryPath } from '../../../lib/paths';
+import { peoplePath, galleryPath, albumsPath } from '../../../lib/paths';
 import type { User } from '../../../meta/types/User';
 
 function mapStateToProps(state) {
-  return { galleryType: state.ui.galleryType, identity: state.identity, user: state.auth.user };
+  return {
+    galleryType: state.ui.galleryType,
+    identity: state.identity,
+    user: state.auth.user,
+    album: state.album.album,
+  };
 }
 
 const mapDispatchToProps = {
@@ -22,6 +27,7 @@ type Props = {
   galleryType: string,
   logout: void => void,
   location: Object,
+  album: Object,
   identity: Object,
   push: Function,
   user: User,
@@ -37,9 +43,10 @@ class NavbarContainer extends React.Component<Props, State> {
   };
 
   render() {
-    const { galleryType, setGalleryType, location, identity, push, user } = this.props;
+    const { galleryType, setGalleryType, location, identity, push, user, album } = this.props;
 
     const peoplePage = location.pathname.includes(peoplePath);
+    const albumPage = location.pathname.includes(albumsPath);
     const isGallery = location.pathname === galleryPath;
 
     return (
@@ -53,6 +60,8 @@ class NavbarContainer extends React.Component<Props, State> {
         identity={identity}
         setMenu={push}
         pathname={location.pathname}
+        albumPage={albumPage}
+        album={album}
       />
     );
   }
