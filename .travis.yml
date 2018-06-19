@@ -56,7 +56,7 @@ matrix:
         - docker push meemaw/photomy:1.1.0
 
     - stage: deploy
-      if: tag IS present
+      if: tag IS present AND tag =~ ^frontend-v.*$
       language: node_js
       node_js:
         - "node"
