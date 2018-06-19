@@ -48,7 +48,7 @@ matrix:
         - codecov -F javascript -t $CODECOV_UPLOAD_TOKEN
 
     - stage: build
-      if: tag IS present OR branch = master
+      if: (tag IS present OR branch = master) AND NOT tag =~ ^frontend-v.*$
       language: bash
       script:
         - docker build . -t meemaw/photomy:1.1.0
