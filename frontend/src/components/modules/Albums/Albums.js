@@ -12,8 +12,10 @@ type Props = { albums: Array<Album>, loading: boolean, updatedAt: ?Date, renderI
 const Albums = ({ albums, loading, updatedAt, renderImage }: Props) => {
   if (loading) return <Loading />;
 
+  const isEmpty = !loading && albums.length === 0;
+
   return (
-    <Gallery isEmpty={false}>
+    <Gallery isEmpty={isEmpty} emptyInstructions="Create albums to see them here">
       <Gallery.Section
         images={albums}
         sectionHeader="Albums"

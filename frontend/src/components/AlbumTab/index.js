@@ -1,8 +1,11 @@
 // @flow
 import React from 'react';
 import SavableTab from '../common/SavableTab';
+import { AlbumsApi } from '../../services';
+import { connect } from 'react-redux';
+import { setAlbum } from '../../actions';
 
-type Props = { album: Object };
+type Props = { album: Object, setAlbum: Function };
 type State = { savingAlbum: boolean };
 
 class AlbumTabContainer extends React.Component<Props, State> {
@@ -11,7 +14,21 @@ class AlbumTabContainer extends React.Component<Props, State> {
   setSavingAlbum = (savingAlbum: boolean) => this.setState({ savingAlbum });
 
   saveAlbum = (albumName: string): Promise<*> => {
-    return Promise.resolve();
+    const { album } = this.props;
+    const name = album.albumName;
+
+    if (albumName === name) {
+      this.setState({ savingAlbum: false });
+      return Promise.resolve();
+    }
+
+    const updatedAlbum = { ...album, name: albumName };
+    return AlbumsApi.patch(updatedAlbum)
+      .then(resp => {
+        this.props.setAlbum({ ...album, albumName });
+        this.setSavingAlbum(false);
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -31,4 +48,11 @@ class AlbumTabContainer extends React.Component<Props, State> {
   }
 }
 
-export default AlbumTabContainer;
+const mapDispatchToProps = {
+  setAlbum,
+};
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(AlbumTabContainer);

@@ -3,6 +3,7 @@ import React from 'react';
 import GalleryImage from '../Gallery/GalleryImage';
 import styled from 'styled-components';
 import { toReadableAlbumDate } from '../../lib/date';
+import { ALBUMS_IMAGE_WIDTH } from '../../constants/gallerySizes';
 import type { Album } from '../../meta/types/Album';
 
 type Props = { album: Album, onAlbumClick: Function };
@@ -16,7 +17,12 @@ class AlbumPreview extends React.Component<Props, State> {
 
     return (
       <AlbumPreviewStyle onClick={onAlbumClick} className="AlbumPreview">
-        <GalleryImage src={image_url} style={{ objectFit: 'cover' }} width={500} height={350} />
+        <GalleryImage
+          src={image_url}
+          style={{ objectFit: 'cover' }}
+          width="100%"
+          height={ALBUMS_IMAGE_WIDTH}
+        />
         <div
           style={{
             position: 'absolute',
@@ -26,11 +32,11 @@ class AlbumPreview extends React.Component<Props, State> {
             padding: '4px',
             width: '100%',
             zIndex: 100,
-            background: 'linear-gradient(rgba(0, 0, 0, .05), rgba(0,0,0,05))',
+            background: 'linear-gradient(rgba(0, 0, 0, .55), rgba(0, 0, 0, .55))',
           }}
         >
-          <div style={{ color: 'white', fontWeight: 800 }}>{album.name}</div>
-          <div style={{ color: 'white', fontWeight: 650 }}>
+          <div style={{ color: 'white', fontWeight: 900 }}>{album.name}</div>
+          <div style={{ color: 'white', fontWeight: 900 }}>
             {album.images_count} images · {toReadableAlbumDate(album.uploaded_at)}
           </div>
         </div>

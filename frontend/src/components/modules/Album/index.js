@@ -2,14 +2,22 @@
 import * as React from 'react';
 import ImageHighlightModal from '../../ImageHighlightModal';
 import Album from './Album';
+import withPush from '../../../hocs/Router';
+import { galleryPath } from '../../../lib/paths';
 import { AlbumsApi } from '../../../services';
-import { setAlbum } from '../../../actions';
+import { setAlbum, deleteAlbum } from '../../../actions';
 import { connect } from 'react-redux';
 import { buildDataMap } from '../../../reducers/gallery';
 import { ALL_PHOTOS_IMAGE_HEIGHT } from '../../../constants/gallerySizes';
 import type { Image } from '../../../meta/types/Image';
 
-type Props = { match: Object, setAlbum: Function };
+type Props = {
+  match: Object,
+  setAlbum: Function,
+  albumDeleting: boolean,
+  deleteAlbum: Function,
+  push: Function,
+};
 type State = { images: Array<Image>, updatedAt: ?Date, name?: string };
 
 const UNTITLED_ALBUM = 'Untitled album';
@@ -48,17 +56,39 @@ class AlbumContainer extends React.Component<Props, State> {
     );
   };
 
+  handleDelete = async () => {
+    const { album_id } = this.props.match.params;
+    await this.props.deleteAlbum(album_id);
+    this.props.push(galleryPath);
+  };
+
   render() {
     const { images, updatedAt } = this.state;
-    return <Album images={images} updatedAt={updatedAt} renderImage={this.renderImage} />;
+    const { albumDeleting } = this.props;
+    return (
+      <Album
+        images={images}
+        updatedAt={updatedAt}
+        renderImage={this.renderImage}
+        albumDeleting={albumDeleting}
+        handleDelete={this.handleDelete}
+      />
+    );
   }
 }
 
 const mapDispatchToProps = {
   setAlbum,
+  deleteAlbum,
 };
 
+function mapStateToProps(state) {
+  return { albumDeleting: state.album.albumDeleting };
+}
+
+const WithPush = withPush(AlbumContainer);
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
-)(AlbumContainer);
+)(WithPush);
