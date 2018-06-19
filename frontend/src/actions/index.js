@@ -1,4 +1,4 @@
-import { setGalleryType } from './ui';
+import { setGalleryType, setAppError } from './ui';
 import { setAuthTokenChecked, setAuthUser, logout, authorize } from './auth';
 import { setIdentity } from './identity';
 import { fetchImages, uploadImages, deleteImage, favoriteImage } from './gallery';
@@ -18,4 +18,5 @@ export {
   deleteImage,
   favoriteImage,
   deleteAlbum,
+  setAppError,
 };

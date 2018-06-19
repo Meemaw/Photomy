@@ -4,9 +4,12 @@ services:
   worker:
     image: meemaw/photomy:1.1.0
     entrypoint: /scripts/run_celery.sh
+    volumes:
+      - /home/ubuntu/photomy/src/.env:/src/.env
   db:
-    env_file:
-      -  /home/ubuntu/photomy/config/.env
+    restart: always
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   web:
@@ -15,10 +18,9 @@ services:
     command: uwsgi --ini /etc/uwsgi/conf.d/uwsgi.ini
     expose:
       - "8000"
-    env_file:
-      -  /home/ubuntu/photomy/config/.env
     volumes:
       - /home/ubuntu/photomy/config/uwsgi:/etc/uwsgi/conf.d
+      - /home/ubuntu/photomy/src/.env:/src/.env
       - /tmp/uwsgi:/tmp/uwsgi
   nginx:
     restart: always
