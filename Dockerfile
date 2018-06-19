@@ -9,6 +9,7 @@ RUN pip install -r /config/requirements.txt
 RUN mkdir /scripts
 COPY /scripts/run_web.sh /scripts
 COPY /scripts/run_celery.sh /scripts
+COPY /scripts/run_celery_docker.sh /scripts
 
 
 RUN mkdir /src;
