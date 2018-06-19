@@ -8,8 +8,8 @@ import type { Image } from '../../meta/types/Image';
 type Props = {
   handleClose: Function,
   highlightedImage: Image,
-  deleteImage: Function,
-  favoriteImage: Function,
+  deleteImage?: Function,
+  favoriteImage?: Function,
 };
 
 type State = { deleting: boolean, favoriting: boolean };
@@ -22,7 +22,7 @@ class ImageHighlightContainer extends React.Component<Props, State> {
     this.setState({ deleting: true });
     await ImagesApi.delete({ image_id: highlightedImage.image_id });
     handleClose();
-    deleteImage(highlightedImage);
+    deleteImage && deleteImage(highlightedImage);
   };
 
   handleFavorite = async () => {
@@ -30,7 +30,7 @@ class ImageHighlightContainer extends React.Component<Props, State> {
     const updatedImage = { ...highlightedImage, favorite: !highlightedImage.favorite };
     this.setState({ favoriting: true });
     await ImagesApi.update(updatedImage);
-    this.setState({ favoriting: false }, () => favoriteImage(updatedImage));
+    this.setState({ favoriting: false }, () => favoriteImage && favoriteImage(updatedImage));
   };
 
   render() {

@@ -4,7 +4,7 @@ import { Input } from 'semantic-ui-react';
 
 type Props = {
   saveValue: string => Promise<*>,
-  initialValue?: string,
+  initialValue: ?string,
   handleEmpty?: Function,
 };
 

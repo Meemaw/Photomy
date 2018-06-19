@@ -4,7 +4,7 @@ import uuid
 import PIL.Image
 import requests
 from django.core.files.storage import default_storage as storage
-from django.db.models import Q
+from django.db.models import Q, Count
 from rest_framework import filters
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
@@ -13,18 +13,41 @@ from rest_framework.response import Response
 from identifier.models import ImageIdentityMatch, IdentityGroup
 from identifier.serializers import ImageIdentityMatchSerializer, IdentitySerializer
 from identifier.tasks import reidify_identity_match
-from .models import Image
-from .serializers import ImageSerializer
+from .constants import ALBUM_ID, JPEG, PK
+from .models import Image, Album
+from .serializers import ImageSerializer, AlbumSerializer, AlbumsSerializer
 
 logger = logging.getLogger(__name__)
 
+
+# ALBUM
+
+class AlbumListView(generics.ListCreateAPIView):
+    filter_backends = (filters.OrderingFilter,)
+    serializer_class = AlbumSerializer
+
+    def get_queryset(self):
+        return Album.objects.filter(Q(user=self.request.user))
+
+    def list(self, request):
+        queryset =  Album.objects.filter(Q(user=self.request.user)).annotate(images_count=Count('images'))
+        serializer = AlbumsSerializer(queryset, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class AlbumDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = AlbumSerializer
+
+    def get_queryset(self):
+        album_id = self.kwargs.get(PK)
+        return Album.objects.filter(Q(user=self.request.user) & Q(id=album_id))
 
 # IDENTITY_MATCH
 class IdentityMatchDetail(generics.UpdateAPIView):
     serializer_class = ImageIdentityMatchSerializer
 
     def get_queryset(self, **kwargs):
-        identity_match_id = self.kwargs.get('pk')
+        identity_match_id = self.kwargs.get(PK)
         return ImageIdentityMatch.objects.filter(Q(id=identity_match_id) & Q(user=self.request.user))
 
 
@@ -86,7 +109,7 @@ class IdentityDetail(generics.RetrieveUpdateAPIView):
     serializer_class = IdentitySerializer
 
     def get_queryset(self, **kwargs):
-        identity_id = self.kwargs.get('pk')
+        identity_id = self.kwargs.get(PK)
         return IdentityGroup.objects.filter(Q(id=identity_id) & Q(user=self.request.user))
 
 
@@ -112,7 +135,7 @@ def get_representatives(request, identity_id):
 
 
 class PersonList(generics.ListAPIView):
-    filter_backends = filter_backends = (filters.OrderingFilter,)
+    filter_backends = (filters.OrderingFilter,)
     serializer_class = ImageIdentityMatchSerializer
 
     def get_queryset(self, **kwargs):
@@ -192,8 +215,8 @@ def upload_image_file(request):
     logger.info("upload_image_file")
     uploaded_file = request.FILES.get('file')
     image = PIL.Image.open(uploaded_file).convert('RGB')
-    image.format = image.format if image.format else 'JPEG'
-    return handle_image_upload(image, request.user)
+    image.format = image.format if image.format else JPEG
+    return handle_image_upload(image, request.user, request.POST)
 
 
 @api_view(['POST'])
@@ -205,32 +228,37 @@ def upload_url(request):
     except OSError as e:
         logger.debug(e)
         return Response(status=status.HTTP_400_BAD_REQUEST)
-    return handle_image_upload(image, request.user)
+    return handle_image_upload(image, request.user, request.POST)
 
 
-def handle_image_upload(image, user):
-    new_image = save_image(image, user)
+def handle_image_upload(image, user, extra_data):
+    new_image = save_image(image, user, extra_data)
     serializer = ImageSerializer(new_image)
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 def get_lqip(image, image_id, user, size=(300, 300)):
     file_name = str(image_id) + '_' + str(user.id) + \
-        '.preview.' + image.format
+                '.preview.' + image.format
     lqip_f_thumb = storage.open(file_name, "w")
 
     optimized_image = image.copy()
     optimized_image.thumbnail(size, PIL.Image.ANTIALIAS)
 
-    optimized_image.save(lqip_f_thumb, "JPEG", optimize=True, quality=85)
+    optimized_image.save(lqip_f_thumb, JPEG, optimize=True, quality=85)
     return lqip_f_thumb
 
 
-def save_image(image, user):
+def save_image(image, user, extra_data=None):
+    extra_data = extra_data if extra_data else {}
+    return _save_image(image, user, extra_data)
+
+
+def _save_image(image, user, extra_data):
     image_id = uuid.uuid4()
     file_name = str(image_id) + '_' + str(user.id) + '.' + image.format
     f_thumb = storage.open(file_name, "w")
-    image.save(f_thumb, "JPEG")
+    image.save(f_thumb, JPEG)
     width, height = image.size
 
     lqip_f_thumb = get_lqip(image, image_id, user)
@@ -242,7 +270,13 @@ def save_image(image, user):
         height=height,
         image_upload=f_thumb,
         lqip_upload=lqip_f_thumb)
+
     f_thumb.close()
     lqip_f_thumb.close()
+
+    if extra_data.get(ALBUM_ID, None):
+        album = Album.objects.get(id=extra_data[ALBUM_ID])
+        album.images.add(new_image)
+        album.save()
 
     return new_image

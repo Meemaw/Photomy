@@ -11,9 +11,14 @@ import {
   passwordResetPath,
   confirmationSentPath,
   galleryPath,
+  albumsPath,
 } from '../lib/paths';
 import { Switch } from 'react-router-dom';
 import Loadable from './common/Loadable';
+
+const AsyncAlbum = Loadable({
+  loader: () => import('./modules/Album'),
+});
 
 const AsyncHome = Loadable({
   loader: () => import('./modules/Home'),
@@ -77,6 +82,7 @@ export default () => {
         <AuthRoute exact path={galleryPath} component={withTracker(AsyncGallery)} />
         <AuthRoute exact path={`${peoplePath}/:identity_id`} component={withTracker(AsyncPerson)} />
         <AuthRoute exact path={settingsPath} component={withTracker(AsyncSettinngs)} />
+        <AuthRoute exact path={`${albumsPath}/:album_id`} component={withTracker(AsyncAlbum)} />
       </MainContent>
     </Switch>
   );

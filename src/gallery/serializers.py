@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Image
+from .models import Image, Album
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -20,3 +20,23 @@ class ImageSerializer(serializers.ModelSerializer):
                 "favorite": obj.favorite,
                 "preview_url": preview_location
                 }
+
+
+class AlbumSerializer(serializers.ModelSerializer):
+    images = ImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Album
+        fields = ('__all__')
+
+
+class AlbumsSerializer(serializers.Serializer):
+    class Meta:
+        model = Image
+        fields = ('__all__')
+
+    def to_representation(self, instance):
+        images = instance.images.all().order_by('-uploaded_at')[:4]
+        images_data = ImageSerializer(images, many=True).data
+        return {"images_count": instance.images_count, "name": instance.name, "id": instance.id,
+                "uploaded_at": instance.uploaded_at, "images": images_data}

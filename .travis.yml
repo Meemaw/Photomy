@@ -26,7 +26,7 @@ matrix:
         - cd src
         - python manage.py migrate --noinput --settings=photomy.settings.travis
       script:
-        - coverage run manage.py test --settings=photomy.settings.travis --noinput
+        - pytest --cov --ds=photomy.settings.travis
       after_success:
         - bash <(curl -s https://codecov.io/bash) -F python -t $CODECOV_UPLOAD_TOKEN
         
@@ -48,6 +48,7 @@ matrix:
         - codecov -F javascript -t $CODECOV_UPLOAD_TOKEN
 
     - stage: build
+      if: tag IS present OR branch = master
       language: bash
       script:
         - docker build . -t meemaw/photomy:1.1.0

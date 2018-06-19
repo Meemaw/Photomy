@@ -47,3 +47,13 @@ class Image(models.Model):
         return '[id: {}, image_url: {}, num_faces: {}]'.format(
             self.id, image_url, num_faces
         )
+
+
+class Album(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=50, blank=True)
+    images = models.ManyToManyField(Image, blank=True)

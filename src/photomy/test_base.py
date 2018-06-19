@@ -6,6 +6,7 @@ import datetime
 import os
 import numpy as np
 import PIL.Image
+import pytest
 
 from django.test import TestCase, Client
 from django.urls import reverse

@@ -8,21 +8,21 @@ type Props = {
   count: number,
   updatedAt: Date,
   ofWhat: string,
+  inWhat: string,
 };
 
-const FooterInfo = ({ count, updatedAt, ofWhat, loadMore }: Props) => {
+const FooterInfo = ({ count, updatedAt, ofWhat, inWhat }: Props) => {
   return count ? (
     <FooterStyle>
-      <div>{`${count} ${ofWhat} in gallery`}</div>
+      <div>{`${count} ${ofWhat} in ${inWhat}`}</div>
       <div className="SubInfo">Updated at: {toFormatedDate(updatedAt)}</div>
     </FooterStyle>
-  ) : (
-    <div />
-  );
+  ) : null;
 };
 
 FooterInfo.defaultProps = {
   ofWhat: 'Images',
+  inWhat: 'Gallery',
 };
 
 const FooterStyle = styled.div`

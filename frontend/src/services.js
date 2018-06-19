@@ -50,3 +50,11 @@ export const UserAuthApi = {
   delete: DELETE(`${CONFIG.services.baseUrl}/auth/me`),
   changePassword: POST(`${CONFIG.services.baseUrl}/rest-auth/password/change/`),
 };
+
+export const AlbumsApi = {
+  create: POST(`${CONFIG.services.baseUrl}/gallery/albums`),
+  getAlbum: GET(`${CONFIG.services.baseUrl}/gallery/albums/:album_id`),
+  list: GET(`${CONFIG.services.baseUrl}/gallery/albums`),
+  delete: DELETE(`${CONFIG.services.baseUrl}/gallery/albums/:album_id`),
+  patch: PATCH(`${CONFIG.services.baseUrl}/gallery/albums/:albumId`),
+};

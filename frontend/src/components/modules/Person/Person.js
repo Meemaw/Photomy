@@ -35,11 +35,11 @@ const Person = ({ images, count, updatedAt, identity, friends, renderImage }: Pr
         minImageWidth={PERSON_PHOTOS_IMAGE_HEIGHT}
       />
       <Gallery.FooterInfo count={count} updatedAt={updatedAt} ofWhat={ofWhat} />
-      {friendsData.images.length > 0 && <PushPeople {...friendsData} />}
+      {friendsData.images.length > 0 && <Friends {...friendsData} />}
     </React.Fragment>
   );
 };
 
-const PushPeople = withPush(People);
+const Friends = withPush(People);
 
 export default Person;

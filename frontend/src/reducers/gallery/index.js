@@ -55,12 +55,10 @@ const fetchingImages = (gallery, fetchingImages) => {
 
 const updateIdentity = (gallery, identity) => {
   const image_identity = identity.identity;
-  console.log(identity);
-  console.log(gallery.images);
+
   const images = gallery.images.map(
     image => (image.identity_group_id === identity.id ? { ...image, image_identity } : image),
   );
-  console.log(images);
   return { ...gallery, images };
 };
 

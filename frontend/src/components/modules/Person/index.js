@@ -78,8 +78,6 @@ class PersonContainer extends React.Component<Props, State> {
     const confirmedPictures = data.results.filter(image => image.confirmed);
     const unconfirmedImages = data.results.filter(image => !image.confirmed);
 
-    console.log(confirmedPictures);
-
     this.dataMap = buildDataMap(confirmedPictures);
 
     this.setState(
