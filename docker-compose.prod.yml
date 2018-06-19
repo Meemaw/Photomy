@@ -8,6 +8,7 @@ services:
       - /home/ubuntu/photomy/src/.env:/src/.env
   db:
     restart: always
+    env_file: .env
     ports:
       - "5432:5432"
     environment:
@@ -16,6 +17,7 @@ services:
     image: meemaw/photomy:1.1.0
     restart: always
     command: uwsgi --ini /etc/uwsgi/conf.d/uwsgi.ini
+    env_file: .env
     expose:
       - "8000"
     volumes:
