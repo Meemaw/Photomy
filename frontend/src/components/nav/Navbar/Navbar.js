@@ -10,7 +10,14 @@ import { onlyUpdateForKeys } from 'recompose';
 import { rootPath, settingsPath, galleryPath } from '../../../lib/paths';
 import { withWidth } from '../../../hocs';
 import { NAVBAR_GALLERY_TYPE_BREAKPOINT } from '../../../constants/breakpoints';
+import { VERSION_INFO } from '../../../version';
 import type { User } from '../../../meta/types/User';
+
+const VERSION_CONTENT = VERSION_INFO.tag
+  ? `Version: ${VERSION_INFO.tag}`
+  : VERSION_INFO.branch
+    ? `${VERSION_INFO.branch} [${VERSION_INFO.commit.substring(0, 8)}]`
+    : 'Local Build';
 
 type Props = {
   galleryType: string,
@@ -87,6 +94,7 @@ const Navbar = ({
             }
           >
             <Dropdown.Menu position="right" style={{ marginTop: '0px', zIndex: 200 }}>
+              <Dropdown.Header content={VERSION_CONTENT} icon="info circle" />
               <Dropdown.Item
                 text="Settings"
                 icon="settings"
