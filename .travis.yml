@@ -62,7 +62,7 @@ matrix:
         - "node"
       before_script:
         - RELEASE_TAG=$(echo $TRAVIS_TAG | cut -d'-' -f 2)
-        - echo "Release tag:" $RELEASE_TAG
+        - echo "Deploying frontend with tag:" $RELEASE_TAG
         - cd frontend
         - yarn install
         - sudo pip install --upgrade pip
