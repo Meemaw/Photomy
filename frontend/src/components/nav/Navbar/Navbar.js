@@ -93,7 +93,10 @@ const Navbar = ({
               </span>
             }
           >
-            <Dropdown.Menu position="right" style={{ marginTop: '0px', zIndex: 200 }}>
+            <Dropdown.Menu
+              position="right"
+              style={{ marginTop: '0px', zIndex: 200, minWidth: '250px' }}
+            >
               <Dropdown.Header content={VERSION_CONTENT} icon="info circle" />
               <Dropdown.Item
                 text="Settings"
