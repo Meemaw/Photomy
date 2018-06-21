@@ -2,7 +2,7 @@
 import * as actionTypes from '../../constants/actionTypes';
 import type { AlbumState } from '../../meta/types/AlbumState';
 
-const INITIAL_STATE: AlbumState = { album: {}, albumDeleting: false };
+export const INITIAL_STATE: AlbumState = { album: {}, albumDeleting: false };
 
 const album = (state: AlbumState = INITIAL_STATE, action: any) => {
   switch (action.type) {

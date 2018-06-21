@@ -3,7 +3,7 @@ import * as actionTypes from '../../constants/actionTypes';
 import { ALL_PHOTOS_GALLERY } from '../../constants/galleryTypes';
 import type { UiState } from '../../meta/types/UiState';
 
-const INITIAL_STATE: UiState = { galleryType: ALL_PHOTOS_GALLERY, appError: false };
+export const INITIAL_STATE: UiState = { galleryType: ALL_PHOTOS_GALLERY, appError: false };
 
 const ui = (state: UiState = INITIAL_STATE, action: any) => {
   switch (action.type) {

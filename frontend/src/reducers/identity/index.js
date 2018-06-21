@@ -2,7 +2,7 @@
 import * as actionTypes from '../../constants/actionTypes';
 import { IdentityState } from '../../meta/types/IdentityState';
 
-const INITIAL_STATE: IdentityState = {};
+export const INITIAL_STATE: IdentityState = {};
 
 const identity = (state: IdentityState = INITIAL_STATE, action: any) => {
   switch (action.type) {

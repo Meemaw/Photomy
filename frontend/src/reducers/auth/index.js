@@ -2,7 +2,7 @@
 import * as actionTypes from '../../constants/actionTypes';
 import type { AuthState } from '../../meta/types/AuthState';
 
-const INITIAL_STATE: AuthState = {
+export const INITIAL_STATE: AuthState = {
   user: null,
   isLoggedIn: false,
   tokenChecked: false,
