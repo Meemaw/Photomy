@@ -1,3 +1,4 @@
+// @flow
 import styled from 'styled-components';
 import { Menu } from 'semantic-ui-react';
 import { NAVBAR_HEIGHT } from '../../../constants/gallerySizes';

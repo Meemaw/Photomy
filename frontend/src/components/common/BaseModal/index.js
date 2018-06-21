@@ -3,7 +3,6 @@ import * as React from 'react';
 import { omit } from 'lodash';
 import { Modal } from 'semantic-ui-react';
 
-// TODO FIX
 type Props = {
   children: any,
   trigger: any,

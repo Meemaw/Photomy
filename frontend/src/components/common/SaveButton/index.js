@@ -1,16 +1,19 @@
+// @flow
 import React from 'react';
 import { Button } from 'semantic-ui-react';
 
-const SaveButton = props => {
-  const onClick = props.loading || props.disabled ? null : props.onClick;
+type Props = { onClick: Function, loading?: boolean, disabled?: boolean, content?: string };
+
+const SaveButton = ({ loading, disabled, onClick, content, ...rest }: Props) => {
+  const actualOnClick = loading || disabled ? null : onClick;
   return (
     <Button
       color="green"
       icon="save"
       type="submit"
-      content={props.content || 'Save changes'}
-      {...props}
-      onClick={onClick}
+      content={content || 'Save changes'}
+      {...rest}
+      onClick={actualOnClick}
     />
   );
 };

@@ -1,16 +1,19 @@
+// @flow
 import React from 'react';
 import { Button } from 'semantic-ui-react';
 
-const DeleteButton = props => {
-  const onClick = props.loading || props.disabled ? null : props.onClick;
+type Props = { onClick: Function, loading?: boolean, disabled?: boolean, content?: string };
+
+const DeleteButton = ({ loading, disabled, onClick, content, ...rest }: Props) => {
+  const actualOnClick = loading || disabled ? null : onClick;
   return (
     <Button
-      {...props}
-      onClick={onClick}
+      {...rest}
+      onClick={actualOnClick}
       color="red"
       icon="trash"
       type="submit"
-      content={props.content || 'Delete'}
+      content={content || 'Delete'}
     />
   );
 };

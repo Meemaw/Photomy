@@ -1,8 +1,11 @@
+// @flow
 import React from 'react';
 import ClickableSpan from '../ClickableSpan';
 import LoadingIcon from '../LoadingIcon';
 
-const ActionableSpan = ({ handleClick, actionLoading, content, ...rest }) => {
+type Props = { handleClick: Function, actionLoading: boolean, content: string };
+
+const ActionableSpan = ({ handleClick, actionLoading, content, ...rest }: Props) => {
   if (actionLoading) {
     return <LoadingIcon />;
   }

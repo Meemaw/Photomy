@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
+// @flow
+import * as React from 'react';
 import { Accordion, Button, List, Divider } from 'semantic-ui-react';
 
-class SettingsTab extends Component {
+type Props = { renderTitle: Function, renderContent: Function, icon: string };
+type State = { open: boolean };
+
+class SettingsTab extends React.Component<Props, State> {
   state = { open: false };
 
   handleClick = () => {

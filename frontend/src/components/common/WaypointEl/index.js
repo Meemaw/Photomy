@@ -1,5 +1,8 @@
+// @flow
 import React from 'react';
 
-const WaypointEl = ({ innerRef }) => <div style={{ height: 4 }} ref={innerRef} />;
+type Props = { innerRef?: Object };
+
+const WaypointEl = ({ innerRef }: Props) => <div style={{ height: 4 }} ref={innerRef} />;
 
 export default WaypointEl;
