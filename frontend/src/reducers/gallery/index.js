@@ -84,7 +84,7 @@ const gallery = (state: GalleryState = INITIAL_STATE, action: any) => {
       };
 
       return { ...state, [action.galleryType]: updatedGallery };
-    case actionTypes.FETCHING_IMAGES:
+    case actionTypes.SET_FETCHING_IMAGES:
       return {
         ...state,
         [action.galleryType]: fetchingImages(state[action.galleryType], action.fetchingImages),

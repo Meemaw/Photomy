@@ -22,6 +22,7 @@ export const deleteAlbum = (album_id: string) => {
 
     return AlbumsApi.delete({ album_id })
       .then(resp => {
+        console.log('HAA');
         dispatch(setAlbumDeleting(false));
         dispatch(setAlbum({}));
       })

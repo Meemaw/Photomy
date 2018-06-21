@@ -9,7 +9,7 @@ import { PERSON_PHOTOS_IMAGE_HEIGHT } from '../../../constants/gallerySizes';
 type Props = {
   images: Array<Image>,
   count: number,
-  updatedAt: Date,
+  updatedAt: ?Date,
   identity: Object,
   friends: Object,
   renderImage: Image => React.Node,

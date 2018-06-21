@@ -80,18 +80,18 @@ describe('Gallery reducer', () => {
     });
   });
 
-  describe('FETCHING_IMAGES', () => {
+  describe('SET_FETCHING_IMAGES', () => {
     it('sets fetching images to correct gallery', () => {
       expect(
         galleryReducer(INITIAL_STATE, {
-          type: actionTypes.FETCHING_IMAGES,
+          type: actionTypes.SET_FETCHING_IMAGES,
           galleryType: PEOPLE_GALLERY,
           fetchingImages: true,
         }).PEOPLE_GALLERY.fetchingImages,
       ).to.equal(true);
 
       const allPhotosFetchingState = galleryReducer(INITIAL_STATE, {
-        type: actionTypes.FETCHING_IMAGES,
+        type: actionTypes.SET_FETCHING_IMAGES,
         galleryType: ALL_PHOTOS_GALLERY,
         fetchingImages: true,
       });
@@ -99,7 +99,7 @@ describe('Gallery reducer', () => {
       expect(allPhotosFetchingState[ALL_PHOTOS_GALLERY].fetchingImages).to.equal(true);
 
       const allPhotosNotFetchingState = galleryReducer(allPhotosFetchingState, {
-        type: actionTypes.FETCHING_IMAGES,
+        type: actionTypes.SET_FETCHING_IMAGES,
         galleryType: ALL_PHOTOS_GALLERY,
         fetchingImages: false,
       });
