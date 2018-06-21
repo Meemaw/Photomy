@@ -6,7 +6,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-type Props = { isLoggedIn: boolean, component: any };
+type Props = { isLoggedIn: boolean, component: any, location: Object };
 type State = {};
 
 class BaseRoute extends React.Component<Props, State> {

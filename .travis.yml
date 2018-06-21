@@ -48,12 +48,23 @@ matrix:
         - codecov -F javascript -t $CODECOV_UPLOAD_TOKEN
 
     - stage: build
-      if: (tag IS present OR branch = master) AND NOT tag =~ ^frontend-v.*$
+      if: branch = master
       language: bash
       script:
-        - docker build . -t meemaw/photomy:1.1.0
+        - docker build . -t meemaw/photomy:latest
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push meemaw/photomy:1.1.0
+        - docker push meemaw/photomy:latest
+
+    - stage: build
+      if: tag IS present AND tag =~ ^backend-v.*$
+      language: bash
+      script:
+        - RELEASE_TAG=$(echo $TRAVIS_TAG | cut -d 'v' -f 2)
+        - echo "Building docker image version:" $RELEASE_TAG
+        - docker build . -t meemaw/photomy:$RELEASE_TAG
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - echo "Pushing docker image version:" $RELEASE_TAG
+        - docker push meemaw/photomy:$RELEASE_TAG
 
     - stage: deploy
       if: tag IS present AND tag =~ ^frontend-v.*$
