@@ -1,3 +1,4 @@
+// @flow
 import * as actionTypes from '../../constants/actionTypes';
 import {
   GALLERY_TYPES,
@@ -5,8 +6,10 @@ import {
   FAVORITE_GALLERY,
   PEOPLE_GALLERY,
 } from '../../constants/galleryTypes';
+import type { GalleryState } from '../../meta/types/GalleryState';
+import type { Image } from '../../meta/types/Image';
 
-const INITIAL_STATE = GALLERY_TYPES.reduce((galleries, gallery) => {
+const INITIAL_STATE: GalleryState = GALLERY_TYPES.reduce((galleries, gallery) => {
   galleries[gallery.galleryType] = {
     count: 0,
     images: [],
@@ -20,7 +23,7 @@ const INITIAL_STATE = GALLERY_TYPES.reduce((galleries, gallery) => {
   return galleries;
 }, {});
 
-export const buildDataMap = images => {
+export const buildDataMap = (images: Array<Image>) => {
   return images.reduce((acc, image, ix) => {
     acc[image.image_id] = { ...image, ix };
     return acc;
@@ -62,7 +65,7 @@ const updateIdentity = (gallery, identity) => {
   return { ...gallery, images };
 };
 
-const gallery = (state = INITIAL_STATE, action) => {
+const gallery = (state: GalleryState = INITIAL_STATE, action: any) => {
   switch (action.type) {
     case actionTypes.FAVORITE_IMAGE:
       const updatedFavoriteGallery = action.image.favorite

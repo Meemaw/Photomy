@@ -1,8 +1,15 @@
+// @flow
 import * as actionTypes from '../../constants/actionTypes';
+import type { AuthState } from '../../meta/types/AuthState';
 
-const INITIAL_STATE = { user: null, isLoggedIn: false, tokenChecked: false, isAuthorized: false };
+const INITIAL_STATE: AuthState = {
+  user: null,
+  isLoggedIn: false,
+  tokenChecked: false,
+  isAuthorized: false,
+};
 
-const auth = (state = INITIAL_STATE, action) => {
+const auth = (state: AuthState = INITIAL_STATE, action: any) => {
   switch (action.type) {
     case actionTypes.SET_AUTH_USER:
       return setUser(state, action.authUser);

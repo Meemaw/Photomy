@@ -1,7 +1,10 @@
+// @flow
 import React from 'react';
 import styled from 'styled-components';
 
-const Maintanance = props => {
+type Props = {};
+
+const Maintanance = (props: Props) => {
   return (
     <Style className="Maintanance">
       <h1>Site is temporarily unavailable.</h1>

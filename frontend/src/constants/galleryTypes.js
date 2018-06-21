@@ -1,3 +1,4 @@
+// @flow
 export const ALL_PHOTOS_GALLERY = 'ALL_PHOTOS';
 export const PEOPLE_GALLERY = 'PEOPLE_GALLERY';
 export const FAVORITE_GALLERY = 'FAVORITE_GALLERY';

@@ -1,10 +1,21 @@
-import React from 'react';
-import { Modal, Icon, Button } from 'semantic-ui-react';
-import { IdentityApi, IdentityMatchApi } from '../../services';
+// @flow
+import * as React from 'react';
 import Gallery from '../Gallery';
 import SaveButton from '../common/SaveButton';
+import { Modal, Icon, Button } from 'semantic-ui-react';
+import { IdentityApi, IdentityMatchApi } from '../../services';
+import type { Image } from '../../meta/types/Image';
+import type { Identity } from '../../meta/types/Identity';
 
-class MergeIdentities extends React.Component {
+type Props = { identity: Identity, addMergedImages: Function, handleClose: Function };
+type State = {
+  join_identity_id: ?string,
+  loadingIdentities: boolean,
+  merging: boolean,
+  results: Array<any>,
+};
+
+class MergeIdentities extends React.Component<Props, State> {
   state = { loadingIdentities: true, results: [], join_identity_id: null, merging: false };
 
   renderImage = (image: Image) => {
@@ -19,7 +30,7 @@ class MergeIdentities extends React.Component {
     );
   };
 
-  setSelectedIdentity = identity_group_id => {
+  setSelectedIdentity = (identity_group_id: string) => {
     this.setState({ join_identity_id: identity_group_id });
   };
 

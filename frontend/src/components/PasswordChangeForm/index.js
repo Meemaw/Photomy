@@ -1,12 +1,9 @@
+// @flow
 import PasswordChangeForm from './PasswordChangeForm';
 import { UserAuthApi } from '../../services';
 import { withFormik } from 'formik';
 import { connect } from 'react-redux';
 import { logout } from '../../actions';
-
-const mapDispatchToProps = {
-  logout,
-};
 
 const PasswordChangeFormContainer = withFormik({
   mapPropsToValues: () => {
@@ -34,6 +31,10 @@ const PasswordChangeFormContainer = withFormik({
       });
   },
 })(PasswordChangeForm);
+
+const mapDispatchToProps = {
+  logout,
+};
 
 export default connect(
   null,

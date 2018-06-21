@@ -1,3 +1,4 @@
+// @flow
 export const rootPath = '/';
 
 // Gallery paths

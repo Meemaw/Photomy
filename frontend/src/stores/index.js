@@ -1,3 +1,4 @@
+// @flow
 import * as reducers from '../reducers';
 import createHistory from 'history/createBrowserHistory';
 import thunk from 'redux-thunk';
@@ -16,7 +17,7 @@ const composedEnhancers = compose(
   ...enhancers,
 );
 
-export default function initStore(initialState = {}) {
+export default function initStore(initialState: Object = {}) {
   const rootReducer = combineReducers({
     ...reducers,
     routing,

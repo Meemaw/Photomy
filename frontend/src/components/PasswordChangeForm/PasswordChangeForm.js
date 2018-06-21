@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import { PasswordFormField } from '../common/FormInputField';
 import SaveButton from '../common/SaveButton';
+import { PasswordFormField } from '../common/FormInputField';
 import { Form } from 'semantic-ui-react';
 
 type Props = {

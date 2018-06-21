@@ -1,3 +1,4 @@
+// @flow
 import { settingsPath } from '../lib/paths';
 
 const ACCOUNT_TAB_NAME = 'account';
@@ -8,12 +9,12 @@ const SECURITY_TAB_NAME = 'security';
 const SECURITY_TAB_CONTENT = 'Security and Login';
 export const SECURITY_TAB = `?tab=${SECURITY_TAB_NAME}`;
 
-export const MENU_UI_NAME_MAP = new Map([
+export const MENU_UI_NAME_MAP: Map<string, string> = new Map([
   [ACCOUNT_TAB_NAME, ACCOUNT_TAB_CONTENT],
   [SECURITY_TAB_NAME, SECURITY_TAB_CONTENT],
 ]);
 
-export const MENU_UI_NAME_ICON_MAP = new Map([
+export const MENU_UI_NAME_ICON_MAP: Map<string, string> = new Map([
   [ACCOUNT_TAB_NAME, 'user'],
   [SECURITY_TAB_NAME, 'lock'],
 ]);

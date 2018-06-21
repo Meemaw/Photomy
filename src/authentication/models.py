@@ -17,6 +17,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(_('active'), default=True)
     username = models.CharField(_('nickname'), max_length=30)
     gender = models.CharField(max_length=10, null=True, blank=True)
+    avatar = models.FileField(null=True)
 
     objects = UserManager()
 

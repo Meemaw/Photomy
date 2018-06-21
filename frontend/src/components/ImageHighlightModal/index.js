@@ -65,6 +65,7 @@ class ImageHighlightModal extends React.PureComponent<Props, State> {
     const { imageSelectedIx } = this.state;
     const { images, highlightHeaderProvider, deleteImage, favoriteImage } = this.props;
     const highlightedImage = images[imageSelectedIx];
+    
 
     return (
       <BaseModal basic size="large" trigger={this.renderTrigger} handleKeyDown={this.handleKeyDown}>

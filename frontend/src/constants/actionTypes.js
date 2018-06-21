@@ -8,6 +8,7 @@ export const AUTHORIZE = 'AUTHORIZE';
 export const SET_IDENTITY = 'SET_IDENTITY';
 export const SET_MENU = 'SET_MENU';
 
+// @flow
 export const FETCH_IMAGES = 'FETCH_IMAGES';
 export const FETCHING_IMAGES = 'FETCHING_IMAGES';
 

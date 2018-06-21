@@ -1,8 +1,10 @@
+// @flow
 import * as actionTypes from '../../constants/actionTypes';
+import { IdentityState } from '../../meta/types/IdentityState';
 
-const INITIAL_STATE = {};
+const INITIAL_STATE: IdentityState = {};
 
-const identity = (state = INITIAL_STATE, action) => {
+const identity = (state: IdentityState = INITIAL_STATE, action: any) => {
   switch (action.type) {
     case actionTypes.SET_IDENTITY:
       return action.identity;
