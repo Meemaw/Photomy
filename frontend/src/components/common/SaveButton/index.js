@@ -1,21 +1,11 @@
 // @flow
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import ActionButton from '../ActionButton';
 
 type Props = { onClick: Function, loading?: boolean, disabled?: boolean, content?: string };
 
-const SaveButton = ({ loading, disabled, onClick, content, ...rest }: Props) => {
-  const actualOnClick = loading || disabled ? null : onClick;
-  return (
-    <Button
-      color="green"
-      icon="save"
-      type="submit"
-      content={content || 'Save changes'}
-      {...rest}
-      onClick={actualOnClick}
-    />
-  );
+const SaveButton = ({ loading, disabled, content, ...rest }: Props) => {
+  return <ActionButton color="green" icon="save" content={content || 'Save changes'} {...rest} />;
 };
 
 export default SaveButton;

@@ -1,21 +1,11 @@
 // @flow
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import ActionButton from '../ActionButton';
 
 type Props = { onClick: Function, loading?: boolean, disabled?: boolean, content?: string };
 
-const DeleteButton = ({ loading, disabled, onClick, content, ...rest }: Props) => {
-  const actualOnClick = loading || disabled ? null : onClick;
-  return (
-    <Button
-      {...rest}
-      onClick={actualOnClick}
-      color="red"
-      icon="trash"
-      type="submit"
-      content={content || 'Delete'}
-    />
-  );
+const DeleteButton = ({ content, ...rest }: Props) => {
+  return <ActionButton color="red" icon="trash" content={content || 'Delete'} {...rest} />;
 };
 
 export default DeleteButton;

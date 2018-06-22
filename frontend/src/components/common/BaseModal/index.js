@@ -14,6 +14,11 @@ type State = { open: boolean };
 class BaseModalContainer extends React.PureComponent<Props, State> {
   state = { open: false };
 
+  static defaultProps = {
+    trigger: (handleOpen: Function) => <div onClick={handleOpen}>Trigger</div>,
+    children: (handleClose: Function) => <div onClick={handleClose}>Handle close</div>,
+  };
+
   handleOpen = () => this.setState({ open: true });
 
   handleClose = (e: SyntheticEvent<>) => this.setState({ open: false });
