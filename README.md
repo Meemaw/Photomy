@@ -34,7 +34,18 @@
 
 ### [About][about]
 
-Photomy is scalable, secure and private photo gallery that recognizes people in your images and group them into identities. It uses AWS Cloudfront for [CDN][cdn] to achieve high performance image distribution. All images are stored on AWS S3 and are protected with AWS Lambda that is responsible for authorization.
+Photomy is scalable, secure and private photo gallery that recognizes people in your images and group them into identities. 
+
+### [Technologies][technologies]
+
+* [React][react] for frontend interface
+* [Django][django] for backend REST API
+* [Celery][celery] as distributed task queue
+* [Redis][redis] as message broker
+* [Amazon CloudFront][cloudfront] for content delivery
+* [Amazon S3][s3] for storage
+* [Amazon Lambda][lambda] for authorization
+* [dlib][dlib] for face recognition
 
 ### [Contributing][contributing]
 
@@ -61,3 +72,12 @@ Contributions of any kind welcome!
 [contributors]: https://github.com/Meemaw/Photomy#contributors
 [about]: https://github.com/Meemaw/Photomy#about
 [cdn]: https://en.wikipedia.org/wiki/Content_delivery_network
+[technologies]: https://github.com/Meemaw/Photomy#technologies
+[dlib]: http://dlib.net/
+[cloudfront]: https://aws.amazon.com/cloudfront/
+[s3]: https://aws.amazon.com/s3/
+[lambda]: https://aws.amazon.com/lambda/
+[django]: https://www.djangoproject.com/
+[react]: https://reactjs.org/
+[celery]: http://www.celeryproject.org/
+[redis]: https://redis.io/
