@@ -9,9 +9,6 @@ import face_recognition
 import numpy as np
 import requests
 
-from django.db.models import Q
-
-
 from photomy.celeryconf import app
 from .models import Image, ImageIdentityMatch, IdentityGroup
 
@@ -28,7 +25,6 @@ def reidify_identity_match(identity_match_id):
     logger.info("reidify_identity_match task")
     identity_match = ImageIdentityMatch.objects.select_related(
         'image_id').get(id=identity_match_id)
-
     image = identity_match.image_id
     face_index = identity_match.face_index
     face_encoding = image.face_encodings[face_index]

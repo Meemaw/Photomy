@@ -1,10 +1,11 @@
 import face_recognition
 
 from gallery.models import Image
+from gallery.views import _reject_identity_match
 from photomy.test_base import *
 from .models import IdentityGroup, ImageIdentityMatch
 from .tasks import _encode_image_faces, create_new_identity, match_face, STRICT_SIMILARITY_THRESHOLD, \
-    REVIEW_SIMILARITY_THRESHOLD
+    REVIEW_SIMILARITY_THRESHOLD, idify_image, reidify_identity_match
 
 OBAMA_IMAGE = f'{TEST_IMAGES_PATH}/obama.jpg'
 OBAMA2_IMAGE = f'{TEST_IMAGES_PATH}/obama2.jpg'
@@ -13,6 +14,97 @@ HILLARY_IMAGE = f'{TEST_IMAGES_PATH}/hillary.jpg'
 HILLARY2_IMAGE = f'{TEST_IMAGES_PATH}/hillary2.jpg'
 OBAMA_HILLARY_IMAGE = f'{TEST_IMAGES_PATH}/obama_hillary.jpg'
 OBAMA_HILLARY_TRUMP_IMAGE = f'{TEST_IMAGES_PATH}/obama_hillary_trump.jpg'
+
+IMAGE_WIDTH_TO_IMAGE_DICTIONARY = {
+    100: OBAMA_IMAGE,
+    200: OBAMA2_IMAGE,
+    300: OBAMA3_IMAGE,
+    110: HILLARY_IMAGE,
+    210: HILLARY2_IMAGE,
+    999: OBAMA_HILLARY_IMAGE,
+    777: OBAMA_HILLARY_TRUMP_IMAGE
+}
+
+# Mark all tests to use database
+pytestmark = pytest.mark.django_db
+
+
+@pytest.fixture
+def test_user():
+    yield User.objects.create(id=uuid.uuid4(), username='Matej', email='ematej.snuderl@gmail.com')
+
+
+def encode_image_faces(image):
+    image_path = IMAGE_WIDTH_TO_IMAGE_DICTIONARY[image.width]
+    im = PIL.Image.open(image_path)
+    d_image = np.array(im)
+    face_locations = face_recognition.face_locations(d_image)
+    face_encodings = face_recognition.face_encodings(d_image, face_locations)
+    image.face_encodings = [list(face_encoding)
+                            for face_encoding in face_encodings]
+    image.face_locations = face_locations
+    image.save()
+    return face_encodings
+
+
+def test_idify_image(test_user, mocker):
+    mocker.patch('identifier.tasks.encode_image_faces', side_effect=encode_image_faces)
+    obama1 = Image.objects.create(width=100, height=100, user=test_user)
+    idify_image(obama1.id)
+
+    assert ImageIdentityMatch.objects.count() == 1
+    assert IdentityGroup.objects.count() == 1
+
+    obama2 = Image.objects.create(width=200, height=200, user=test_user)
+    idify_image(obama2.id)
+
+    assert ImageIdentityMatch.objects.count() == 2
+    assert IdentityGroup.objects.count() == 1
+
+    obama3 = Image.objects.create(width=300, height=300, user=test_user)
+    idify_image(obama3.id)
+
+    assert ImageIdentityMatch.objects.count() == 3
+    assert IdentityGroup.objects.count() == 1
+
+    hillary1 = Image.objects.create(width=110, height=110, user=test_user)
+    idify_image(hillary1.id)
+
+    assert ImageIdentityMatch.objects.count() == 4
+    assert IdentityGroup.objects.count() == 2
+
+    hillary2 = Image.objects.create(width=210, height=210, user=test_user)
+    idify_image(hillary2.id)
+
+    assert ImageIdentityMatch.objects.count() == 5
+    assert IdentityGroup.objects.count() == 2
+
+    obama_hillary_image = Image.objects.create(width=999, height=999, user=test_user)
+    idify_image(obama_hillary_image.id)
+
+    assert ImageIdentityMatch.objects.count() == 7
+    assert IdentityGroup.objects.count() == 2
+
+    obama_hillary_trump_image = Image.objects.create(width=777, height=777, user=test_user)
+    idify_image(obama_hillary_trump_image.id)
+
+    assert ImageIdentityMatch.objects.count() == 10
+    assert IdentityGroup.objects.count() == 3
+
+
+def test_reidify_identity_match(test_user, mocker):
+    mocker.patch('identifier.tasks.encode_image_faces', side_effect=encode_image_faces)
+    obama1 = Image.objects.create(width=100, height=100, user=test_user)
+    idify_image(obama1.id)
+    obama2 = Image.objects.create(width=200, height=200, user=test_user)
+    idify_image(obama2.id)
+
+    match = ImageIdentityMatch.objects.get(image_id=obama2.id)
+    _reject_identity_match(match)
+    reidify_identity_match(match.id)
+
+    assert ImageIdentityMatch.objects.count() == 2
+    assert IdentityGroup.objects.count() == 2
 
 
 class EncodeFacesTest(TestCase):
@@ -172,13 +264,3 @@ class MatchFaceTest(TestCase):
             self.assertTrue(identity_match.confirmed)
         else:
             self.assertFalse(identity_match.confirmed)
-
-
-class IdifyImage(TestCase):
-
-    def setUp(self):
-        self.test_user = User.objects.create(
-            username="matej", email="ematej.snuderl@gmail.com")
-
-    def test_idify_image(self):
-        self.assertTrue(True)

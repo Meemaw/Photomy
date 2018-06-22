@@ -63,6 +63,42 @@ def identity_group(test_user):
 pytestmark = pytest.mark.django_db
 
 
+def test_get_representatives(client, test_user):
+    identities = [IdentityGroup.objects.create(identity=identity.get(
+        'name'), user=test_user) for identity in TEST_IDENTITIES]
+
+    matej_image = Image.objects.create(user=test_user, width=0, height=0, face_encodings=[[1.0]])
+    matej2_image = Image.objects.create(user=test_user, width=0, height=0, face_encodings=[[1.0]])
+    marko_image = Image.objects.create(user=test_user, width=0, height=0, face_encodings=[[1.0]])
+    marko2_image = Image.objects.create(user=test_user, width=0, height=0, face_encodings=[[1.0], [2.0]])
+
+    _ = ImageIdentityMatch.objects.create(user=test_user, identity_group_id=identities[0],
+                                          image_id=matej_image, face_index=0)
+    _ = ImageIdentityMatch.objects.create(user=test_user, identity_group_id=identities[0],
+                                          image_id=matej2_image, face_index=0)
+    _ = ImageIdentityMatch.objects.create(user=test_user, identity_group_id=identities[1],
+                                          image_id=marko_image, face_index=0)
+    _ = ImageIdentityMatch.objects.create(user=test_user, identity_group_id=identities[1],
+                                          image_id=marko2_image, face_index=0)
+    _ = ImageIdentityMatch.objects.create(user=test_user, identity_group_id=identities[1],
+                                          image_id=marko2_image, face_index=1)
+
+    response = client.get(
+        reverse('representatives', kwargs={'identity_id': identities[0].id}),
+        **auth_headers(test_user)
+    )
+    assert response.status_code == 200
+    assert len(response.data) == 2
+
+    response = client.get(
+        reverse('representatives', kwargs={'identity_id': identities[1].id}),
+        **auth_headers(test_user)
+    )
+
+    assert response.status_code == 200
+    assert len(response.data) == 1
+
+
 def test_reject_identity(client, identity_group, test_user, mocker):
     mocker.patch('identifier.tasks.reidify_identity_match')
     im1 = Image.objects.create(user=test_user, width=0, height=0)
