@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('authentication', '0002_user_avatar'),
-        ('gallery', '0001_initial')
+        ('gallery', '0001_initial'),
     ]
 
     operations = [
