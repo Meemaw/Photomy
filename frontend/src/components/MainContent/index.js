@@ -2,7 +2,7 @@
 import React from 'react';
 import Navbar from '../nav/Navbar';
 
-type Props = { location: Object, children: any };
+type Props = { location?: Object, children: any };
 
 const MainContent = ({ location, children }: Props) => {
   return (

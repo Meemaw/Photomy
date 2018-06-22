@@ -26,4 +26,6 @@ class App extends React.Component {
   }
 }
 
+export { App };
+
 export default withRouter(withAuthorization(App));
