@@ -8,12 +8,14 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('authentication', '0002_user_avatar'),
+        ('gallery', '0001_initial')
     ]
 
     operations = [
         migrations.AlterField(
             model_name='user',
             name='avatar',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='avatar_user', to='gallery.Image'),
+            field=models.OneToOneField(
+                null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='avatar_user', to='gallery.Image'),
         ),
     ]
