@@ -7,6 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from .managers import UserManager
 
+from gallery.models import Image
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -17,6 +19,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(_('active'), default=True)
     username = models.CharField(_('nickname'), max_length=30)
     gender = models.CharField(max_length=10, null=True, blank=True)
+    avatar = models.OneToOneField(Image, null=True, on_delete=models.SET_NULL, related_name='avatar_user')
 
     objects = UserManager()
 

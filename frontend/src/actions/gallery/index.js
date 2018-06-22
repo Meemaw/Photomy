@@ -4,7 +4,7 @@ import type { Image } from '../../meta/types/Image';
 
 export const setFetchingImages = (galleryType: string, fetchingImages: boolean) => {
   return {
-    type: actionTypes.FETCHING_IMAGES,
+    type: actionTypes.SET_FETCHING_IMAGES,
     fetchingImages,
     galleryType,
   };

@@ -1,7 +1,9 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { LANDING_MAIN_BREAKPOINT } from '../../../../constants/breakpoints';
 import {
   Sidebar,
   Menu,
@@ -14,22 +16,17 @@ import {
 } from 'semantic-ui-react';
 import { rootPath, loginPath, registerPath } from '../../../../lib/paths';
 
-const LANDING_MAIN_BREAKPOINT = 1000;
+type Props = { children: any, location: Object };
+type State = { sidebarOpened?: boolean };
 
-class MobileContainer extends React.PureComponent {
+class MobileContainer extends React.PureComponent<Props, State> {
   state = {};
 
-  closeSidebar = () => {
-    this.state.sidebarOpened && this.setState({ sidebarOpened: false });
-  };
+  closeSidebar = () => this.state.sidebarOpened && this.setState({ sidebarOpened: false });
 
-  toggleSidebar = () => {
-    this.setState({ sidebarOpened: !this.state.sidebarOpened });
-  };
+  toggleSidebar = () => this.setState({ sidebarOpened: !this.state.sidebarOpened });
 
-  openSidebar = () => {
-    this.setState({ sidebarOpened: true });
-  };
+  openSidebar = () => this.setState({ sidebarOpened: true });
 
   render() {
     const { children, location } = this.props;

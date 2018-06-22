@@ -1,3 +1,4 @@
+// @flow
 import * as actionTypes from '../../constants/actionTypes';
 import {
   GALLERY_TYPES,
@@ -5,8 +6,17 @@ import {
   FAVORITE_GALLERY,
   PEOPLE_GALLERY,
 } from '../../constants/galleryTypes';
+import {
+  uploadImages,
+  deleteImage,
+  favoriteImage,
+  buildDataMap,
+  fetchingImages,
+  updateIdentity,
+} from './util';
+import type { GalleryState } from '../../meta/types/GalleryState';
 
-const INITIAL_STATE = GALLERY_TYPES.reduce((galleries, gallery) => {
+export const INITIAL_STATE: GalleryState = GALLERY_TYPES.reduce((galleries, gallery) => {
   galleries[gallery.galleryType] = {
     count: 0,
     images: [],
@@ -20,49 +30,7 @@ const INITIAL_STATE = GALLERY_TYPES.reduce((galleries, gallery) => {
   return galleries;
 }, {});
 
-export const buildDataMap = images => {
-  return images.reduce((acc, image, ix) => {
-    acc[image.image_id] = { ...image, ix };
-    return acc;
-  }, {});
-};
-
-const deleteImage = (gallery, deletedImage) => {
-  const images = gallery.images.filter(image => image.image_id !== deletedImage.image_id);
-  const dataMap = buildDataMap(images);
-  const isEmpty = images.length === 0;
-  return { ...gallery, dataMap, images, count: images.length, isEmpty };
-};
-
-const uploadImages = (gallery, uploadedImages) => {
-  const images = [...uploadedImages, ...gallery.images];
-  const dataMap = buildDataMap(images);
-  return { ...gallery, dataMap, images, count: images.length, isEmpty: false };
-};
-
-const favoriteImage = (gallery, favoriteImage) => {
-  const images = gallery.images.map(
-    image => (image.image_id === favoriteImage.image_id ? favoriteImage : image),
-  );
-  const dataMap = buildDataMap(images);
-
-  return { ...gallery, dataMap, images };
-};
-
-const fetchingImages = (gallery, fetchingImages) => {
-  return { ...gallery, fetchingImages };
-};
-
-const updateIdentity = (gallery, identity) => {
-  const image_identity = identity.identity;
-
-  const images = gallery.images.map(
-    image => (image.identity_group_id === identity.id ? { ...image, image_identity } : image),
-  );
-  return { ...gallery, images };
-};
-
-const gallery = (state = INITIAL_STATE, action) => {
+const gallery = (state: GalleryState = INITIAL_STATE, action: any) => {
   switch (action.type) {
     case actionTypes.FAVORITE_IMAGE:
       const updatedFavoriteGallery = action.image.favorite
@@ -102,7 +70,7 @@ const gallery = (state = INITIAL_STATE, action) => {
       const mergedDataMap = buildDataMap(allImages);
       const isEmpty = allImages.length === 0;
 
-      const hasMore = action.next !== null;
+      const hasMore = action.next !== null && action.next !== undefined;
       const updatedGallery = {
         ...gallery,
         images: allImages,
@@ -116,7 +84,7 @@ const gallery = (state = INITIAL_STATE, action) => {
       };
 
       return { ...state, [action.galleryType]: updatedGallery };
-    case actionTypes.FETCHING_IMAGES:
+    case actionTypes.SET_FETCHING_IMAGES:
       return {
         ...state,
         [action.galleryType]: fetchingImages(state[action.galleryType], action.fetchingImages),

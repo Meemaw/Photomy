@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { setIdentity } from '../../../actions';
 import { Divider } from 'semantic-ui-react';
 import { PERSON_PHOTOS_IMAGE_HEIGHT } from '../../../constants/gallerySizes';
-import { buildDataMap } from '../../../reducers/gallery';
+import { buildDataMap } from '../../../reducers/gallery/util';
 
 type State = {
   images: Array<Image>,

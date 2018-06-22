@@ -2,7 +2,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import GalleryImage from '../Gallery/GalleryImage';
-import { Modal, Icon, Menu } from 'semantic-ui-react';
+import { Modal, Icon, Menu, Dropdown } from 'semantic-ui-react';
 import { withHover } from '../../hocs';
 import { toReadableHighlightDate } from '../../lib/date';
 import type { Image } from '../../meta/types/Image';
@@ -43,15 +43,13 @@ const ImageHighlight = ({
   favoriting,
 }: Props) => {
   const contentStyle = { height: `${window.innerHeight - 30}px`, background: '#000' };
+  const src = highlightedImage.image_url;
+
+  hovered = true;
 
   return (
     <Modal.Content style={contentStyle}>
-      <GalleryImage
-        src={highlightedImage.image_url}
-        height="100%"
-        width="100%"
-        withPlaceholder={false}
-      />
+      <GalleryImage src={src} height="100%" width="100%" withPlaceholder={false} />
 
       {hovered && (
         <React.Fragment>
@@ -67,9 +65,17 @@ const ImageHighlight = ({
               new Date(highlightedImage.uploaded_at),
             )}`}</p>
           </div>
-          <PagerIcon onClick={handleClose} icon="remove" top="20px" style={{ right: '20px' }} />
-          <PagerIcon onClick={handleLeftClick} icon="chevron left" />
-          <PagerIcon onClick={handleRightClick} icon="chevron right" style={{ right: '0px' }} />
+          <PagerIcon
+            onClick={handleClose}
+            icon="remove"
+            width="null"
+            right="5px"
+            top="10px"
+            height="null"
+            zIndex={1000}
+          />
+          <PagerIcon onClick={handleLeftClick} icon="chevron left" left="0px" />
+          <PagerIcon onClick={handleRightClick} icon="chevron right" right="0px" />
 
           <Menu inverted secondary style={menuStyle}>
             <Menu.Item style={{ color: 'white' }} onClick={handleFavorite}>
@@ -92,12 +98,12 @@ const ImageHighlight = ({
               )}
             </Menu.Item>
 
-            <Menu.Item style={{ color: 'white' }} onClick={() => {}}>
-              <Icon name="download" /> Download
-            </Menu.Item>
-
             <Menu.Menu position="right">
-              <Menu.Item style={{ opacity: 0.8 }}>Options</Menu.Item>
+              <Dropdown item trigger="Options" upward={true}>
+                <Dropdown.Menu position="right">
+                  <Dropdown.Item text="TODO" icon="upload" />
+                </Dropdown.Menu>
+              </Dropdown>
             </Menu.Menu>
           </Menu>
         </React.Fragment>
@@ -134,13 +140,24 @@ const PagerIcon = ({ onClick, icon, ...rest }) => (
 
 const Pager = styled.div`
   position: absolute;
-  z-index: 100;
-  top: ${props => props.top || '50%'};
+  z-index: ${props => props.zIndex || 100};
+  top: ${props => props.top || '0%'};
+  height: ${props => props.height || '100%'};
+  width: ${props => props.width || '20%'};
   opacity: ${props => props.opacity || 0.5};
+  right: ${props => props.right || null};
+  left: ${props => props.left || null};
 
   :hover {
     cursor: pointer;
     opacity: 1;
+  }
+
+  i {
+    right: ${props => props.right || null};
+    left: ${props => props.left || null};
+    position: absolute;
+    top: 50%;
   }
 `;
 

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import MainContent from './MainContent';
 import withTracker from '../hocs/GoogleAnalytics';

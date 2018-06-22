@@ -1,7 +1,10 @@
+// @flow
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
 
-const LoadingIcon = props => {
+type Props = {};
+
+const LoadingIcon = (props: Props) => {
   return <Icon loading name="spinner" {...props} />;
 };
 

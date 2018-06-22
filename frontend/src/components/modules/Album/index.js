@@ -7,7 +7,7 @@ import { galleryPath } from '../../../lib/paths';
 import { AlbumsApi } from '../../../services';
 import { setAlbum, deleteAlbum } from '../../../actions';
 import { connect } from 'react-redux';
-import { buildDataMap } from '../../../reducers/gallery';
+import { buildDataMap } from '../../../reducers/gallery/util';
 import { ALL_PHOTOS_IMAGE_HEIGHT } from '../../../constants/gallerySizes';
 import type { Image } from '../../../meta/types/Image';
 

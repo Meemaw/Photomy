@@ -1,9 +1,12 @@
+// @flow
 import React from 'react';
 import { Menu, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { loginPath, registerPath } from '../../../../lib/paths';
 
-const AuthMenu = props => {
+type Props = {};
+
+const AuthMenu = (props: Props) => {
   const { pathname } = window.location;
   return (
     <Menu.Item position="right">

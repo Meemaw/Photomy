@@ -1,3 +1,5 @@
+import logging
+
 from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
 from django.conf import settings
 from django.http import Http404
@@ -8,8 +10,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .serializers import UserSerializer
-
-import logging
 
 logger = logging.getLogger(__name__)
 

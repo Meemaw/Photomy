@@ -10,7 +10,7 @@ import {
 import { Link } from 'react-router-dom';
 
 type Props = { renderContent: Function, search: String };
-type State = { activeItem: ?string };
+type State = { activeItem: string };
 
 class Settings extends React.Component<Props, State> {
   constructor(props: Props) {

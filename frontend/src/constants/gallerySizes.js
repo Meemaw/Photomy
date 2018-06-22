@@ -1,3 +1,4 @@
+// @flow
 export const NAVBAR_HEIGHT = '55px';
 
 export const ALL_PHOTOS_IMAGE_HEIGHT = 150;

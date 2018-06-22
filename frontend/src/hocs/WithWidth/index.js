@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Visibility } from 'semantic-ui-react';
 
 const withWidth = WrappedComponent => {

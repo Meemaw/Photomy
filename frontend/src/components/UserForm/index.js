@@ -1,3 +1,4 @@
+// @flow
 import UserForm from './UserForm';
 import { withFormik } from 'formik';
 import { UserAuthApi } from '../../services';

@@ -1,8 +1,11 @@
+// @flow
 import React from 'react';
 import DesktopContainer from './Desktop';
 import MobileContainer from './Mobile';
 
-const Navbar = props => {
+type Props = { children: any, location: Object };
+
+const Navbar = (props: Props) => {
   return (
     <div style={{ height: '100vh' }}>
       <DesktopContainer {...props}>{props.children}</DesktopContainer>

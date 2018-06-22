@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { loginPath } from '../../../lib/paths';
@@ -5,20 +6,18 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AuthApi } from '../../../services';
 import { authorize } from '../../../actions';
+import type { User } from '../../../meta/types/User';
 
-function mapStateToProps(state) {
-  return {
-    authUser: state.auth.user,
-    isLoggedIn: state.auth.isLoggedIn,
-    isAuthorized: state.auth.isAuthorized,
-  };
-}
-
-const mapDispatchToProps = {
-  authorize,
+type Props = {
+  authorize: Function,
+  authUser: User,
+  isAuthorized: boolean,
+  isLoggedIn: boolean,
+  component: any,
 };
+type State = {};
 
-class AuthRoute extends React.Component {
+class AuthRoute extends React.Component<Props, State> {
   render() {
     const {
       authorize,
@@ -50,6 +49,18 @@ class AuthRoute extends React.Component {
     return <Route {...rest} render={props => <Component {...props} />} />;
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    authUser: state.auth.user,
+    isLoggedIn: state.auth.isLoggedIn,
+    isAuthorized: state.auth.isAuthorized,
+  };
+}
+
+const mapDispatchToProps = {
+  authorize,
+};
 
 export default withRouter(
   connect(

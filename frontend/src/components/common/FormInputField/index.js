@@ -1,5 +1,8 @@
+// @flow
 import React from 'react';
 import { Form, Label } from 'semantic-ui-react';
+
+type AnyProps = any;
 
 const FormInputField = ({
   errors,
@@ -12,7 +15,7 @@ const FormInputField = ({
   loading,
   type,
   ...rest
-}) => {
+}: AnyProps) => {
   return (
     <Form.Field error={errors[fieldName] ? true : false} style={{ textAlign: 'left' }}>
       {errors[fieldName] && (
@@ -41,7 +44,7 @@ FormInputField.defaultProps = {
   errors: {},
 };
 
-export const EmailFormField = props => {
+export const EmailFormField = (props: AnyProps) => {
   return (
     <FormInputField
       fluid
@@ -57,7 +60,7 @@ export const EmailFormField = props => {
   );
 };
 
-export const PasswordFormField = props => {
+export const PasswordFormField = (props: AnyProps) => {
   return (
     <FormInputField
       fluid

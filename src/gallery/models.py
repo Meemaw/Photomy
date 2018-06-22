@@ -17,9 +17,6 @@ class Image(models.Model):
     width = models.IntegerField()
     height = models.IntegerField()
 
-    rejected_identities = ArrayField(
-        models.IntegerField(), null=True, blank=True)
-
     uploaded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     face_locations = ArrayField(

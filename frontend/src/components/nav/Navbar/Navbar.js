@@ -2,6 +2,7 @@
 import React from 'react';
 import IdentityTab from '../../IdentityTab';
 import AlbumTab from '../../AlbumTab';
+import GalleryImage from '../../Gallery/GalleryImage';
 import { Menu, Header, Dropdown, Icon, Grid, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { NAVBAR_HEIGHT } from '../../../constants/gallerySizes';
@@ -10,7 +11,14 @@ import { onlyUpdateForKeys } from 'recompose';
 import { rootPath, settingsPath, galleryPath } from '../../../lib/paths';
 import { withWidth } from '../../../hocs';
 import { NAVBAR_GALLERY_TYPE_BREAKPOINT } from '../../../constants/breakpoints';
+import { VERSION_INFO } from '../../../version';
 import type { User } from '../../../meta/types/User';
+
+const VERSION_CONTENT = VERSION_INFO.tag
+  ? `Version: ${VERSION_INFO.tag}`
+  : VERSION_INFO.branch
+    ? `${VERSION_INFO.branch} [${VERSION_INFO.commit.substring(0, 8)}]`
+    : 'Local Build';
 
 type Props = {
   galleryType: string,
@@ -80,13 +88,27 @@ const Navbar = ({
           <Dropdown
             item
             trigger={
-              <span>
-                <Icon name="user" />
-                {`Hi ${user.first_name || ' there!'}`}
-              </span>
+              user.avatar ? (
+                <GalleryImage
+                  src={user.avatar}
+                  width="30px"
+                  height="30px"
+                  rounded
+                  style={{ objectFit: 'initial' }}
+                />
+              ) : (
+                <span>
+                  <Icon name="user" />
+                  {`Hi ${user.first_name || ' there!'}`}
+                </span>
+              )
             }
           >
-            <Dropdown.Menu position="right" style={{ marginTop: '0px', zIndex: 200 }}>
+            <Dropdown.Menu
+              position="right"
+              style={{ marginTop: '0px', zIndex: 200, minWidth: '250px' }}
+            >
+              <Dropdown.Header content={VERSION_CONTENT} icon="info circle" />
               <Dropdown.Item
                 text="Settings"
                 icon="settings"

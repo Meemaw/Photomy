@@ -1,7 +1,8 @@
+// @flow
 import L from 'react-loadable';
 import Loading from '../Loading';
 
-function Loadable(opts) {
+function Loadable(opts: Object) {
   return L({
     ...opts,
     delay: 200,

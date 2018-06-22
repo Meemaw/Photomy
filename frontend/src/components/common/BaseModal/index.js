@@ -3,7 +3,6 @@ import * as React from 'react';
 import { omit } from 'lodash';
 import { Modal } from 'semantic-ui-react';
 
-// TODO FIX
 type Props = {
   children: any,
   trigger: any,
@@ -14,6 +13,11 @@ type State = { open: boolean };
 
 class BaseModalContainer extends React.PureComponent<Props, State> {
   state = { open: false };
+
+  static defaultProps = {
+    trigger: (handleOpen: Function) => <div onClick={handleOpen}>Trigger</div>,
+    children: (handleClose: Function) => <div onClick={handleClose}>Handle close</div>,
+  };
 
   handleOpen = () => this.setState({ open: true });
 
