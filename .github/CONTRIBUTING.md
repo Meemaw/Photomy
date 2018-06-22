@@ -36,6 +36,24 @@ cd frontend && yarn
 
 > Note, `yarn` is used because `npm` has unfortunately become unreliable. Get it [here][3].
 
+### Usage
+> To be able to run this application you have to replace enrionment variables in `.env` files located in in [`/src/.env`][.env].
+
+```javascript
+AWS_ACCESS_KEY_ID="AWS_ACCESS_KEY_ID"
+AWS_SECRET_ACCESS_KEY="AWS_SECRET_ACCESS_KEY"
+DJANGO_SECRET_KEY="DJANGO_SECRET_KEY"
+AWS_CLOUDFRONT_DOMAIN="AWS_CLOUDFRONT_DOMAIN"
+TEST_AWS_CLOUDFRONT_DOMAIN="TEST_AWS_CLOUDFRONT_DOMAIN"
+AWS_LAMBDA_SECRET_APP_KEY="AWS_LAMBDA_SECRET_APP_KEY"
+AWS_LAMBDA_SECRET_APP_VALUE="AWS_LAMBDA_SECRET_APP_VALUE"
+EMAIL_HOST_PASSWORD="EMAIL_HOST_PASSWORD"
+EMAIL_HOST_USER="EMAIL_HOST_USER"
+AWS_STORAGE_BUCKET_NAME="AWS_STORAGE_BUCKET_NAME"
+TEST_AWS_STORAGE_BUCKET_NAME="TEST_AWS_STORAGE_BUCKET_NAME"
+```
+
+
 ### Commands
 
 #### Backend
@@ -94,3 +112,5 @@ Code coverage is reported to [codecov][5].
 [3]: https://yarnpkg.com/en/docs/getting-started
 [4]: https://travis-ci.org/Meemaw/Photomy
 [5]: https://codecov.io/gh/Meemaw/Photomy
+[.env]: https://github.com/Meemaw/Photomy/blob/master/src/.env
+[cdn]: https://en.wikipedia.org/wiki/Content_delivery_network
