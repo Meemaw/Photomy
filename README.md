@@ -34,7 +34,7 @@
 
 ### [About][about]
 
-Photomy is scalable, secure and private photo gallery that recognizes people in your images and group them into identities. 
+Photomy is scalable, secure and private photo gallery that recognizes people in your images and groups them together. 
 
 ### [Technologies][technologies]
 
