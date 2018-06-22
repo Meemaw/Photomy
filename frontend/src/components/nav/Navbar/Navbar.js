@@ -2,6 +2,7 @@
 import React from 'react';
 import IdentityTab from '../../IdentityTab';
 import AlbumTab from '../../AlbumTab';
+import GalleryImage from '../../Gallery/GalleryImage';
 import { Menu, Header, Dropdown, Icon, Grid, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { NAVBAR_HEIGHT } from '../../../constants/gallerySizes';
@@ -87,10 +88,20 @@ const Navbar = ({
           <Dropdown
             item
             trigger={
-              <span>
-                <Icon name="user" />
-                {`Hi ${user.first_name || ' there!'}`}
-              </span>
+              user.avatar ? (
+                <GalleryImage
+                  src={user.avatar}
+                  width="30px"
+                  height="30px"
+                  rounded
+                  style={{ objectFit: 'initial' }}
+                />
+              ) : (
+                <span>
+                  <Icon name="user" />
+                  {`Hi ${user.first_name || ' there!'}`}
+                </span>
+              )
             }
           >
             <Dropdown.Menu

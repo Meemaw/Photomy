@@ -6,7 +6,9 @@ type Props = { onClick: Function, loading?: boolean, disabled?: boolean, content
 
 const ActionButton = ({ loading, disabled, onClick, ...rest }: Props) => {
   const actualOnClick = loading || disabled ? null : onClick;
-  return <Button type="submit" {...rest} onClick={actualOnClick} />;
+  return (
+    <Button type="submit" {...rest} onClick={actualOnClick} loading={loading} disabled={disabled} />
+  );
 };
 
 export default ActionButton;

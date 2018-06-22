@@ -20,7 +20,7 @@ class SettingsTab extends React.Component<Props, State> {
 
     return (
       <React.Fragment>
-        <Divider style={{ marginTop: '0px', paddingTop: '0px' }} />
+        <Divider style={{ marginTop: '0px', paddingTop: '0px', marginBottom: '4px' }} />
         <Accordion>
           <Accordion.Title active={open} style={{ cursor: 'auto' }}>
             <List divided relaxed>

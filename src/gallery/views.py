@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from identifier.models import ImageIdentityMatch, IdentityGroup
 from identifier.serializers import ImageIdentityMatchSerializer, IdentitySerializer
 from identifier.tasks import reidify_identity_match
-from .constants import ALBUM_ID, JPEG, PK
+from .constants import ALBUM_ID, JPEG, PK, AVATAR
 from .models import Image, Album
 from .serializers import ImageSerializer, AlbumSerializer, AlbumsSerializer
 
@@ -27,7 +27,7 @@ class AlbumListView(generics.ListCreateAPIView):
     serializer_class = AlbumSerializer
 
     def list(self, request):
-        queryset =  Album.objects.filter(Q(user=self.request.user)).annotate(images_count=Count('images'))
+        queryset = Album.objects.filter(Q(user=self.request.user)).annotate(images_count=Count('images'))
         serializer = AlbumsSerializer(queryset, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -38,6 +38,7 @@ class AlbumDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         album_id = self.kwargs.get(PK)
         return Album.objects.filter(Q(user=self.request.user) & Q(id=album_id))
+
 
 # IDENTITY_MATCH
 class IdentityMatchDetail(generics.UpdateAPIView):
@@ -269,12 +270,16 @@ def _save_image(image, user, extra_data):
         image_upload=f_thumb,
         lqip_upload=lqip_f_thumb)
 
-    f_thumb.close()
-    lqip_f_thumb.close()
-
     if extra_data.get(ALBUM_ID, None):
         album = Album.objects.get(id=extra_data[ALBUM_ID])
         album.images.add(new_image)
         album.save()
+
+    f_thumb.close()
+    lqip_f_thumb.close()
+
+    if extra_data.get(AVATAR, False):
+        user.avatar = new_image
+        user.save()
 
     return new_image
