@@ -26,9 +26,6 @@ class AlbumListView(generics.ListCreateAPIView):
     filter_backends = (filters.OrderingFilter,)
     serializer_class = AlbumSerializer
 
-    def get_queryset(self):
-        return Album.objects.filter(Q(user=self.request.user))
-
     def list(self, request):
         queryset =  Album.objects.filter(Q(user=self.request.user)).annotate(images_count=Count('images'))
         serializer = AlbumsSerializer(queryset, many=True)
@@ -86,6 +83,7 @@ def reject_identity_match(request, pk):
     logger.info("reject_identity_match")
     identity_match = ImageIdentityMatch.objects.select_related('image_id').get(
         Q(image_id__user=request.user) & Q(id=pk))
+    identity_match = _reject_identity_match(identity_match)
 
     reidify_identity_match.delay(identity_match.id)
     return Response(data={}, status=status.HTTP_200_OK)

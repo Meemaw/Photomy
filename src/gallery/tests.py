@@ -2,7 +2,7 @@ from identifier.models import ImageIdentityMatch, IdentityGroup
 from identifier.serializers import IdentityGroupSerializer
 from photomy.test_base import *
 from .models import Image, Album
-from .views import _reject_identity_match, save_image
+from .views import _reject_identity_match, save_image, reject_identity_match
 
 IMAGE_VIEW = reverse('images')
 PEOPLE_VIEW = reverse('people')
@@ -54,26 +54,44 @@ def album(test_user):
     yield Album.objects.create(user=test_user, name='Paris')
 
 
+@pytest.fixture
+def identity_group(test_user):
+    yield IdentityGroup.objects.create(user=test_user, identity=test_user.username)
+
+
 # Mark all tests to use database
 pytestmark = pytest.mark.django_db
 
 
+def test_reject_identity(client, identity_group, test_user, mocker):
+    mocker.patch('identifier.tasks.reidify_identity_match')
+    im1 = Image.objects.create(user=test_user, width=0, height=0)
+    identity_match = ImageIdentityMatch.objects.create(user=test_user, identity_group_id=identity_group,
+                                                       image_id=im1, face_index=0)
+
+    response = client.get(
+        reverse('reject_identity_match', kwargs={'pk': identity_match.id}),
+        **auth_headers(test_user)
+    )
+    assert response.status_code == 200
+    assert len(ImageIdentityMatch.objects.get(id=identity_match.id).rejected_identities) == 1
+    assert ImageIdentityMatch.objects.get(id=identity_match.id).rejected_identities == [
+        identity_match.identity_group_id.id]
+
+
 def test_get_albums(client, test_user):
     albums = [Album.objects.create(user=test_user, name=album_name)
-     for album_name in ALBUM_NAMES]
+              for album_name in ALBUM_NAMES]
 
     album = albums[0]
-    im1 =Image.objects.create(user=test_user, width=0, height=0)
+    im1 = Image.objects.create(user=test_user, width=0, height=0)
     album.images.add(im1)
     album.save()
-
 
     response = client.get(
         ALBUMS_VIEW,
         **auth_headers(test_user)
     )
-
-    print(response.data)
     assert response.status_code == 200
     assert len(response.data) == 3
 
@@ -91,6 +109,7 @@ def test_create_empty_album(client, test_user):
         **auth_headers(test_user)
     )
     assert response.status_code == 201
+
 
 def test_get_album(client, test_user, album):
     response = client.get(
@@ -288,7 +307,7 @@ class IdentityMatchTest(TestCase):
         )
         self.assertEqual(response.status_code, 404)
 
-    def test_reject_identity_match(self):
+    def test_reject_identity_match_helper(self):
         self.assertEqual(self.im2.rejected_identities, None)
 
         _reject_identity_match(self.im2)
