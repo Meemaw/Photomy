@@ -32,6 +32,10 @@
 
 </span>
 
+### [About][about]
+
+Photomy is scalable, secure and private photo gallery that recognizes people in your images and group them into identities. It uses AWS Cloudfront for [CDN][cdn] to achieve high performance image distribution. All images are stored on AWS S3 and are protected with AWS Lambda that is responsible for authorization.
+
 ### [Contributing][contributing]
 
 Our [CONTRIBUTING.md][contributing] is a step-by-step setup and development guide.
@@ -55,3 +59,5 @@ Contributions of any kind welcome!
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [contributors]: https://github.com/Meemaw/Photomy#contributors
+[about]: https://github.com/Meemaw/Photomy#about
+[cdn]: https://en.wikipedia.org/wiki/Content_delivery_network
