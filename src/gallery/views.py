@@ -267,7 +267,7 @@ def _save_image(image, user, extra_data):
     width, height = image.size
 
     processing_status = ProcessingStatus.INITIAL if is_truthy(
-        extra_data[RECOGNIZE_PEOPLE]) else ProcessingStatus.USER_DISABLED
+        extra_data.get(RECOGNIZE_PEOPLE, False)) else ProcessingStatus.USER_DISABLED
 
     lqip_f_thumb = get_lqip(image, image_id, user)
 
