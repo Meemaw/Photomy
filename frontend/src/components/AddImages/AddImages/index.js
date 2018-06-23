@@ -3,7 +3,6 @@ import * as React from 'react';
 import AddImages from './AddImages';
 import { ImagesApi, AlbumsApi } from '../../../services';
 import { albumsPath } from '../../../lib/paths';
-import { toFormData } from '../../../lib/form';
 
 type Props = {
   handleClose: Function,
