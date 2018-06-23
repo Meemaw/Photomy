@@ -13,6 +13,7 @@
 *.pyc
 *.pyo
 *pytest_cache*
+*.ipynb
 
 ### Frontend ###
 */node_modules/*
