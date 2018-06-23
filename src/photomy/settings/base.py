@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'storages',
+    'corsheaders',
     'authentication.apps.AuthenticationConfig',
     'gallery.apps.GalleryConfig',
     'identifier.apps.IdentifierConfig',
