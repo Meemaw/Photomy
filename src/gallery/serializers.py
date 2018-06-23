@@ -1,3 +1,5 @@
+import json
+from enum import Enum
 from rest_framework import serializers
 
 from .models import Image, Album
@@ -20,7 +22,7 @@ class ImageSerializer(serializers.ModelSerializer):
                 "favorite": obj.favorite,
                 "preview_url": preview_location,
                 "taken_on": obj.taken_on,
-                "processing_status": obj.processing_status
+                "processing_status": str(obj.processing_status)
                 }
 
 
