@@ -37,7 +37,7 @@ cd frontend && yarn
 > Note, `yarn` is used because `npm` has unfortunately become unreliable. Get it [here][3].
 
 ### Usage
-> To be able to run this application you have to replace enrionment variables in `.env` files located in in [`/src/.env`][.env].
+> To be able to run this application locally you have to replace enrionment variables in `.env` file located in in [`/src/.env`][.env].
 
 ```javascript
 AWS_ACCESS_KEY_ID="AWS_ACCESS_KEY_ID"
