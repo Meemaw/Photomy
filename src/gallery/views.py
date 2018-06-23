@@ -278,6 +278,7 @@ def _save_image(image, user, extra_data):
         height=height,
         image_upload=f_thumb,
         lqip_upload=lqip_f_thumb,
+        taken_on=extra_data.get('taken_on', None),
         processing_status=processing_status)
 
     if extra_data.get(ALBUM_ID, None):

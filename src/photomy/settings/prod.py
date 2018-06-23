@@ -2,6 +2,7 @@ from .docker import *
 
 DEBUG = False
 CORS_ORIGIN_ALLOW_ALL = False
+ALLOWED_HOSTS = ['.photomy.si']
 CORS_ORIGIN_WHITELIST = (
     'photomy.si',
 )

@@ -18,7 +18,9 @@ class ImageSerializer(serializers.ModelSerializer):
                 "width": obj.width,
                 "height": obj.height,
                 "favorite": obj.favorite,
-                "preview_url": preview_location
+                "preview_url": preview_location,
+                "taken_on": obj.taken_on,
+                "processing_status": obj.processing_status
                 }
 
 
