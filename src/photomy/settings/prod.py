@@ -2,9 +2,10 @@ from .docker import *
 
 DEBUG = False
 CORS_ORIGIN_ALLOW_ALL = False
-ALLOWED_HOSTS = ['photomy.si']
+ALLOWED_HOSTS = ['photomy.si', 'services.photomy.si']
 CORS_ORIGIN_WHITELIST = (
     'photomy.si',
+    'services.photomy.si'
 )
 
 EMAIL_CONFIRMATION_REDIRECT_URL = "http://photomy.si/confirmed"
