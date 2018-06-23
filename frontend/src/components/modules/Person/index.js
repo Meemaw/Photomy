@@ -151,8 +151,10 @@ class PersonContainer extends React.Component<Props, State> {
     const { unconfirmedImages, count, updatedAt, friends, images } = this.state;
     const { identity } = this.props;
 
+    const isEmpty = images.length === 0 && updatedAt !== null;
+
     return (
-      <Gallery>
+      <Gallery isEmpty={isEmpty}>
         <Person
           images={images}
           count={count}
