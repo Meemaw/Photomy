@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 type Props = {
   disabled?: boolean,
-  accept: string,
+  accept?: string,
   error?: string,
   handleAcceptedFiles: Function,
 };

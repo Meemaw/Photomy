@@ -1,7 +1,8 @@
 // @flow
+import EventEmitter from 'events';
 import { injectParameters } from './urls';
 import { getAccessToken } from './auth';
-import EventEmitter from 'events';
+import { toFormData } from './form';
 
 class Api extends EventEmitter {
   GET = this._makeMethod('GET');
@@ -24,7 +25,7 @@ class Api extends EventEmitter {
           headers['Content-Type'] = 'application/json';
           body = JSON.stringify(data);
         } else if (hasBody && filesUpload) {
-          body = data;
+          body = toFormData(data);
         }
 
         if (withAuth) {

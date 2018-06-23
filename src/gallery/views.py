@@ -13,7 +13,8 @@ from rest_framework.response import Response
 from identifier.models import ImageIdentityMatch, IdentityGroup
 from identifier.serializers import ImageIdentityMatchSerializer, IdentitySerializer
 from identifier.tasks import reidify_identity_match
-from .constants import ALBUM_ID, JPEG, PK, AVATAR
+from .constants import ALBUM_ID, JPEG, PK, AVATAR, RECOGNIZE_PEOPLE, ProcessingStatus
+
 from .models import Image, Album
 from .serializers import ImageSerializer, AlbumSerializer, AlbumsSerializer
 
@@ -27,7 +28,8 @@ class AlbumListView(generics.ListCreateAPIView):
     serializer_class = AlbumSerializer
 
     def list(self, request):
-        queryset = Album.objects.filter(Q(user=self.request.user)).annotate(images_count=Count('images'))
+        queryset = Album.objects.filter(Q(user=self.request.user)).annotate(
+            images_count=Count('images'))
         serializer = AlbumsSerializer(queryset, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -238,7 +240,7 @@ def handle_image_upload(image, user, extra_data):
 
 def get_lqip(image, image_id, user, size=(300, 300)):
     file_name = str(image_id) + '_' + str(user.id) + \
-                '.preview.' + image.format
+        '.preview.' + image.format
     lqip_f_thumb = storage.open(file_name, "w")
 
     optimized_image = image.copy()
@@ -253,12 +255,19 @@ def save_image(image, user, extra_data=None):
     return _save_image(image, user, extra_data)
 
 
+def is_truthy(value):
+    return value == True or value == 'True' or value == 'true'
+
+
 def _save_image(image, user, extra_data):
     image_id = uuid.uuid4()
     file_name = str(image_id) + '_' + str(user.id) + '.' + image.format
     f_thumb = storage.open(file_name, "w")
     image.save(f_thumb, JPEG)
     width, height = image.size
+
+    processing_status = ProcessingStatus.INITIAL if is_truthy(
+        extra_data[RECOGNIZE_PEOPLE]) else ProcessingStatus.USER_DISABLED
 
     lqip_f_thumb = get_lqip(image, image_id, user)
 
@@ -268,7 +277,8 @@ def _save_image(image, user, extra_data):
         width=width,
         height=height,
         image_upload=f_thumb,
-        lqip_upload=lqip_f_thumb)
+        lqip_upload=lqip_f_thumb,
+        processing_status=processing_status)
 
     if extra_data.get(ALBUM_ID, None):
         album = Album.objects.get(id=extra_data[ALBUM_ID])

@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator
 from django.db import models
+from .constants import ProcessingStatus
 
 
 class Image(models.Model):
@@ -17,8 +18,13 @@ class Image(models.Model):
     width = models.IntegerField()
     height = models.IntegerField()
 
+    processing_status = models.CharField(
+        max_length=30, choices=[(tag, tag.value) for tag in ProcessingStatus], default=ProcessingStatus.INITIAL)
+
     uploaded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    taken_on = models.DateTimeField(null=True)
+
     face_locations = ArrayField(
         ArrayField(
             models.IntegerField(validators=[MinValueValidator(0)]),

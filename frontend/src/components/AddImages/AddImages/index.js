@@ -3,6 +3,7 @@ import * as React from 'react';
 import AddImages from './AddImages';
 import { ImagesApi, AlbumsApi } from '../../../services';
 import { albumsPath } from '../../../lib/paths';
+import { toFormData } from '../../../lib/form';
 
 type Props = {
   handleClose: Function,
@@ -47,12 +48,12 @@ class AddImagesContainer extends React.Component<Props, State> {
   };
 
   uploadFile = async (file: File, albumId: ?string): Promise<*> => {
-    const formData = new FormData();
-    formData.append('file', file);
+    const { recognizePeople } = this.state;
+    const payload: Object = { file, recognizePeople };
     if (albumId) {
-      formData.append('albumId', albumId);
+      payload['albumId'] = albumId;
     }
-    return ImagesApi.upload_image_file(formData, true);
+    return ImagesApi.upload_image_file(payload, true);
   };
 
   uploadLink = async (image_url: string, albumId: ?string): Promise<*> => {

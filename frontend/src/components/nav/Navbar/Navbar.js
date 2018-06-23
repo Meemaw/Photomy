@@ -12,6 +12,7 @@ import { rootPath, settingsPath, galleryPath } from '../../../lib/paths';
 import { withWidth } from '../../../hocs';
 import { NAVBAR_GALLERY_TYPE_BREAKPOINT } from '../../../constants/breakpoints';
 import { VERSION_INFO } from '../../../version';
+import { GITHUB_RELEASES } from '../../../constants/links';
 import type { User } from '../../../meta/types/User';
 
 const VERSION_CONTENT = VERSION_INFO.tag
@@ -108,7 +109,12 @@ const Navbar = ({
               position="right"
               style={{ marginTop: '0px', zIndex: 200, minWidth: '250px' }}
             >
-              <Dropdown.Header content={VERSION_CONTENT} icon="info circle" />
+              <Dropdown.Header
+                content={VERSION_CONTENT}
+                icon="info circle"
+                onClick={() => window.open(GITHUB_RELEASES, '_blank')}
+                className="Hoverable"
+              />
               <Dropdown.Item
                 text="Settings"
                 icon="settings"
