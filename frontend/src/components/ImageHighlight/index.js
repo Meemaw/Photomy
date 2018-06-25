@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import ImageHighlight from './ImageHighlight';
-import { setAuthUser } from '../../actions';
+import { setAuthUser, setAlbumCoverImageAction } from '../../actions';
 import { connect } from 'react-redux';
 import { withHover } from '../../hocs';
 import { ImagesApi, UserAuthApi, AlbumsApi } from '../../services';
@@ -15,6 +15,7 @@ type Props = {
   favoriteImage?: Function,
   setAuthUser: Function,
   removeFromAlbum?: ?Function,
+  setAlbumCoverImageAction: Function,
 };
 
 type State = {
@@ -42,6 +43,11 @@ class ImageHighlightContainer extends React.Component<Props, State> {
       this.props.removeFromAlbum(imageId);
     }
     this.props.handleClose();
+  };
+
+  setAsAlbumCoverPhoto = async (albumId: string, imageId: string) => {
+    const image = await AlbumsApi.setCoverImage({ albumId, image_id: imageId });
+    this.props.setAlbumCoverImageAction(albumId, image.image_url);
   };
 
   setRenderInformation = (renderInformation: boolean) => this.setState({ renderInformation });
@@ -92,6 +98,7 @@ class ImageHighlightContainer extends React.Component<Props, State> {
         handleAddToAlbumOpen={this.handleAddToAlbumOpen}
         handleAddToAlbumClose={this.handleAddToAlbumClose}
         removeFromAlbum={this.removeFromAlbum}
+        setAsAlbumCoverPhoto={this.setAsAlbumCoverPhoto}
       />
     );
   }
@@ -99,6 +106,7 @@ class ImageHighlightContainer extends React.Component<Props, State> {
 
 const mapDispatchToProps = {
   setAuthUser,
+  setAlbumCoverImageAction,
 };
 
 export default withHover(

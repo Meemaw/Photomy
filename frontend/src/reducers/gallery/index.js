@@ -15,9 +15,14 @@ import {
   updateIdentity,
   updateImage,
 } from './util';
-import type { GalleryState } from '../../meta/types/GalleryState';
+import {
+  deleteAlbumFromImages,
+  addAlbumToImages,
+  setImagesAlbumCover,
+} from '../../meta/types/Image';
+import type { Gallery } from '../../meta/types/Gallery';
 
-export const INITIAL_STATE: GalleryState = GALLERY_REDUCERS.reduce((galleries, gallery) => {
+export const INITIAL_STATE: Object = GALLERY_REDUCERS.reduce((galleries, gallery) => {
   galleries[gallery.galleryType] = {
     count: 0,
     images: [],
@@ -31,8 +36,40 @@ export const INITIAL_STATE: GalleryState = GALLERY_REDUCERS.reduce((galleries, g
   return galleries;
 }, {});
 
-const gallery = (state: GalleryState = INITIAL_STATE, action: any) => {
+const applyToEach = (state: Object, f: Function, args: any) => {
+  return Object.entries(state).reduce((newState, pair) => {
+    const [galleryType, gallery] = pair;
+    newState[galleryType] = f(gallery, args);
+    return newState;
+  }, {});
+};
+
+const removeAlbumFromGallery = (gallery: Gallery, { albumId }: Object) => {
+  const updatedImages = deleteAlbumFromImages(gallery.images, albumId);
+  return { ...gallery, images: updatedImages, dataMap: buildDataMap(updatedImages) };
+};
+
+const addAlbumToGalleryImage = (gallery: Gallery, { album, image }: Object) => {
+  const updatedImages = addAlbumToImages(gallery.images, album, image);
+  return { ...gallery, images: updatedImages, dataMap: buildDataMap(updatedImages) };
+};
+
+const setAlbumsCoverImageUrlToGallery = (
+  gallery: Gallery,
+  { albumId, cover_image_url }: Object,
+) => {
+  const updatedImages = setImagesAlbumCover(gallery.images, albumId, cover_image_url);
+  return { ...gallery, iamges: updatedImages, dataMap: buildDataMap(updatedImages) };
+};
+
+const gallery = (state: Object = INITIAL_STATE, action: any) => {
   switch (action.type) {
+    case actionTypes.SET_ALBUM_COVER_IMAGE:
+      return applyToEach(state, setAlbumsCoverImageUrlToGallery, action);
+    case actionTypes.DELETE_ALBUM_GALLERIES:
+      return applyToEach(state, removeAlbumFromGallery, action);
+    case actionTypes.ADD_ALBUM_TO_IMAGE:
+      return applyToEach(state, addAlbumToGalleryImage, action);
     case actionTypes.UPDATE_IMAGE:
       return {
         ...state,

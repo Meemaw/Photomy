@@ -7,6 +7,7 @@ import Gallery from '../../Gallery';
 import ImageHighlightModal from '../../ImageHighlightModal';
 import MergeIdentities from '../../MergeIdentities';
 import type { Image } from '../../../meta/types/Image';
+import { mapImages } from '../../../meta/types/Image';
 import { ImagesApi, IdentityApi } from '../../../services';
 import { connect } from 'react-redux';
 import { setIdentity } from '../../../actions';
@@ -75,8 +76,10 @@ class PersonContainer extends React.Component<Props, State> {
     const friends = await IdentityApi.getNeighbours({ identity_id });
     const data = await ImagesApi.person({ identity_id });
     const identity = await IdentityApi.get({ identity_id });
-    const confirmedPictures = data.results.filter(image => image.confirmed);
-    const unconfirmedImages = data.results.filter(image => !image.confirmed);
+    const results = mapImages(data.results);
+
+    const confirmedPictures = results.filter(image => image.confirmed);
+    const unconfirmedImages = results.filter(image => !image.confirmed);
 
     this.dataMap = buildDataMap(confirmedPictures);
 

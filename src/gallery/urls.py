@@ -12,6 +12,8 @@ urlpatterns = [
          views.add_image_to_album, name='add_image_to_album'),
     path('albums/<uuid:album_id>/removeImage/<uuid:image_id>',
          views.remove_image_from_album, name='remove_image_from_album'),
+    path('albums/<uuid:album_id>/setCoverImage/<uuid:image_id>',
+         views.set_album_cover_image, name='set_album_cover_image'),
     path('images', views.ImagesList.as_view(), name='images'),
     path('images/<uuid:pk>',
          views.ImageDetails.as_view(), name='image_detail'),

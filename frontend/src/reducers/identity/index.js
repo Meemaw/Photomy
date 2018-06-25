@@ -1,8 +1,8 @@
 // @flow
 import * as actionTypes from '../../constants/actionTypes';
-import { IdentityState } from '../../meta/types/IdentityState';
+import type { IdentityState } from '../../meta/types/IdentityState';
 
-export const INITIAL_STATE: IdentityState = {};
+export const INITIAL_STATE: IdentityState = { identity: null };
 
 const identity = (state: IdentityState = INITIAL_STATE, action: any) => {
   switch (action.type) {

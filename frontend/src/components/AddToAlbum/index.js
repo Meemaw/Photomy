@@ -3,7 +3,7 @@ import * as React from 'react';
 import AddToAlbum from './AddToAlbum';
 import withPush from '../../hocs/Router';
 import { AlbumsApi } from '../../services';
-import { fetchAlbums } from '../../actions';
+import { fetchAlbums, addAlbumToImage } from '../../actions';
 import { connect } from 'react-redux';
 import type { AlbumsState } from '../../meta/types/AlbumsState';
 import type { Image } from '../../meta/types/Image';
@@ -17,6 +17,7 @@ type Props = {
   fetchAlbums: Function,
   image: Image,
   push: Function,
+  addAlbumToImage: Function,
 };
 type State = {};
 
@@ -35,6 +36,7 @@ class AddToAlbumContainer extends React.Component<Props, State> {
     const { image, push } = this.props;
     await AlbumsApi.addImage({ image_id: image.image_id, albumId: album.id });
     push(`${albumsPath}/${album.id}`);
+    this.props.addAlbumToImage(album, image);
   };
 
   render() {
@@ -56,6 +58,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   fetchAlbums,
+  addAlbumToImage,
 };
 
 export default connect(

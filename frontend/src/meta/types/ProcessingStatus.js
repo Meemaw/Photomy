@@ -1,3 +1,4 @@
+// @flow
 export type ProcessingStatus =
   | 'INITIAL'
   | 'IN_QUEUE'

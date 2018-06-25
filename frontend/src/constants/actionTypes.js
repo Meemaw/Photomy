@@ -24,7 +24,11 @@ export const SET_APP_ERROR = 'SET_APP_ERROR';
 // Album
 export const SET_ALBUM = 'SET_ALBUM';
 export const SET_ALBUM_DELETING = 'SET_ALBUM_DELETING';
+export const DELETE_ALBUM_GALLERIES = 'DELETE_ALBUM_GALLERIES';
 
 // Albums
 export const SET_ALBUMS_FETCHING = 'SET_ALBUMS_FETCHING';
 export const SET_ALBUMS = 'SET_ALBUMS';
+export const ADD_ALBUM = 'ADD_ALBUM';
+export const ADD_ALBUM_TO_IMAGE = 'ADD_ALBUM_TO_IMAGE';
+export const SET_ALBUM_COVER_IMAGE = 'SET_ALBUM_COVER_IMAGE';

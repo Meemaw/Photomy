@@ -60,4 +60,5 @@ export const AlbumsApi = {
   patch: PATCH(`${CONFIG.services.baseUrl}/gallery/albums/:albumId`),
   addImage: POST(`${CONFIG.services.baseUrl}/gallery/albums/:albumId/addImage/:image_id`),
   removeImage: DELETE(`${CONFIG.services.baseUrl}/gallery/albums/:albumId/removeImage/:image_id`),
+  setCoverImage: POST(`${CONFIG.services.baseUrl}/gallery/albums/:albumId/setCoverImage/:image_id`),
 };

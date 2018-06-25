@@ -1,8 +1,31 @@
 // @flow
 import * as actionTypes from '../../constants/actionTypes';
+import { mapAlbums } from '../../meta/types/Album';
 import { AlbumsApi } from '../../services';
 import type { Album } from '../../meta/types/Album';
-import type { Image } from '../../meta/types/Image';
+
+export const addAlbumAction = (album: Album) => {
+  return {
+    type: actionTypes.ADD_ALBUM,
+    album,
+  };
+};
+
+export const setAlbumCoverImageAction = (albumId: string, cover_image_url: string) => {
+  return {
+    type: actionTypes.SET_ALBUM_COVER_IMAGE,
+    albumId,
+    cover_image_url,
+  };
+};
+
+export const addAlbumToImage = (album: Album, image: Image) => {
+  return {
+    type: actionTypes.ADD_ALBUM_TO_IMAGE,
+    album,
+    image,
+  };
+};
 
 export const setAlbumsFetching = (albumsFetching: boolean) => {
   return {
@@ -25,20 +48,4 @@ export const fetchAlbums = () => {
     dispatch(setAlbums(albums));
     dispatch(setAlbumsFetching(false));
   };
-};
-
-export const mapAlbums = (albums: Array<Album>) => {
-  return albums.map(album => ({
-    ...album,
-    uploaded_at: new Date(album.uploaded_at),
-    images: mapImages(album.images),
-  }));
-};
-
-const mapImages = (images: Array<Image>) => {
-  return images.map(image => ({
-    ...image,
-    taken_on: new Date(image.taken_on),
-    uploaded_at: new Date(image.uploaded_at),
-  }));
 };

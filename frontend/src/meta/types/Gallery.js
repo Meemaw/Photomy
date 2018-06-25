@@ -1,6 +1,9 @@
+// @flow
+import type { Image } from './Image';
+
 export type Gallery = {
   count: number,
-  image: Array<Image>,
+  images: Array<Image>,
   fetchingImages: boolean,
   dataMap: Object,
   next: ?string,

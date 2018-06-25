@@ -35,6 +35,7 @@ type Props = {
   handleAddToAlbumOpen: Function,
   addToAlbumOpen: boolean,
   removeFromAlbum: Function,
+  setAsAlbumCoverPhoto: Function,
 };
 
 // TODO clean code
@@ -63,6 +64,7 @@ const ImageHighlight = ({
   handleAddToAlbumOpen,
   addToAlbumOpen,
   removeFromAlbum,
+  setAsAlbumCoverPhoto,
 }: Props) => {
   const contentStyle = {
     height: `${window.innerHeight - 30}px`,
@@ -172,6 +174,14 @@ const ImageHighlight = ({
                           text="Remove from album"
                           icon="trash"
                           onClick={() => removeFromAlbum(albumId, highlightedImage.image_id)}
+                        />
+                      )}
+
+                      {albumId !== null && (
+                        <Dropdown.Item
+                          text="Set as album cover photo"
+                          icon="image"
+                          onClick={() => setAsAlbumCoverPhoto(albumId, highlightedImage.image_id)}
                         />
                       )}
 

@@ -62,5 +62,5 @@ class Album(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=50, blank=True)
     images = models.ManyToManyField(Image, blank=True, related_name="albums")
-    cover_image = models.OneToOneField(
-        Image, null=True, on_delete=models.SET_NULL, related_name='covered_album')
+    cover_image = models.ForeignKey(
+        Image, null=True, on_delete=models.SET_NULL, related_name='covered_albums')

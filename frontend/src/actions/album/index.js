@@ -9,6 +9,13 @@ export const setAlbum = (album: Object) => {
   };
 };
 
+export const deleteAlbumGalleries = (albumId: string) => {
+  return {
+    type: actionTypes.DELETE_ALBUM_GALLERIES,
+    albumId,
+  };
+};
+
 export const setAlbumDeleting = (albumDeleting: boolean) => {
   return {
     type: actionTypes.SET_ALBUM_DELETING,
@@ -23,7 +30,7 @@ export const deleteAlbum = (album_id: string) => {
     return AlbumsApi.delete({ album_id })
       .then(resp => {
         dispatch(setAlbumDeleting(false));
-        dispatch(setAlbum({}));
+        dispatch(deleteAlbumGalleries(album_id));
       })
       .catch(err => console.log(err));
   };

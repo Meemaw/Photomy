@@ -43,6 +43,17 @@ class AlbumDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 @api_view(['POST'])
+def set_album_cover_image(request, album_id, image_id):
+    album = Album.objects.get(Q(id=album_id) & Q(user=request.user))
+    image = Image.objects.get(Q(id=image_id) & Q(user=request.user))
+
+    album.cover_image = image
+    album.save()
+    serializer = ImageSerializer(image)
+    return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
 def add_image_to_album(request, album_id, image_id):
     album = Album.objects.get(Q(id=album_id) & Q(user=request.user))
     image = Image.objects.get(Q(id=image_id) & Q(user=request.user))
@@ -270,7 +281,7 @@ def handle_image_upload(image, user, extra_data):
 
 def get_lqip(image, image_id, user, size=(300, 300)):
     file_name = str(image_id) + '_' + str(user.id) + \
-        '.preview.' + image.format
+                '.preview.' + image.format
     lqip_f_thumb = storage.open(file_name, "w")
 
     optimized_image = image.copy()
