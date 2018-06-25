@@ -3,7 +3,7 @@ import * as React from 'react';
 import Gallery from '../../Gallery';
 import People from './People';
 import withPush from '../../../hocs/Router';
-import type { Image } from '../../../meta/types/Image';
+import type { ImageIdentityMatch } from '../../../meta/types/ImageIdentityMatch';
 import { connect } from 'react-redux';
 import { ImagesApi } from '../../../services';
 import { peoplePath } from '../../../lib/paths';
@@ -13,7 +13,7 @@ import { fetchImages as fetchImagesAction } from '../../../actions';
 type Props = {
   history: Object,
   push: string => void,
-  images: Array<Image>,
+  images: Array<ImageIdentityMatch>,
   count: number,
   updatedAt: ?Date,
   fetchImages: Function,
@@ -30,7 +30,7 @@ class PeopleContainer extends React.Component<Props, State> {
     }
   }
 
-  handleImageClick = (image: Image) => {
+  handleImageClick = (image: ImageIdentityMatch) => {
     this.props.push(`${peoplePath}/${image.identity_group_id}`);
   };
 

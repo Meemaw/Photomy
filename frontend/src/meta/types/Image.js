@@ -20,7 +20,7 @@ export type Image = {
   albums: Array<Album>,
 };
 
-export const mapImage = (image: Image) => {
+export const mapImage = (image: Image | ImageIdentityMatch) => {
   return {
     ...image,
     taken_on: image.taken_on ? new Date(image.taken_on) : null,
@@ -28,7 +28,7 @@ export const mapImage = (image: Image) => {
   };
 };
 
-export const mapImages = (images: Array<Image>) => {
+export const mapImages = (images: Array<Image | ImageIdentityMatch>) => {
   return images.map(mapImage);
 };
 

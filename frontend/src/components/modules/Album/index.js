@@ -18,6 +18,7 @@ type Props = {
   deleteAlbum: Function,
   push: Function,
 };
+
 type State = { images: Array<Image>, updatedAt: ?Date, name?: string };
 
 const UNTITLED_ALBUM = 'Untitled album';

@@ -4,7 +4,7 @@ import Gallery from '../Gallery';
 import SaveButton from '../common/SaveButton';
 import { Modal, Icon, Button, Message } from 'semantic-ui-react';
 import { IdentityApi, IdentityMatchApi } from '../../services';
-import type { Image } from '../../meta/types/Image';
+import type { ImageIdentityMatch } from '../../meta/types/ImageIdentityMatch';
 import type { Identity } from '../../meta/types/Identity';
 
 type Props = { identity: Identity, addMergedImages: Function, handleClose: Function };
@@ -18,7 +18,7 @@ type State = {
 class MergeIdentities extends React.Component<Props, State> {
   state = { loadingIdentities: true, results: [], join_identity_id: null, merging: false };
 
-  renderImage = (image: Image) => {
+  renderImage = (image: ImageIdentityMatch) => {
     return (
       <Gallery.Image
         src={image.preview_url}
