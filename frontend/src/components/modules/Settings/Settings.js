@@ -60,6 +60,10 @@ class Settings extends React.Component<Props, State> {
             </Menu.Item>
 
             <Menu.Item>
+              <Menu.Header>Gallery</Menu.Header>
+            </Menu.Item>
+
+            <Menu.Item>
               <Menu.Header>Privacy</Menu.Header>
             </Menu.Item>
 

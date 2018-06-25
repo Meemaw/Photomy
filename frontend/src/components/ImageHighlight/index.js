@@ -37,7 +37,7 @@ class ImageHighlightContainer extends React.Component<Props, State> {
   imgRef = null;
 
   removeFromAlbum = async (albumId: string, imageId: string) => {
-    const resp = await AlbumsApi.removeImage({ albumId, image_id: imageId });
+    await AlbumsApi.removeImage({ albumId, image_id: imageId });
     if (this.props.removeFromAlbum) {
       this.props.removeFromAlbum(imageId);
     }

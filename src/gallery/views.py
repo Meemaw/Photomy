@@ -64,6 +64,9 @@ def remove_image_from_album(request, album_id, image_id):
     image = Image.objects.get(Q(id=image_id) & Q(user=request.user))
 
     album.images.remove(image)
+    if album.cover_image and album.cover_image.id == image_id:
+        album.cover_image = None
+
     album.save()
 
     return Response(status=status.HTTP_200_OK)
