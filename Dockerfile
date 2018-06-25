@@ -10,7 +10,6 @@ RUN mkdir /src;
 COPY ./src /src
 
 # Copy deploy scripts
-RUN mkdir /scripts
 COPY /scripts/run_web.sh /src
 COPY /scripts/run_celery.sh /src
 COPY /scripts/run_celery_docker.sh /src
