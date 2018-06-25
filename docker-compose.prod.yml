@@ -3,7 +3,7 @@ version: '3'
 services:
   worker:
     image: meemaw/photomy:${VERSION}
-    entrypoint: /src/scripts/run_celery.sh
+    entrypoint: /src/run_celery.sh
     volumes:
       - /home/ubuntu/photomy/src/.env:/src/.env
   db:
