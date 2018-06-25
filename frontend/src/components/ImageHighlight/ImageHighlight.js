@@ -1,12 +1,16 @@
 // @flow
 import * as React from 'react';
 import styled from 'styled-components';
+import LoadingIcon from '../common/LoadingIcon';
 import GalleryImage from '../Gallery/GalleryImage';
-import { Modal, Icon, Menu, Dropdown } from 'semantic-ui-react';
+import ImageHighlightDetails from '../ImageHighlightDetails';
+import AddToAlbum from '../AddToAlbumModal';
+import { enterFullscren } from '../../lib/document';
+import { Modal, Icon, Menu, Dropdown, Sidebar, Dimmer } from 'semantic-ui-react';
 import { withHover } from '../../hocs';
 import { toReadableHighlightDate } from '../../lib/date';
+import { isAlbumPath } from '../../lib/paths';
 import type { Image } from '../../meta/types/Image';
-import LoadingIcon from '../common/LoadingIcon';
 
 type Props = {
   highlightedImage: Image,
@@ -21,12 +25,20 @@ type Props = {
   handleDelete: void => void,
   handleFavorite: Function,
   favoriting: boolean,
+  handleRef: Function,
+  imgRef: ?React.Node,
+  setRenderInformation: Function,
+  renderInformation: boolean,
+  settingAsAvatar: boolean,
+  setAsAvatar: Function,
+  handleAddToAlbumClose: Function,
+  handleAddToAlbumOpen: Function,
+  addToAlbumOpen: boolean,
+  removeFromAlbum: Function,
 };
 
-// TODO better UI
-// TODO identity if known
 // TODO clean code
-// TODO improve handle delete
+// TODO handle hover with css
 
 const ImageHighlight = ({
   highlightedImage,
@@ -41,74 +53,143 @@ const ImageHighlight = ({
   handleDelete,
   handleFavorite,
   favoriting,
+  imgRef,
+  handleRef,
+  renderInformation,
+  setRenderInformation,
+  settingAsAvatar,
+  setAsAvatar,
+  handleAddToAlbumClose,
+  handleAddToAlbumOpen,
+  addToAlbumOpen,
+  removeFromAlbum,
 }: Props) => {
-  const contentStyle = { height: `${window.innerHeight - 30}px`, background: '#000' };
+  const contentStyle = {
+    height: `${window.innerHeight - 30}px`,
+    background: '#000',
+    display: 'flex',
+  };
   const src = highlightedImage.image_url;
-
-  hovered = true;
-
+  const albumId = isAlbumPath(window.location.pathname);
   return (
-    <Modal.Content style={contentStyle}>
-      <GalleryImage src={src} height="100%" width="100%" withPlaceholder={false} />
+    <Sidebar.Pushable as={Modal.Content} style={contentStyle}>
+      <Sidebar
+        animation="scale down"
+        style={{ width: '280px' }}
+        direction="right"
+        visible={renderInformation}
+      >
+        <ImageHighlightDetails
+          image={highlightedImage}
+          setRenderInformation={setRenderInformation}
+        />
+      </Sidebar>
+      <Sidebar.Pusher style={{ width: '100%' }}>
+        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+          <Dimmer.Dimmable dimmed={addToAlbumOpen} style={{ height: '100%' }} blurring>
+            <GalleryImage
+              src={src}
+              height="100%"
+              width="100%"
+              withPlaceholder={false}
+              handleRef={handleRef}
+            />
+            <Dimmer active={addToAlbumOpen} />
+          </Dimmer.Dimmable>
 
-      {hovered && (
-        <React.Fragment>
-          <div style={backgroundStyle}>
-            <p
-              style={{ fontSize: '21px', lineHeight: '1.28', marginBottom: '6px', color: 'white' }}
-              onClick={handleClose}
-            >
-              {highlightHeaderProvider()}
-            </p>
-            <p style={{ color: 'rgba(255, 255, 255, .5)', fontSize: '14px' }}>{`${imageSelectedIx +
-              1} of ${count} | ${toReadableHighlightDate(
-              new Date(highlightedImage.uploaded_at),
-            )}`}</p>
-          </div>
-          <PagerIcon
-            onClick={handleClose}
-            icon="remove"
-            width="null"
-            right="5px"
-            top="10px"
-            height="null"
-            zIndex={1000}
-          />
-          <PagerIcon onClick={handleLeftClick} icon="chevron left" left="0px" />
-          <PagerIcon onClick={handleRightClick} icon="chevron right" right="0px" />
+          {(hovered || addToAlbumOpen) && (
+            <React.Fragment>
+              <div style={backgroundStyle}>
+                <p
+                  style={{
+                    fontSize: '21px',
+                    lineHeight: '1.28',
+                    marginBottom: '6px',
+                    color: 'white',
+                  }}
+                  onClick={handleClose}
+                >
+                  {highlightHeaderProvider()}
+                </p>
+                <p
+                  style={{ color: 'rgba(255, 255, 255, .5)', fontSize: '14px' }}
+                >{`${imageSelectedIx + 1} of ${count} | ${toReadableHighlightDate(
+                  highlightedImage.taken_on || highlightedImage.uploaded_at,
+                )}`}</p>
+              </div>
+              <PagerIcon
+                onClick={handleClose}
+                icon="remove"
+                width="null"
+                right="5px"
+                top="10px"
+                height="null"
+                zIndex={1000}
+              />
+              <PagerIcon onClick={handleLeftClick} icon="chevron left" left="0px" />
+              <PagerIcon onClick={handleRightClick} icon="chevron right" right="0px" />
 
-          <Menu inverted secondary style={menuStyle}>
-            <Menu.Item style={{ color: 'white' }} onClick={handleFavorite}>
-              {!favoriting ? (
-                <React.Fragment>
-                  <Icon name="favorite" color={highlightedImage.favorite ? 'yellow' : null} />{' '}
-                  Favorite
-                </React.Fragment>
-              ) : (
-                <LoadingIcon />
-              )}
-            </Menu.Item>
-            <Menu.Item style={{ color: 'white' }} onClick={handleDelete}>
-              {!deleting ? (
-                <React.Fragment>
-                  <Icon name="trash" /> Delete
-                </React.Fragment>
-              ) : (
-                <LoadingIcon />
-              )}
-            </Menu.Item>
+              <Menu inverted secondary style={menuStyle}>
+                <Menu.Item style={{ color: 'white' }} onClick={handleFavorite}>
+                  {!favoriting ? (
+                    <React.Fragment>
+                      <Icon name="favorite" color={highlightedImage.favorite ? 'yellow' : null} />{' '}
+                      Favorite
+                    </React.Fragment>
+                  ) : (
+                    <LoadingIcon />
+                  )}
+                </Menu.Item>
+                <Menu.Item style={{ color: 'white' }} onClick={handleDelete}>
+                  {!deleting ? (
+                    <React.Fragment>
+                      <Icon name="trash" /> Delete
+                    </React.Fragment>
+                  ) : (
+                    <LoadingIcon />
+                  )}
+                </Menu.Item>
 
-            <Menu.Menu position="right">
-              <Dropdown item trigger="Options" upward={true}>
-                <Dropdown.Menu position="right">
-                  <Dropdown.Item text="TODO" icon="upload" />
-                </Dropdown.Menu>
-              </Dropdown>
-            </Menu.Menu>
-          </Menu>
-        </React.Fragment>
-      )}
-    </Modal.Content>
+                <Menu.Item
+                  content="Details"
+                  icon="info circle"
+                  onClick={() => setRenderInformation(renderInformation ? false : true)}
+                />
+
+                <Menu.Menu position="right">
+                  <Dropdown item trigger="More options" upward={true}>
+                    <Dropdown.Menu position="right">
+                      <Dropdown.Item
+                        text="Fullscreen"
+                        icon="image"
+                        onClick={() => enterFullscren(imgRef)}
+                      />
+
+                      <Dropdown.Item text="Set as avatar" icon="user" onClick={setAsAvatar} />
+
+                      {albumId !== null && (
+                        <Dropdown.Item
+                          text="Remove from album"
+                          icon="trash"
+                          onClick={() => removeFromAlbum(albumId, highlightedImage.image_id)}
+                        />
+                      )}
+
+                      <AddToAlbum
+                        open={addToAlbumOpen}
+                        handleClose={handleAddToAlbumClose}
+                        handleOpen={handleAddToAlbumOpen}
+                        image={highlightedImage}
+                      />
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Menu.Menu>
+              </Menu>
+            </React.Fragment>
+          )}
+        </div>
+      </Sidebar.Pusher>
+    </Sidebar.Pushable>
   );
 };
 

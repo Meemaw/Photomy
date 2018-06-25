@@ -42,6 +42,33 @@ class AlbumDetailView(generics.RetrieveUpdateDestroyAPIView):
         return Album.objects.filter(Q(user=self.request.user) & Q(id=album_id))
 
 
+@api_view(['POST'])
+def add_image_to_album(request, album_id, image_id):
+    album = Album.objects.get(Q(id=album_id) & Q(user=request.user))
+    image = Image.objects.get(Q(id=image_id) & Q(user=request.user))
+
+    if not album.images.filter(id=image_id).exists():
+        album.images.add(image)
+
+    if not album.cover_image:
+        album.cover_image = image
+
+    album.save()
+
+    return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['DELETE'])
+def remove_image_from_album(request, album_id, image_id):
+    album = Album.objects.get(Q(id=album_id) & Q(user=request.user))
+    image = Image.objects.get(Q(id=image_id) & Q(user=request.user))
+
+    album.images.remove(image)
+    album.save()
+
+    return Response(status=status.HTTP_200_OK)
+
+
 # IDENTITY_MATCH
 class IdentityMatchDetail(generics.UpdateAPIView):
     serializer_class = ImageIdentityMatchSerializer

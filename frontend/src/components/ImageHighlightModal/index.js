@@ -15,6 +15,7 @@ type Props = {
   triggerImageMaxHeight: number,
   deleteImage?: Function,
   favoriteImage?: Function,
+  removeFromAlbum?: ?Function,
 };
 
 type State = { imageSelectedIx: number };
@@ -63,7 +64,13 @@ class ImageHighlightModal extends React.PureComponent<Props, State> {
 
   render() {
     const { imageSelectedIx } = this.state;
-    const { images, highlightHeaderProvider, deleteImage, favoriteImage } = this.props;
+    const {
+      images,
+      highlightHeaderProvider,
+      deleteImage,
+      favoriteImage,
+      removeFromAlbum,
+    } = this.props;
     const highlightedImage = images[imageSelectedIx];
 
     return (
@@ -79,6 +86,7 @@ class ImageHighlightModal extends React.PureComponent<Props, State> {
             highlightHeaderProvider={highlightHeaderProvider}
             deleteImage={deleteImage}
             favoriteImage={favoriteImage}
+            removeFromAlbum={removeFromAlbum}
           />
         )}
       </BaseModal>

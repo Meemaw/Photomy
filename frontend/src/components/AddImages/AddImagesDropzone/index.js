@@ -26,7 +26,7 @@ const AlbumImagesDropzone = ({
   isDuplicated,
 }: Props) => {
   return (
-    <Segment style={{ width: 'calc(100% - 265px)', marginTop: '0px', marginLeft: '15px' }}>
+    <Segment>
       <AcceptedImages
         acceptedImages={acceptedImages}
         uploadedStatuses={uploadedStatuses}

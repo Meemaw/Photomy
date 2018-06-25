@@ -34,6 +34,7 @@ class AlbumContainer extends React.Component<Props, State> {
     const images = data.images.map(image => ({
       ...image,
       uploaded_at: new Date(image.uploaded_at),
+      taken_on: new Date(image.taken_on),
     }));
 
     this.dataMap = buildDataMap(images);
@@ -41,6 +42,13 @@ class AlbumContainer extends React.Component<Props, State> {
     this.props.setAlbum({ albumId: data.id, albumName: data.name });
     this.setState({ images, updatedAt: new Date(), name: data.name });
   }
+
+  removeFromAlbum = (imageId: string) => {
+    const { images } = this.state;
+    const updatedImages = images.filter(image => image.image_id !== imageId);
+    this.dataMap = buildDataMap(updatedImages);
+    this.setState({ images: updatedImages });
+  };
 
   renderImage = (image: Image): React.Node => {
     const imageIx = this.dataMap[image.image_id].ix;
@@ -52,6 +60,7 @@ class AlbumContainer extends React.Component<Props, State> {
         highlightHeaderProvider={() => this.state.name || UNTITLED_ALBUM}
         images={Object.values(this.dataMap)}
         initialImage={image}
+        removeFromAlbum={this.removeFromAlbum}
       />
     );
   };

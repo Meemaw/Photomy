@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import AddImages from './AddImages';
+import { toUploadFormat } from '../../../lib/date';
 import { ImagesApi, AlbumsApi } from '../../../services';
 import { albumsPath } from '../../../lib/paths';
 
@@ -20,6 +21,9 @@ type State = {
   recognizePeople: boolean,
   isUploading: boolean,
   uploadWithLink: boolean,
+  photosTakenOn: ?Date,
+  isCustomDate: boolean,
+  location: ?string,
 };
 
 const INITIAL_STATE = {
@@ -31,35 +35,34 @@ const INITIAL_STATE = {
   recognizePeople: true,
   isUploading: false,
   uploadWithLink: false,
+  photosTakenOn: null,
+  isCustomDate: false,
+  location: '',
 };
 
 class AddImagesContainer extends React.Component<Props, State> {
   state = INITIAL_STATE;
 
+  setIsCustomDate = (isCustomDate: boolean) => this.setState({ isCustomDate });
   setAlbumQuality = (highQuality: boolean) => this.setState({ highQuality });
   setRecognizePeople = (recognizePeople: boolean) => this.setState({ recognizePeople });
   setIsAlbum = (isAlbum: boolean) => this.setState({ isAlbum });
   setAlbumName = (albumName: string) => this.setState({ albumName });
+  handleDateSelection = (photosTakenOn: ?Date) => this.setState({ photosTakenOn });
+  setLocation = (location: string) => this.setState({ location });
 
   isDuplicated = (src: string) => {
     const { acceptedImages } = this.state;
     return acceptedImages.filter(acceptedImage => acceptedImage.preview === src).length > 0;
   };
 
-  uploadFile = async (file: File, albumId: ?string): Promise<*> => {
-    const { recognizePeople } = this.state;
-    const payload: Object = { file, recognizePeople };
-    if (albumId) {
-      payload['albumId'] = albumId;
-    }
+  uploadFile = async (file: File, extraData: Object): Promise<*> => {
+    const payload: Object = { file, ...extraData };
     return ImagesApi.upload_image_file(payload, true);
   };
 
-  uploadLink = async (image_url: string, albumId: ?string): Promise<*> => {
-    let payload = { image_url };
-    if (albumId) {
-      payload = { ...payload, albumId };
-    }
+  uploadLink = async (image_url: string, extraData: Object): Promise<*> => {
+    let payload = { image_url, ...extraData };
     return ImagesApi.upload_url(payload);
   };
 
@@ -97,21 +100,32 @@ class AddImagesContainer extends React.Component<Props, State> {
 
   uploadImagesToServer = async () => {
     this.setIsUploadingImages(true);
-    const { acceptedImages, uploadedStatuses, isAlbum, albumName } = this.state;
+    const {
+      acceptedImages,
+      uploadedStatuses,
+      isAlbum,
+      albumName,
+      recognizePeople,
+      isCustomDate,
+      photosTakenOn,
+      location,
+    } = this.state;
     const { uploadImages, userId } = this.props;
-    let albumId = null;
+
+    const taken_on: Date = isCustomDate && photosTakenOn ? photosTakenOn : new Date();
+    let extraData: Object = { recognizePeople, taken_on: toUploadFormat(taken_on), location };
 
     if (isAlbum) {
       const album = await AlbumsApi.create({ name: albumName, user: userId });
-      albumId = album.id;
+      extraData.albumId = album.id;
     }
 
     await Promise.all(
       acceptedImages.map(async (file, fileIx) => {
         if (!uploadedStatuses[fileIx]) {
           const promise = file.isLink
-            ? this.uploadLink(file.preview, albumId)
-            : this.uploadFile(file, albumId);
+            ? this.uploadLink(file.preview, extraData)
+            : this.uploadFile(file, extraData);
 
           promise
             .then(resp => {
@@ -128,8 +142,8 @@ class AddImagesContainer extends React.Component<Props, State> {
       }),
     );
 
-    if (albumId) {
-      this.props.push(`${albumsPath}/${albumId}`);
+    if (extraData.albumId) {
+      this.props.push(`${albumsPath}/${extraData.albumId}`);
     } else {
       this.props.handleClose();
     }
@@ -140,8 +154,11 @@ class AddImagesContainer extends React.Component<Props, State> {
       <AddImages
         {...this.state}
         {...this.props}
+        handleDateSelection={this.handleDateSelection}
         setAlbumName={this.setAlbumName}
         setIsAlbum={this.setIsAlbum}
+        setLocation={this.setLocation}
+        setIsCustomDate={this.setIsCustomDate}
         setRecognizePeople={this.setRecognizePeople}
         setAlbumQuality={this.setAlbumQuality}
         uploadImagesToServer={this.uploadImagesToServer}

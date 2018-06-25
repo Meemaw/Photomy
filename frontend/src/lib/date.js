@@ -4,7 +4,7 @@ import subDays from 'date-fns/sub_days';
 import isSameDay from 'date-fns/is_same_day';
 import isAfter from 'date-fns/is_after';
 
-const TODAY = new Date();
+export const TODAY = new Date();
 const TODAY_STR = 'Today';
 
 const YESTERDAY: Date = subDays(TODAY, 1);
@@ -15,6 +15,15 @@ const WEEK_OLD: Date = subDays(TODAY, 7);
 const HOUR_FORMAT: string = 'HH:MM';
 const DAY_FORMAT: string = 'DD MMM YYYY';
 const DAY_HOUR_FORMAT: string = 'DD MMM YYYY HH:MM';
+const UPLOAD_FORMAT: string = 'YYYY-MM-DD HH:MM';
+
+export const toUploadFormat = (date: Date): string => {
+  return toFormatedDate(date, UPLOAD_FORMAT);
+};
+
+export const numDaysInMonth = (month: number, year: number): number => {
+  return new Date(year, month, 0).getDate();
+};
 
 export const toReadableDate = (date: Date): string => {
   if (!date) return '';

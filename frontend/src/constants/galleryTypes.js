@@ -10,3 +10,7 @@ export const GALLERY_TYPES = [
   { galleryType: PEOPLE_GALLERY, icon: 'user', niceName: 'People' },
   { galleryType: ALBUM_GALLERY, icon: 'image', niceName: 'Albums' },
 ];
+
+export const GALLERY_REDUCERS = GALLERY_TYPES.filter(
+  gallery => gallery.galleryType !== ALBUM_GALLERY,
+);

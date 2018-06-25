@@ -1,7 +1,7 @@
 // @flow
 import * as actionTypes from '../../constants/actionTypes';
 import {
-  GALLERY_TYPES,
+  GALLERY_REDUCERS,
   ALL_PHOTOS_GALLERY,
   FAVORITE_GALLERY,
   PEOPLE_GALLERY,
@@ -13,10 +13,11 @@ import {
   buildDataMap,
   fetchingImages,
   updateIdentity,
+  updateImage,
 } from './util';
 import type { GalleryState } from '../../meta/types/GalleryState';
 
-export const INITIAL_STATE: GalleryState = GALLERY_TYPES.reduce((galleries, gallery) => {
+export const INITIAL_STATE: GalleryState = GALLERY_REDUCERS.reduce((galleries, gallery) => {
   galleries[gallery.galleryType] = {
     count: 0,
     images: [],
@@ -32,6 +33,11 @@ export const INITIAL_STATE: GalleryState = GALLERY_TYPES.reduce((galleries, gall
 
 const gallery = (state: GalleryState = INITIAL_STATE, action: any) => {
   switch (action.type) {
+    case actionTypes.UPDATE_IMAGE:
+      return {
+        ...state,
+        [ALL_PHOTOS_GALLERY]: updateImage(state[ALL_PHOTOS_GALLERY], action.image),
+      };
     case actionTypes.FAVORITE_IMAGE:
       const updatedFavoriteGallery = action.image.favorite
         ? uploadImages(state[FAVORITE_GALLERY], [action.image])

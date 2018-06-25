@@ -1,8 +1,10 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import FormInputField from '../../common/FormInputField';
-import styled from 'styled-components';
-import { Form } from 'semantic-ui-react';
+import FormLabel from '../../common/FormLabel';
+import SimpleDatePicker from '../../common/SimpleDatePicker';
+import LocationSearchInput from '../../common/LocationSearchInput';
+import { Form, Menu } from 'semantic-ui-react';
 import { onlyUpdateForKeys } from 'recompose';
 
 type Props = {
@@ -15,6 +17,11 @@ type Props = {
   setAlbumQuality: Function,
   albumName: string,
   setAlbumName: Function,
+  photosTakenOn: ?Date,
+  isCustomDate: boolean,
+  setIsCustomDate: Function,
+  handleDateSelection: Function,
+  setLocation: Function,
 };
 
 const AddImagesOptions = ({
@@ -27,18 +34,29 @@ const AddImagesOptions = ({
   setRecognizePeople,
   uploadWithLink,
   setUploadWithLink,
+  photosTakenOn,
+  isCustomDate,
+  setIsCustomDate,
+  handleDateSelection,
+  setLocation,
 }: Props) => {
   return (
     <Form style={{ width: '250px' }}>
       {isAlbum && (
-        <FormInputField
-          fluid
-          placeholder="Album name"
-          fieldName="album_name"
-          value={albumName}
-          onChange={(e, { value }) => setAlbumName(value)}
-        />
+        <React.Fragment>
+          <FormLabel>Album name</FormLabel>
+          <FormInputField
+            fluid
+            placeholder="Summer in Miami..."
+            fieldName="album_name"
+            value={albumName}
+            onChange={(e, { value }) => setAlbumName(value)}
+          />
+        </React.Fragment>
       )}
+
+      <FormLabel>Location</FormLabel>
+      <LocationSearchInput setLocation={setLocation} />
       <FormLabel>Options</FormLabel>
       <Form.Checkbox
         style={{ fontSize: '0.82em', textAlign: 'left', marginTop: '10px' }}
@@ -59,14 +77,21 @@ const AddImagesOptions = ({
         onChange={(e, { checked }) => setRecognizePeople(checked)}
       />
       <FormLabel>Change date</FormLabel>
+      <br />
+
+      <Menu compact size="mini">
+        <Menu.Item active={!isCustomDate} onClick={() => setIsCustomDate(false)}>
+          Use current date
+        </Menu.Item>
+        <Menu.Item active={isCustomDate} onClick={() => setIsCustomDate(true)}>
+          Pick a date
+        </Menu.Item>
+      </Menu>
+
+      {isCustomDate && <SimpleDatePicker handleDateSelection={handleDateSelection} />}
     </Form>
   );
 };
-
-const FormLabel = styled.label`
-  font-weight: 700;
-  font-size: 0.85rem;
-`;
 
 export default onlyUpdateForKeys([
   'albumName',
@@ -74,4 +99,5 @@ export default onlyUpdateForKeys([
   'isAlbum',
   'recognizePeople',
   'uploadWithLink',
+  'isCustomDate',
 ])(AddImagesOptions);

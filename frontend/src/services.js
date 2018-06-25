@@ -48,6 +48,7 @@ export const UserAuthApi = {
   get: GET(`${CONFIG.services.baseUrl}/auth/me`),
   update: PUT(`${CONFIG.services.baseUrl}/auth/me`),
   delete: DELETE(`${CONFIG.services.baseUrl}/auth/me`),
+  patch: PATCH(`${CONFIG.services.baseUrl}/auth/me`),
   changePassword: POST(`${CONFIG.services.baseUrl}/rest-auth/password/change/`),
 };
 
@@ -57,4 +58,6 @@ export const AlbumsApi = {
   list: GET(`${CONFIG.services.baseUrl}/gallery/albums`),
   delete: DELETE(`${CONFIG.services.baseUrl}/gallery/albums/:album_id`),
   patch: PATCH(`${CONFIG.services.baseUrl}/gallery/albums/:albumId`),
+  addImage: POST(`${CONFIG.services.baseUrl}/gallery/albums/:albumId/addImage/:image_id`),
+  removeImage: DELETE(`${CONFIG.services.baseUrl}/gallery/albums/:albumId/removeImage/:image_id`),
 };

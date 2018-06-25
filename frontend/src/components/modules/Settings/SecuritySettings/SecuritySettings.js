@@ -1,7 +1,7 @@
 import React from 'react';
-import { List } from 'semantic-ui-react';
 import PasswordChangeForm from '../../../PasswordChangeForm';
 import SettingsTab from '../../../common/SettingsTab';
+import { List } from 'semantic-ui-react';
 
 class SecuritySettings extends React.Component {
   render() {

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SecuritySettings from './SecuritySettings';
 
-class SecuritySettingsContainer extends Component {
+class SecuritySettingsContainer extends React.Component {
   render() {
     return <SecuritySettings />;
   }

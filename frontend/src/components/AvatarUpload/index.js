@@ -14,10 +14,7 @@ class AvatarUpload extends React.Component {
     const file = accepted[0];
     this.setState({ uploading: true });
 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('avatar', true);
-    const resp = await ImagesApi.upload_image_file(formData, true);
+    const resp = await ImagesApi.upload_image_file({ file, avatar: true }, true);
     setAuthUser({ ...authUser, avatar: resp.image_url });
     this.setState({ uploading: false });
   };

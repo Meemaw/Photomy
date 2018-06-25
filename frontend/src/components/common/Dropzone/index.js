@@ -8,7 +8,7 @@ type Props = {
   renderError?: Function,
   accept: string,
   handleAcceptedFiles: Function,
-  multiple?: number,
+  multiple: boolean,
   disabled: boolean,
   error?: string,
 };
