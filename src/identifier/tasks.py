@@ -9,7 +9,9 @@ import face_recognition
 import numpy as np
 import requests
 
+
 from photomy.celeryconf import app
+from django.conf import settings
 from gallery.constants import ProcessingStatus
 from .models import Image, ImageIdentityMatch, IdentityGroup
 
@@ -19,6 +21,8 @@ CDN_SECRET_KEY = os.environ['AWS_LAMBDA_SECRET_APP_KEY']
 CDN_SECRET_VALUE = os.environ['AWS_LAMBDA_SECRET_APP_VALUE']
 
 logger = logging.getLogger(__name__)
+
+print(settings.DATABASES)
 
 
 @app.task
