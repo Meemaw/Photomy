@@ -17,6 +17,8 @@ class Image(models.Model):
     favorite = models.BooleanField(default=False)
     width = models.IntegerField()
     height = models.IntegerField()
+    location = models.CharField(max_length=100, null=True, blank=True)
+    description = models.CharField(max_length=100, null=True, blank=True)
 
     processing_status = models.CharField(
         max_length=30, choices=[(tag, tag.value) for tag in ProcessingStatus], default=ProcessingStatus.INITIAL)
@@ -59,4 +61,6 @@ class Album(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=50, blank=True)
-    images = models.ManyToManyField(Image, blank=True)
+    images = models.ManyToManyField(Image, blank=True, related_name="albums")
+    cover_image = models.OneToOneField(
+        Image, null=True, on_delete=models.SET_NULL, related_name='covered_album')

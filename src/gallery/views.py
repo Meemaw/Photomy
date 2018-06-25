@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from identifier.models import ImageIdentityMatch, IdentityGroup
 from identifier.serializers import ImageIdentityMatchSerializer, IdentitySerializer
 from identifier.tasks import reidify_identity_match
-from .constants import ALBUM_ID, JPEG, PK, AVATAR, RECOGNIZE_PEOPLE, ProcessingStatus
+from .constants import ALBUM_ID, JPEG, PK, AVATAR, RECOGNIZE_PEOPLE, ProcessingStatus, LOCATION
 
 from .models import Image, Album
 from .serializers import ImageSerializer, AlbumSerializer, AlbumsSerializer
@@ -267,7 +267,7 @@ def _save_image(image, user, extra_data):
     width, height = image.size
 
     processing_status = ProcessingStatus.INITIAL if is_truthy(
-        extra_data.get(RECOGNIZE_PEOPLE, False)) else ProcessingStatus.USER_DISABLED
+        extra_data.get(RECOGNIZE_PEOPLE, True)) else ProcessingStatus.USER_DISABLED
 
     lqip_f_thumb = get_lqip(image, image_id, user)
 
@@ -279,10 +279,13 @@ def _save_image(image, user, extra_data):
         image_upload=f_thumb,
         lqip_upload=lqip_f_thumb,
         taken_on=extra_data.get('taken_on', None),
-        processing_status=processing_status)
+        processing_status=processing_status,
+        location=extra_data.get(LOCATION, None))
 
     if extra_data.get(ALBUM_ID, None):
         album = Album.objects.get(id=extra_data[ALBUM_ID])
+        if not album.cover_image:
+            album.cover_image = new_image
         album.images.add(new_image)
         album.save()
 

@@ -22,7 +22,11 @@ class ImageSerializer(serializers.ModelSerializer):
                 "favorite": obj.favorite,
                 "preview_url": preview_location,
                 "taken_on": obj.taken_on,
-                "processing_status": str(obj.processing_status)
+                "processing_status": str(obj.processing_status),
+                "location": obj.location,
+                "description": obj.description,
+                "taken_on": obj.taken_on,
+                "albums": ImageAlbumsSerializer(obj.albums, many=True).data
                 }
 
 
@@ -36,11 +40,22 @@ class AlbumSerializer(serializers.ModelSerializer):
 
 class AlbumsSerializer(serializers.Serializer):
     class Meta:
-        model = Image
+        model = Album
         fields = ('__all__')
 
     def to_representation(self, instance):
         images = instance.images.all().order_by('-uploaded_at')[:4]
         images_data = ImageSerializer(images, many=True).data
+        cover_image_url = instance.cover_image.image_upload.url if instance.cover_image else ""
         return {"images_count": instance.images_count, "name": instance.name, "id": instance.id,
-                "uploaded_at": instance.uploaded_at, "images": images_data}
+                "uploaded_at": instance.uploaded_at, "images": images_data, "cover_image_url": cover_image_url}
+
+
+class ImageAlbumsSerializer(serializers.Serializer):
+    class Meta:
+        model = Album
+        fields = ('__all__')
+
+    def to_representation(self, instance):
+        cover_image_url = instance.cover_image.image_upload.url if instance.cover_image else ""
+        return {"name": instance.name, "id": instance.id, "uploaded_at": instance.uploaded_at, "images_count": instance.images.count(), "cover_image_url": cover_image_url}

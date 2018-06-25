@@ -5,6 +5,7 @@ JPEG = 'JPEG'
 PK = 'pk'
 AVATAR = "avatar"
 RECOGNIZE_PEOPLE = 'recognizePeople'
+LOCATION = "location"
 
 
 class ProcessingStatus(Enum):
@@ -13,3 +14,6 @@ class ProcessingStatus(Enum):
     PROCESSING = 'Processing'
     PROCESSED = 'Processed'
     USER_DISABLED = 'User disabled'
+
+    def __str__(self):
+        return str(self.name)
