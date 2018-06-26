@@ -16,6 +16,19 @@ describe('Album reducer', () => {
     });
   });
 
+  describe('RENAME_ALBUM', () => {
+    it('renames album', () => {
+      const state = albumReducer(INITIAL_STATE, {
+        type: actionTypes.RENAME_ALBUM,
+        album: TEST_ALBUM,
+      });
+      expect(state).to.deep.equal({
+        ...INITIAL_STATE,
+        name: TEST_ALBUM.name,
+      });
+    });
+  });
+
   describe('SET_ALBUM_DELETING', () => {
     it('Sets album is deleting', () => {
       const state = albumReducer(INITIAL_STATE, {

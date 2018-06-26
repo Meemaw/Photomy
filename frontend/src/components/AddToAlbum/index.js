@@ -34,9 +34,11 @@ class AddToAlbumContainer extends React.Component<Props, State> {
 
   addToAlbum = async (album: Album) => {
     const { image, push } = this.props;
-    await AlbumsApi.addImage({ image_id: image.image_id, albumId: album.id });
+    const resp = await AlbumsApi.addImage({ image_id: image.image_id, albumId: album.id });
     push(`${albumsPath}/${album.id}`);
-    this.props.addAlbumToImage(album, image);
+    if (resp.image_added) {
+      this.props.addAlbumToImage(album, image);
+    }
   };
 
   render() {

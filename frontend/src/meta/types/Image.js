@@ -3,7 +3,7 @@ import type { ProcessingStatus } from './ProcessingStatus';
 import type { Album } from './Album';
 import type { ImageIdentityMatch } from './ImageIdentityMatch';
 import { deleteAlbum } from './Album';
-import { setAlbumsCoverImageUrl } from './Album';
+import { setAlbumsCoverImageUrl, renameAlbums, addImageToAlbums } from './Album';
 
 export type ImageId = string;
 
@@ -41,9 +41,10 @@ export const deleteAlbumFromImage = (image: Image, albumId: string) => {
 };
 
 export const addAlbumToImages = (images: Array<Image>, album: Album, toUpdate: Image) => {
-  return images.map(
-    image => (image.image_id === toUpdate.image_id ? addAlbumToImage(image, album) : image),
-  );
+  return images.map(image => {
+    const withAlbum = image.image_id === toUpdate.image_id ? addAlbumToImage(image, album) : image;
+    return { ...withAlbum, albums: addImageToAlbums(withAlbum.albums, album, toUpdate) };
+  });
 };
 
 export const addAlbumToImage = (image: Image, album: Album) => {
@@ -61,5 +62,12 @@ export const setImagesAlbumCover = (
   return images.map(image => ({
     ...image,
     albums: setAlbumsCoverImageUrl(image.albums, albumId, cover_image_url),
+  }));
+};
+
+export const renameAlbumImages = (images: Array<Image>, album: Album) => {
+  return images.map(image => ({
+    ...image,
+    albums: renameAlbums(image.albums, album),
   }));
 };

@@ -9,6 +9,13 @@ export const setAlbum = (album: Object) => {
   };
 };
 
+export const renameAlbum = (album: Object) => {
+  return {
+    type: actionTypes.RENAME_ALBUM,
+    album,
+  };
+};
+
 export const deleteAlbumGalleries = (albumId: string) => {
   return {
     type: actionTypes.DELETE_ALBUM_GALLERIES,

@@ -19,6 +19,7 @@ import {
   deleteAlbumFromImages,
   addAlbumToImages,
   setImagesAlbumCover,
+  renameAlbumImages,
 } from '../../meta/types/Image';
 import type { Gallery } from '../../meta/types/Gallery';
 
@@ -59,11 +60,18 @@ const setAlbumsCoverImageUrlToGallery = (
   { albumId, cover_image_url }: Object,
 ) => {
   const updatedImages = setImagesAlbumCover(gallery.images, albumId, cover_image_url);
-  return { ...gallery, iamges: updatedImages, dataMap: buildDataMap(updatedImages) };
+  return { ...gallery, images: updatedImages, dataMap: buildDataMap(updatedImages) };
+};
+
+const renameAlbumsToGallery = (gallery: Gallery, { album }: Object) => {
+  const updatedImages = renameAlbumImages(gallery.images, album);
+  return { ...gallery, images: updatedImages, dataMap: buildDataMap(updatedImages) };
 };
 
 const gallery = (state: Object = INITIAL_STATE, action: any) => {
   switch (action.type) {
+    case actionTypes.RENAME_ALBUM:
+      return applyToEach(state, renameAlbumsToGallery, action);
     case actionTypes.SET_ALBUM_COVER_IMAGE:
       return applyToEach(state, setAlbumsCoverImageUrlToGallery, action);
     case actionTypes.DELETE_ALBUM_GALLERIES:

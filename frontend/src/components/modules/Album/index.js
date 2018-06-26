@@ -40,7 +40,7 @@ class AlbumContainer extends React.Component<Props, State> {
 
     this.dataMap = buildDataMap(images);
 
-    this.props.setAlbum({ albumId: data.id, albumName: data.name });
+    this.props.setAlbum({ id: data.id, name: data.name });
     this.setState({ images, updatedAt: new Date(), name: data.name });
   }
 

@@ -55,3 +55,18 @@ export const setAlbumsCoverImageUrl = (
 ) => {
   return albums.map(album => (album.id === albumId ? { ...album, cover_image_url } : album));
 };
+
+export const renameAlbums = (albums: Array<Album>, newAlbum: Album) => {
+  return albums.map(album => (newAlbum.id === album.id ? { ...album, ...newAlbum } : album));
+};
+
+export const addImageToAlbum = (album: Album, image: Image) => {
+  const baseImages = album.images || [];
+  return { ...album, images: [...baseImages, image], images_count: album.images_count + 1 };
+};
+
+export const addImageToAlbums = (albums: Array<Album>, selectedAlbum: Album, image: Image) => {
+  return albums.map(
+    album => (album.id === selectedAlbum.id ? addImageToAlbum(album, image) : album),
+  );
+};

@@ -4,6 +4,7 @@ import AddImages from './AddImages';
 import { toUploadFormat } from '../../../lib/date';
 import { ImagesApi, AlbumsApi } from '../../../services';
 import { albumsPath } from '../../../lib/paths';
+import { mapImage } from '../../../meta/types/Image';
 
 type Props = {
   handleClose: Function,
@@ -129,7 +130,7 @@ class AddImagesContainer extends React.Component<Props, State> {
 
           promise
             .then(resp => {
-              const image = { ...resp, uploaded_at: new Date(resp.uploaded_at) };
+              const image = mapImage(resp);
               this.setImageUploaded(fileIx);
               uploadImages([image]);
             })
