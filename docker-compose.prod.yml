@@ -4,6 +4,7 @@ services:
   worker:
     image: meemaw/photomy:${VERSION}
     entrypoint: /src/run_celery.sh
+    env_file: .env
     volumes:
       - /home/ubuntu/photomy/src/.env:/src/.env
   db:
