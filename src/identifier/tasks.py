@@ -22,9 +22,6 @@ CDN_SECRET_VALUE = os.environ['AWS_LAMBDA_SECRET_APP_VALUE']
 
 logger = logging.getLogger(__name__)
 
-print(settings.DATABASES)
-
-
 @app.task
 def reidify_identity_match(identity_match_id):
     logger.info("reidify_identity_match task")
