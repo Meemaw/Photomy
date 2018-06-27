@@ -21,7 +21,6 @@ import {
   renameAlbumImages,
 } from '../../meta/types/Image';
 import type { Gallery } from '../../meta/types/Gallery';
-import type { Image } from '../../meta/types/Image';
 import { removeImageFromAlbumsImages } from '../../meta/types/Album';
 
 export const INITIAL_STATE: Object = GALLERY_REDUCERS.reduce((galleries, gallery) => {
@@ -112,7 +111,6 @@ const gallery = (state: Object = INITIAL_STATE, action: any) => {
       return applyToEach(state, addAlbumToGalleryImage, action);
     case actionTypes.UPDATE_IMAGE:
       return applyToEach(state, updateGalleryImage, action);
-
     case actionTypes.FAVORITE_IMAGE:
       const updatedFavoriteGallery = action.image.favorite
         ? uploadImages(state[FAVORITE_GALLERY], [action.image])
