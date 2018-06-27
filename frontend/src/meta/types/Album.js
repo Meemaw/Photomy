@@ -62,7 +62,8 @@ export const renameAlbums = (albums: Array<Album>, newAlbum: Album) => {
 
 export const addImageToAlbum = (album: Album, image: Image) => {
   const baseImages = album.images || [];
-  return { ...album, images: [...baseImages, image], images_count: album.images_count + 1 };
+  const baseCount = album.images_count || 0;
+  return { ...album, images: [...baseImages, image], images_count: baseCount + 1 };
 };
 
 export const addImageToAlbums = (albums: Array<Album>, selectedAlbum: Album, image: Image) => {
@@ -83,10 +84,11 @@ export const removeImageFromAlbumsImages = (
 ) => {
   return albums.map(album => {
     if (album.id === albumId) {
+      const currentCount = album.images_count || 1;
       return {
         ...album,
         images: removeImageFromAlbumImages(album, imageId),
-        images_count: album.images_count - 1,
+        images_count: currentCount - 1,
       };
     }
     return album;
