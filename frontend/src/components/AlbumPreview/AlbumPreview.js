@@ -3,7 +3,6 @@ import React from 'react';
 import GalleryImage from '../Gallery/GalleryImage';
 import styled from 'styled-components';
 import { toReadableAlbumDate } from '../../lib/date';
-import { ALBUMS_IMAGE_WIDTH } from '../../constants/gallerySizes';
 import { getCoverUrl } from '../../meta/types/Album';
 import type { Album } from '../../meta/types/Album';
 
@@ -14,9 +13,9 @@ const AlbumPreview = ({ onAlbumClick, album }: Props) => {
     <AlbumPreviewStyle onClick={onAlbumClick} className="AlbumPreview">
       <GalleryImage
         src={getCoverUrl(album)}
-        style={{ objectFit: 'cover' }}
+        height="auto"
         width="100%"
-        height={ALBUMS_IMAGE_WIDTH}
+        style={{ objectFit: 'cover' }}
       />
       <div
         style={{
@@ -32,15 +31,20 @@ const AlbumPreview = ({ onAlbumClick, album }: Props) => {
       >
         <div style={{ color: 'white', fontWeight: 900 }}>{album.name}</div>
         <div style={{ color: 'white', fontWeight: 900 }}>
-          {album.images_count} images · {toReadableAlbumDate(album.uploaded_at)}
+          {imageCountText(album.images_count)} · {toReadableAlbumDate(album.uploaded_at)}
         </div>
       </div>
     </AlbumPreviewStyle>
   );
 };
 
+const imageCountText = (imagesCount: number) => {
+  return imagesCount === 0 ? 'No images' : imagesCount === 1 ? '1 image' : `${imagesCount} images`;
+};
+
 const AlbumPreviewStyle = styled.div`
   position: relative;
+  width: 100%;
   :hover {
     cursor: pointer;
   }
