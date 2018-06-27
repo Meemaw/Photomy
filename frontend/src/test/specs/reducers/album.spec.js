@@ -1,7 +1,7 @@
 import * as actionTypes from '../../../constants/actionTypes';
 import albumReducer, { INITIAL_STATE } from '../../../reducers/album';
 
-const TEST_ALBUM = { id: '1', images: [], images_count: 100 };
+const TEST_ALBUM = { name: 'TEST_ALBUM', id: '1', images: [], images_count: 100 };
 
 describe('Album reducer', () => {
   it('should return the initial state', () => {
@@ -22,9 +22,10 @@ describe('Album reducer', () => {
         type: actionTypes.RENAME_ALBUM,
         album: TEST_ALBUM,
       });
+
       expect(state).to.deep.equal({
         ...INITIAL_STATE,
-        name: TEST_ALBUM.name,
+        album: { ...INITIAL_STATE.album, name: TEST_ALBUM.name },
       });
     });
   });
