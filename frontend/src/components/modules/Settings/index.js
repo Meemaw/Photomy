@@ -3,7 +3,8 @@ import * as React from 'react';
 import Settings from './Settings';
 import AccountSettings from './AccountSettings';
 import SecuritySettings from './SecuritySettings';
-import { SECURITY_TAB, ACCOUNT_TAB } from '../../../constants/settings';
+import GallerySettings from './GallerySettings';
+import { SECURITY_TAB, ACCOUNT_TAB, GALLERY_TAB } from '../../../constants/settings';
 
 type Props = { location: Object };
 type State = {};
@@ -11,6 +12,7 @@ type State = {};
 const CONTENT_CONTAINER_MAP = new Map([
   [ACCOUNT_TAB, AccountSettings],
   [SECURITY_TAB, SecuritySettings],
+  [GALLERY_TAB, GallerySettings],
 ]);
 
 class SettingsContainer extends React.Component<Props, State> {
