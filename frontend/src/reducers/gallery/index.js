@@ -13,7 +13,6 @@ import {
   buildDataMap,
   fetchingImages,
   updateIdentity,
-  updateImage,
 } from './util';
 import {
   deleteAlbumFromImages,
@@ -22,6 +21,7 @@ import {
   renameAlbumImages,
 } from '../../meta/types/Image';
 import type { Gallery } from '../../meta/types/Gallery';
+import type { Image } from '../../meta/types/Image';
 import { removeImageFromAlbumsImages } from '../../meta/types/Album';
 
 export const INITIAL_STATE: Object = GALLERY_REDUCERS.reduce((galleries, gallery) => {
@@ -88,6 +88,16 @@ const removeImageFromGalleryImageAlbums = (gallery: Gallery, { imageId, albumId 
   return { ...gallery, images, dataMap: buildDataMap(images) };
 };
 
+const updateGalleryImage = (gallery: Gallery, { image }: Object) => {
+  const imagePatch = image;
+  const updatedImages = gallery.images.map(
+    image => (image.image_id === imagePatch.image_id ? { ...image, ...imagePatch } : image),
+  );
+  const dataMap = gallery.dataMap;
+  dataMap[imagePatch.image_id] = { ...dataMap[imagePatch.image_id], ...imagePatch };
+  return { ...gallery, images: updatedImages, dataMap };
+};
+
 const gallery = (state: Object = INITIAL_STATE, action: any) => {
   switch (action.type) {
     case actionTypes.REMOVE_IMAGE_FROM_ALBUM:
@@ -101,10 +111,8 @@ const gallery = (state: Object = INITIAL_STATE, action: any) => {
     case actionTypes.ADD_ALBUM_TO_IMAGE:
       return applyToEach(state, addAlbumToGalleryImage, action);
     case actionTypes.UPDATE_IMAGE:
-      return {
-        ...state,
-        [ALL_PHOTOS_GALLERY]: updateImage(state[ALL_PHOTOS_GALLERY], action.image),
-      };
+      return applyToEach(state, updateGalleryImage, action);
+
     case actionTypes.FAVORITE_IMAGE:
       const updatedFavoriteGallery = action.image.favorite
         ? uploadImages(state[FAVORITE_GALLERY], [action.image])

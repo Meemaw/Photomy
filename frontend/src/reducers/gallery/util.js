@@ -10,15 +10,6 @@ export const buildDataMap = (images: Array<Image>) => {
   }, {});
 };
 
-export const updateImage = (gallery: Gallery, imagePatch: Image) => {
-  const updatedImages = gallery.images.map(
-    image => (image.image_id === imagePatch.image_id ? { ...image, ...imagePatch } : image),
-  );
-  const dataMap = gallery.dataMap;
-  dataMap[imagePatch.image_id] = { ...dataMap[imagePatch.image_id], ...imagePatch };
-  return { ...gallery, images: updatedImages, dataMap };
-};
-
 export const deleteImage = (gallery: Gallery, deletedImage: Image) => {
   const images = gallery.images.filter(image => image.image_id !== deletedImage.image_id);
   const dataMap = buildDataMap(images);

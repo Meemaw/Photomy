@@ -10,10 +10,6 @@ const TEST_ALBUM_2 = {
   name: 'Album2',
   images_count: 10,
 };
-const TEST_ALBUM_3 = {
-  id: 3,
-  name: 'Album3',
-};
 
 const TEST_STATE = {
   ...INITIAL_STATE,
