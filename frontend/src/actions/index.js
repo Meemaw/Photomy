@@ -3,7 +3,13 @@ import { setAuthTokenChecked, setAuthUser, logout, authorize } from './auth';
 import { setIdentity } from './identity';
 import { fetchImages, uploadImages, deleteImage, favoriteImage, updateImage } from './gallery';
 import { setAlbum, deleteAlbum, renameAlbum } from './album';
-import { fetchAlbums, addAlbumAction, addAlbumToImage, setAlbumCoverImageAction } from './albums';
+import {
+  fetchAlbums,
+  addAlbumAction,
+  addAlbumToImage,
+  setAlbumCoverImageAction,
+  removeImageFromAlbum,
+} from './albums';
 
 export {
   setAlbum,
@@ -25,4 +31,5 @@ export {
   addAlbumToImage,
   setAlbumCoverImageAction,
   renameAlbum,
+  removeImageFromAlbum,
 };

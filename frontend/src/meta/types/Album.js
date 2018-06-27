@@ -70,3 +70,25 @@ export const addImageToAlbums = (albums: Array<Album>, selectedAlbum: Album, ima
     album => (album.id === selectedAlbum.id ? addImageToAlbum(album, image) : album),
   );
 };
+
+export const removeImageFromAlbumImages = (album: Album, imageId: string) => {
+  const albumImages = album.images || [];
+  return albumImages.filter(image => image.image_id !== imageId);
+};
+
+export const removeImageFromAlbumsImages = (
+  albums: Array<Album>,
+  imageId: string,
+  albumId: string,
+) => {
+  return albums.map(album => {
+    if (album.id === albumId) {
+      return {
+        ...album,
+        images: removeImageFromAlbumImages(album, imageId),
+        images_count: album.images_count - 1,
+      };
+    }
+    return album;
+  });
+};

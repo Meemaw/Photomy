@@ -22,6 +22,7 @@ import {
   renameAlbumImages,
 } from '../../meta/types/Image';
 import type { Gallery } from '../../meta/types/Gallery';
+import { removeImageFromAlbumsImages } from '../../meta/types/Album';
 
 export const INITIAL_STATE: Object = GALLERY_REDUCERS.reduce((galleries, gallery) => {
   galleries[gallery.galleryType] = {
@@ -68,8 +69,29 @@ const renameAlbumsToGallery = (gallery: Gallery, { album }: Object) => {
   return { ...gallery, images: updatedImages, dataMap: buildDataMap(updatedImages) };
 };
 
+const removeImageFromGalleryImageAlbums = (gallery: Gallery, { imageId, albumId }: Object) => {
+  const images = gallery.images.map(image => {
+    let updatedImage = {
+      ...image,
+      albums: removeImageFromAlbumsImages(image.albums, imageId, albumId),
+    };
+
+    if (image.image_id === imageId) {
+      updatedImage = {
+        ...updatedImage,
+        albums: updatedImage.albums.filter(album => album.id !== albumId),
+      };
+    }
+
+    return updatedImage;
+  });
+  return { ...gallery, images, dataMap: buildDataMap(images) };
+};
+
 const gallery = (state: Object = INITIAL_STATE, action: any) => {
   switch (action.type) {
+    case actionTypes.REMOVE_IMAGE_FROM_ALBUM:
+      return applyToEach(state, removeImageFromGalleryImageAlbums, action);
     case actionTypes.RENAME_ALBUM:
       return applyToEach(state, renameAlbumsToGallery, action);
     case actionTypes.SET_ALBUM_COVER_IMAGE:

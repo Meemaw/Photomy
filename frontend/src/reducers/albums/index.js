@@ -2,7 +2,7 @@
 import * as actionTypes from '../../constants/actionTypes';
 import { deleteAlbum } from '../../meta/types/Album';
 import { setAlbumsCoverImageUrl, renameAlbums } from '../../meta/types/Album';
-import { addImageToAlbums } from '../../meta/types/Album';
+import { addImageToAlbums, removeImageFromAlbumsImages } from '../../meta/types/Album';
 import type { AlbumsState } from '../../meta/types/AlbumsState';
 
 export const INITIAL_STATE: AlbumsState = {
@@ -14,6 +14,11 @@ export const INITIAL_STATE: AlbumsState = {
 
 const albums = (state: AlbumsState = INITIAL_STATE, action: any) => {
   switch (action.type) {
+    case actionTypes.REMOVE_IMAGE_FROM_ALBUM:
+      return {
+        ...state,
+        albums: removeImageFromAlbumsImages(state.albums, action.imageId, action.albumId),
+      };
     case actionTypes.ADD_ALBUM_TO_IMAGE:
       return { ...state, albums: addImageToAlbums(state.albums, action.album, action.image) };
     case actionTypes.RENAME_ALBUM:

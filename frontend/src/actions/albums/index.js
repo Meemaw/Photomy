@@ -4,6 +4,14 @@ import { mapAlbums } from '../../meta/types/Album';
 import { AlbumsApi } from '../../services';
 import type { Album } from '../../meta/types/Album';
 
+export const removeImageFromAlbum = (imageId: string, albumId: string) => {
+  return {
+    type: actionTypes.REMOVE_IMAGE_FROM_ALBUM,
+    imageId,
+    albumId,
+  };
+};
+
 export const addAlbumAction = (album: Album) => {
   return {
     type: actionTypes.ADD_ALBUM,

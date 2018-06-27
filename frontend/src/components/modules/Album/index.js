@@ -5,7 +5,7 @@ import Album from './Album';
 import withPush from '../../../hocs/Router';
 import { galleryPath } from '../../../lib/paths';
 import { AlbumsApi } from '../../../services';
-import { setAlbum, deleteAlbum } from '../../../actions';
+import { setAlbum, deleteAlbum, removeImageFromAlbum } from '../../../actions';
 import { connect } from 'react-redux';
 import { buildDataMap } from '../../../reducers/gallery/util';
 import { ALL_PHOTOS_IMAGE_HEIGHT } from '../../../constants/gallerySizes';
@@ -17,6 +17,7 @@ type Props = {
   albumDeleting: boolean,
   deleteAlbum: Function,
   push: Function,
+  removeImageFromAlbum: Function,
 };
 
 type State = { images: Array<Image>, updatedAt: ?Date, name?: string };
@@ -45,10 +46,12 @@ class AlbumContainer extends React.Component<Props, State> {
   }
 
   removeFromAlbum = (imageId: string) => {
+    const { album_id } = this.props.match.params;
     const { images } = this.state;
     const updatedImages = images.filter(image => image.image_id !== imageId);
     this.dataMap = buildDataMap(updatedImages);
     this.setState({ images: updatedImages });
+    this.props.removeImageFromAlbum(imageId, album_id);
   };
 
   renderImage = (image: Image): React.Node => {
@@ -90,6 +93,7 @@ class AlbumContainer extends React.Component<Props, State> {
 const mapDispatchToProps = {
   setAlbum,
   deleteAlbum,
+  removeImageFromAlbum,
 };
 
 function mapStateToProps(state) {
