@@ -14,12 +14,13 @@ matrix:
         - sudo apt-get install -y libappindicator1 fonts-liberation
         - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         - sudo dpkg -i google-chrome*.deb
-        - cd frontend
-        - BROWSER=none yarn start  2>&1 > /dev/null &
       install:
-        - cd e2etests
+        - cd frontend/e2etests
         - yarn install
       script:
+        - cd ..
+        - BROWSER=none yarn start  2>&1 > /dev/null &
+        - cd e2etests
         - yarn test
 
     - stage: build
