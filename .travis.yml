@@ -7,6 +7,10 @@ matrix:
       node_js:
         - "node"
       before_install:
+        - export CHROME_BIN=/usr/bin/google-chrome
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+      install:
         - cd frontend/e2etests
         - yarn install
       script:
