@@ -46,6 +46,24 @@ matrix:
         - yarn test-coverage
       after_success:
         - codecov -F javascript -t $CODECOV_UPLOAD_TOKEN
+    
+    - stage: test
+      language: java
+      addons:
+      apt:
+        sources:
+          - google-chrome
+        packages:
+          - google-chrome-stable
+      jdk:
+        - oraclejdk8
+      node_js:
+        - 6
+      before_install:
+        - export CHROME_BIN=chromium-browser
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - PHOTOMY_URL="https://www.photomy.si/" nightwatch . -o /tmp/nwreports
 
     - stage: build
       if: branch = master

@@ -1,0 +1,55 @@
+{
+  "src_folders": ["./tests"],
+  "page_objects_path": "./pages",
+  "custom_assertions_path": "",
+  "globals_path": "./env",
+
+  "selenium": {
+    "start_process": false,
+    "server_path": "",
+    "log_path": "",
+    "port": 4444,
+    "cli_args": {
+      "webdriver.chrome.driver": "",
+      "webdriver.gecko.driver": "",
+      "webdriver.edge.driver": ""
+    }
+  },
+
+  "test_settings": {
+    "default": {
+      "launch_url_DISABLED": "http://localhost",
+      "launch_url": "http://selenium",
+      "selenium_port": 4444,
+      "selenium_host_DISABLED": "localhost",
+      "selenium_host": "selenium",
+      "silent": true,
+      "screenshots": {
+        "enabled": false,
+        "path": ""
+      },
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "marionette": true
+      }
+    },
+
+    "chrome": {
+      "desiredCapabilities": {
+        "browserName": "chrome"
+      }
+    },
+
+    "firefox": {
+      "desiredCapabilities": {
+        "browserName": "firefox"
+      }
+    },
+
+    "edge": {
+      "desiredCapabilities": {
+        "browserName": "MicrosoftEdge"
+      }
+    }
+  }
+}
