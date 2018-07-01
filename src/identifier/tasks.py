@@ -9,7 +9,10 @@ import face_recognition
 import numpy as np
 import requests
 
+
 from photomy.celeryconf import app
+from django.conf import settings
+from gallery.constants import ProcessingStatus
 from .models import Image, ImageIdentityMatch, IdentityGroup
 
 STRICT_SIMILARITY_THRESHOLD = 0.52
@@ -18,7 +21,6 @@ CDN_SECRET_KEY = os.environ['AWS_LAMBDA_SECRET_APP_KEY']
 CDN_SECRET_VALUE = os.environ['AWS_LAMBDA_SECRET_APP_VALUE']
 
 logger = logging.getLogger(__name__)
-
 
 @app.task
 def reidify_identity_match(identity_match_id):
@@ -41,6 +43,8 @@ def reidify_identity_match(identity_match_id):
 def idify_image(image_id):
     logger.info("idify_image task")
     new_image = Image.objects.get(id=image_id)
+    Image.objects.filter(id=image_id).update(
+        processing_status=ProcessingStatus.PROCESSING)
 
     face_encodings = encode_image_faces(new_image)
 
@@ -49,6 +53,9 @@ def idify_image(image_id):
 
     _ = [match_face(face_index, np.array(face_encoding), matches, new_image)
          for face_index, face_encoding in enumerate(face_encodings)]
+
+    Image.objects.filter(id=image_id).update(
+        processing_status=ProcessingStatus.PROCESSED)
 
 
 def match_face(face_index, face_encoding, all_matches, new_image, existing_match=None):

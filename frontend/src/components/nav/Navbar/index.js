@@ -8,20 +8,6 @@ import { AuthApi } from '../../../services';
 import { peoplePath, galleryPath, albumsPath } from '../../../lib/paths';
 import type { User } from '../../../meta/types/User';
 
-function mapStateToProps(state) {
-  return {
-    galleryType: state.ui.galleryType,
-    identity: state.identity,
-    user: state.auth.user,
-    album: state.album.album,
-  };
-}
-
-const mapDispatchToProps = {
-  setGalleryType,
-  logout,
-};
-
 type Props = {
   setGalleryType: string => Object,
   galleryType: string,
@@ -66,6 +52,20 @@ class NavbarContainer extends React.Component<Props, State> {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    galleryType: state.ui.galleryType,
+    identity: state.identity,
+    user: state.auth.user,
+    album: state.album.album,
+  };
+}
+
+const mapDispatchToProps = {
+  setGalleryType,
+  logout,
+};
 
 export default connect(
   mapStateToProps,

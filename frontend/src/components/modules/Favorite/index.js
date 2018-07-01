@@ -4,6 +4,7 @@ import Favorite from './Favorite';
 import { FAVORITE_GALLERY } from '../../../constants/galleryTypes';
 import { ImagesApi } from '../../../services';
 import { withImageHighlight } from '../../../hocs';
+import type { Image } from '../../../meta/types/Image';
 
 type Props = {
   fetchImages: Function,

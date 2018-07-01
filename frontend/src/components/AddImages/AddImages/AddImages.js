@@ -24,6 +24,11 @@ type Props = {
   setRecognizePeople: Function,
   setAlbumQuality: Function,
   uploadImagesToServer: Function,
+  photosTakenOn: ?Date,
+  isCustomDate: boolean,
+  setIsCustomDate: Function,
+  handleDateSelection: Function,
+  setLocation: Function,
 };
 
 const AddImages = ({
@@ -45,6 +50,11 @@ const AddImages = ({
   setAlbumQuality,
   setAlbumName,
   uploadImagesToServer,
+  photosTakenOn,
+  isCustomDate,
+  setIsCustomDate,
+  handleDateSelection,
+  setLocation,
 }: Props) => {
   return (
     <React.Fragment>
@@ -56,6 +66,7 @@ const AddImages = ({
       />
 
       <AddImagesContent
+        setLocation={setLocation}
         acceptedImages={acceptedImages}
         uploadedStatuses={uploadedStatuses}
         addAcceptedImages={addAcceptedImages}
@@ -69,8 +80,12 @@ const AddImages = ({
         isAlbum={isAlbum}
         setAlbumQuality={setAlbumQuality}
         setAlbumName={setAlbumName}
+        isCustomDate={isCustomDate}
+        setIsCustomDate={setIsCustomDate}
         highQuality={highQuality}
         albumName={albumName}
+        handleDateSelection={handleDateSelection}
+        photosTakenOn={photosTakenOn}
       />
       <AddImagesFooter
         isAlbum={isAlbum}

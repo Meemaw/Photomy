@@ -2,29 +2,23 @@
 import React from 'react';
 import Albums from './Albums';
 import AlbumPreview from '../../AlbumPreview';
-import { AlbumsApi } from '../../../services';
+import { fetchAlbums } from '../../../actions';
+import { connect } from 'react-redux';
 import type { Album } from '../../../meta/types/Album';
+import type { AlbumsState } from '../../../meta/types/AlbumsState';
 
-type Props = {};
-type State = { albums: Array<Album>, loading: boolean, updatedAt: ?Date };
+type Props = { albumsState: AlbumsState, fetchAlbums: Function };
+type State = {};
 
 class AlbumsContainer extends React.Component<Props, State> {
-  state = { albums: [], loading: true, updatedAt: null };
+  componentDidMount() {
+    const {
+      albumsState: { albumsFetched },
+    } = this.props;
 
-  async componentDidMount() {
-    const albums = await AlbumsApi.list();
-
-    const fixedAlbums = albums.map(album => {
-      const images = album.images.map(image => ({
-        ...image,
-        uploaded_at: new Date(image.uploaded_at),
-      }));
-      const name = album.name || 'Untitled album';
-
-      return { ...album, uploaded_at: new Date(album.uploaded_at), images, name };
-    });
-
-    this.setState({ albums: fixedAlbums, loading: false, updatedAt: new Date() });
+    if (!albumsFetched) {
+      this.props.fetchAlbums();
+    }
   }
 
   renderAlbum = (album: Album) => {
@@ -32,11 +26,12 @@ class AlbumsContainer extends React.Component<Props, State> {
   };
 
   render() {
-    const { albums, loading, updatedAt } = this.state;
+    const { albumsState } = this.props;
+    const { albums, albumsFetching, updatedAt } = albumsState;
     return (
       <Albums
         albums={albums}
-        loading={loading}
+        loading={albumsFetching}
         updatedAt={updatedAt}
         renderImage={this.renderAlbum}
       />
@@ -44,4 +39,15 @@ class AlbumsContainer extends React.Component<Props, State> {
   }
 }
 
-export default AlbumsContainer;
+function mapStateToProps(state) {
+  return { albumsState: state.albums };
+}
+
+const mapDispatchToProps = {
+  fetchAlbums,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AlbumsContainer);

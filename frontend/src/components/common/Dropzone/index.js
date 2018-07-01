@@ -1,8 +1,20 @@
+// @flow
 import * as React from 'react';
 import Dropzone from 'react-dropzone';
 import { Icon } from 'semantic-ui-react';
 
-class DropzoneContainer extends React.Component {
+type Props = {
+  renderDropzone?: Function,
+  renderError?: Function,
+  accept: string,
+  handleAcceptedFiles: Function,
+  multiple: boolean,
+  disabled: boolean,
+  error?: string,
+};
+type State = { error: ?string };
+
+class DropzoneContainer extends React.Component<Props, State> {
   state = { error: null };
 
   static defaultProps = {
@@ -11,7 +23,7 @@ class DropzoneContainer extends React.Component {
     disabled: false,
   };
 
-  renderError = actualError => {
+  renderError = (actualError: string) => {
     if (this.props.renderError) {
       return this.props.renderError(actualError);
     }

@@ -8,6 +8,8 @@
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <script src=https://cdn.ravenjs.com/3.25.2/raven.min.js crossorigin=anonymous></script>
+  <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASltppadG1Zs1zVxXgFh11CYSy8vhIA7Q&libraries=places"></script>
+
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"></link>
 
 
@@ -80,13 +82,22 @@
         font-size: 10px !important;
       }
     }
+
+    .Hoverable:hover {
+      cursor: pointer;
+    }
+
+    .Oveflow-Hidden {
+      overflow: hidden;
+      position: fixed;
+    }
   </style>
 
 
   <title>Photomy</title>
 </head>
 
-<body>
+<body class="Oveflow-Hidden">
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>

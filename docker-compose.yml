@@ -4,6 +4,7 @@ services:
   db:
     restart: always
     image: postgres
+    env_file: .env
     volumes:
       - pgdata:/var/lib/postgresql/data
   web:
@@ -11,17 +12,19 @@ services:
       context: .
       dockerfile: Dockerfile
     hostname: web
+    env_file: .env
     links:
       - db
       - redis
     depends_on:
       - db
-    entrypoint: /scripts/run_web.sh
+    entrypoint: /src/run_web.sh
   worker:
     build:
       context: .
       dockerfile: Dockerfile
-    entrypoint: /scripts/run_celery_docker.sh
+    env_file: .env
+    entrypoint: /src/run_celery.sh
     links:
       - db
       - redis

@@ -5,7 +5,7 @@ import Album from './Album';
 import withPush from '../../../hocs/Router';
 import { galleryPath } from '../../../lib/paths';
 import { AlbumsApi } from '../../../services';
-import { setAlbum, deleteAlbum } from '../../../actions';
+import { setAlbum, deleteAlbum, removeImageFromAlbum } from '../../../actions';
 import { connect } from 'react-redux';
 import { buildDataMap } from '../../../reducers/gallery/util';
 import { ALL_PHOTOS_IMAGE_HEIGHT } from '../../../constants/gallerySizes';
@@ -17,7 +17,9 @@ type Props = {
   albumDeleting: boolean,
   deleteAlbum: Function,
   push: Function,
+  removeImageFromAlbum: Function,
 };
+
 type State = { images: Array<Image>, updatedAt: ?Date, name?: string };
 
 const UNTITLED_ALBUM = 'Untitled album';
@@ -34,13 +36,23 @@ class AlbumContainer extends React.Component<Props, State> {
     const images = data.images.map(image => ({
       ...image,
       uploaded_at: new Date(image.uploaded_at),
+      taken_on: new Date(image.taken_on),
     }));
 
     this.dataMap = buildDataMap(images);
 
-    this.props.setAlbum({ albumId: data.id, albumName: data.name });
+    this.props.setAlbum({ id: data.id, name: data.name });
     this.setState({ images, updatedAt: new Date(), name: data.name });
   }
+
+  removeFromAlbum = (imageId: string) => {
+    const { album_id } = this.props.match.params;
+    const { images } = this.state;
+    const updatedImages = images.filter(image => image.image_id !== imageId);
+    this.dataMap = buildDataMap(updatedImages);
+    this.setState({ images: updatedImages });
+    this.props.removeImageFromAlbum(imageId, album_id);
+  };
 
   renderImage = (image: Image): React.Node => {
     const imageIx = this.dataMap[image.image_id].ix;
@@ -52,6 +64,7 @@ class AlbumContainer extends React.Component<Props, State> {
         highlightHeaderProvider={() => this.state.name || UNTITLED_ALBUM}
         images={Object.values(this.dataMap)}
         initialImage={image}
+        removeFromAlbum={this.removeFromAlbum}
       />
     );
   };
@@ -80,6 +93,7 @@ class AlbumContainer extends React.Component<Props, State> {
 const mapDispatchToProps = {
   setAlbum,
   deleteAlbum,
+  removeImageFromAlbum,
 };
 
 function mapStateToProps(state) {

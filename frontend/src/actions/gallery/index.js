@@ -2,6 +2,13 @@
 import * as actionTypes from '../../constants/actionTypes';
 import type { Image } from '../../meta/types/Image';
 
+export const updateImage = (image: Image) => {
+  return {
+    type: actionTypes.UPDATE_IMAGE,
+    image,
+  };
+};
+
 export const setFetchingImages = (galleryType: string, fetchingImages: boolean) => {
   return {
     type: actionTypes.SET_FETCHING_IMAGES,
@@ -43,6 +50,7 @@ export const fetchImages = (fetchFunction: any, fetchArguments: any, galleryType
         const images = resp.results.map(image => ({
           ...image,
           uploaded_at: new Date(image.uploaded_at),
+          taken_on: image.taken_on ? new Date(image.taken_on) : null,
         }));
 
         const dataMap = images.reduce((acc, image, ix) => {

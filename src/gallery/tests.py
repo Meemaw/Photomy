@@ -32,15 +32,6 @@ TEST_IDENTITIES = [
     {"name": "Identity 6"}
 ]
 
-
-class UUIDEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, UUID):
-            # if the obj is uuid, we simply return the value of uuid
-            return obj.hex
-        return json.JSONEncoder.default(self, obj)
-
-
 ALBUM_NAMES = ['Paris', 'London', 'Budapest']
 
 
@@ -61,6 +52,60 @@ def identity_group(test_user):
 
 # Mark all tests to use database
 pytestmark = pytest.mark.django_db
+
+
+def test_add_image_to_album(client, test_user, album):
+    image = Image.objects.create(user=test_user, width=0, height=0)
+    image2 = Image.objects.create(user=test_user, width=0, height=0)
+    response = client.post(
+        reverse('add_image_to_album', kwargs={'album_id': album.id, 'image_id': image.id}),
+        data=json.dumps({}),
+        content_type="application/json",
+        **auth_headers(test_user)
+    )
+    assert response.status_code == 200
+    refetched_album = Album.objects.get(id=album.id)
+    assert refetched_album.images.count() == 1
+    assert refetched_album.cover_image.id == image.id
+
+    response = client.post(
+        reverse('add_image_to_album', kwargs={'album_id': album.id, 'image_id': image2.id}),
+        data=json.dumps({}),
+        content_type="application/json",
+        **auth_headers(test_user)
+    )
+    assert response.status_code == 200
+    refetched_album = Album.objects.get(id=album.id)
+    assert refetched_album.images.count() == 2
+    assert refetched_album.cover_image.id == image.id
+
+    ## Ignores if image is already added
+    response = client.post(
+        reverse('add_image_to_album', kwargs={'album_id': album.id, 'image_id': image2.id}),
+        data=json.dumps({}),
+        content_type="application/json",
+        **auth_headers(test_user)
+    )
+    assert response.status_code == 200
+    refetched_album = Album.objects.get(id=album.id)
+    assert refetched_album.images.count() == 2
+    assert refetched_album.cover_image.id == image.id
+
+
+def test_remove_image_from_album(client, test_user, album):
+    image = Image.objects.create(user=test_user, width=0, height=0)
+    album.images.add(image)
+    album.save()
+    response = client.delete(
+        reverse('remove_image_from_album', kwargs={'album_id': album.id, 'image_id': image.id}),
+        data=json.dumps({}),
+        content_type="application/json",
+        **auth_headers(test_user)
+    )
+    assert response.status_code == 200
+    refetched_album = Album.objects.get(id=album.id)
+    assert refetched_album.images.count() == 0
+    assert refetched_album.cover_image == None
 
 
 def test_get_representatives(client, test_user):

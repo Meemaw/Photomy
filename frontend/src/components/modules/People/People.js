@@ -2,12 +2,12 @@
 import * as React from 'react';
 import Gallery from '../../Gallery';
 import ClickableSpan from '../../common/ClickableSpan';
-import type { Image } from '../../../meta/types/Image';
+import type { ImageIdentityMatch } from '../../../meta/types/ImageIdentityMatch';
 import { peoplePath } from '../../../lib/paths';
 
 type Props = {
   push: string => void,
-  images: Array<Image>,
+  images: Array<ImageIdentityMatch>,
   count: number,
   updatedAt: ?Date,
   withDivider: boolean,
@@ -21,9 +21,10 @@ class People extends React.Component<Props, State> {
     images: [],
   };
 
-  handleImageClick = (image: Image) => this.props.push(`${peoplePath}/${image.identity_group_id}`);
+  handleImageClick = (image: ImageIdentityMatch) =>
+    this.props.push(`${peoplePath}/${image.identity_group_id}`);
 
-  renderImage = (image: Image) => {
+  renderImage = (image: ImageIdentityMatch) => {
     return (
       <div style={{ position: 'relative', width: '100%' }}>
         <Gallery.Image

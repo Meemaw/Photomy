@@ -50,18 +50,10 @@ class AcceptedImagesContainner extends React.PureComponent<Props, State> {
     const columnWidth = width / num_items_per_row;
 
     return (
-      <Grid columns={num_rows} doubling stackable style={{ width: '100%', margin: '0px' }}>
+      <Grid columns={num_rows} doubling stackable className="AcceptedImages">
         {acceptedImages.map((file, fileIx) => (
-          <div
-            style={{
-              position: 'relative',
-              background: '#f6f7f9',
-              margin: '5px',
-              padding: '25px 0px 25px 0px',
-            }}
-            key={file.preview}
-          >
-            <GalleryImage src={file.preview} width={columnWidth} />
+          <div key={file.preview} className="AcceptedImageContainer">
+            <GalleryImage className="AcceptedImage" src={file.preview} width={columnWidth} />
             {this.renderIcon(fileIx)}
             {this.renderRemove(fileIx)}
           </div>

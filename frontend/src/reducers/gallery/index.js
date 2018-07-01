@@ -1,7 +1,7 @@
 // @flow
 import * as actionTypes from '../../constants/actionTypes';
 import {
-  GALLERY_TYPES,
+  GALLERY_REDUCERS,
   ALL_PHOTOS_GALLERY,
   FAVORITE_GALLERY,
   PEOPLE_GALLERY,
@@ -14,9 +14,16 @@ import {
   fetchingImages,
   updateIdentity,
 } from './util';
-import type { GalleryState } from '../../meta/types/GalleryState';
+import {
+  deleteAlbumFromImages,
+  addAlbumToImages,
+  setImagesAlbumCover,
+  renameAlbumImages,
+} from '../../meta/types/Image';
+import type { Gallery } from '../../meta/types/Gallery';
+import { removeImageFromAlbumsImages } from '../../meta/types/Album';
 
-export const INITIAL_STATE: GalleryState = GALLERY_TYPES.reduce((galleries, gallery) => {
+export const INITIAL_STATE: Object = GALLERY_REDUCERS.reduce((galleries, gallery) => {
   galleries[gallery.galleryType] = {
     count: 0,
     images: [],
@@ -30,8 +37,80 @@ export const INITIAL_STATE: GalleryState = GALLERY_TYPES.reduce((galleries, gall
   return galleries;
 }, {});
 
-const gallery = (state: GalleryState = INITIAL_STATE, action: any) => {
+const applyToEach = (state: Object, f: Function, args: any) => {
+  return Object.entries(state).reduce((newState, pair) => {
+    const [galleryType, gallery] = pair;
+    newState[galleryType] = f(gallery, args);
+    return newState;
+  }, {});
+};
+
+const removeAlbumFromGallery = (gallery: Gallery, { albumId }: Object) => {
+  const updatedImages = deleteAlbumFromImages(gallery.images, albumId);
+  return { ...gallery, images: updatedImages, dataMap: buildDataMap(updatedImages) };
+};
+
+const addAlbumToGalleryImage = (gallery: Gallery, { album, image }: Object) => {
+  const updatedImages = addAlbumToImages(gallery.images, album, image);
+  return { ...gallery, images: updatedImages, dataMap: buildDataMap(updatedImages) };
+};
+
+const setAlbumsCoverImageUrlToGallery = (
+  gallery: Gallery,
+  { albumId, cover_image_url }: Object,
+) => {
+  const updatedImages = setImagesAlbumCover(gallery.images, albumId, cover_image_url);
+  return { ...gallery, images: updatedImages, dataMap: buildDataMap(updatedImages) };
+};
+
+const renameAlbumsToGallery = (gallery: Gallery, { album }: Object) => {
+  const updatedImages = renameAlbumImages(gallery.images, album);
+  return { ...gallery, images: updatedImages, dataMap: buildDataMap(updatedImages) };
+};
+
+const removeImageFromGalleryImageAlbums = (gallery: Gallery, { imageId, albumId }: Object) => {
+  const images = gallery.images.map(image => {
+    let updatedImage = {
+      ...image,
+      albums: removeImageFromAlbumsImages(image.albums, imageId, albumId),
+    };
+
+    if (image.image_id === imageId) {
+      updatedImage = {
+        ...updatedImage,
+        albums: updatedImage.albums.filter(album => album.id !== albumId),
+      };
+    }
+
+    return updatedImage;
+  });
+  return { ...gallery, images, dataMap: buildDataMap(images) };
+};
+
+const updateGalleryImage = (gallery: Gallery, { image }: Object) => {
+  const imagePatch = image;
+  const updatedImages = gallery.images.map(
+    image => (image.image_id === imagePatch.image_id ? { ...image, ...imagePatch } : image),
+  );
+  const dataMap = gallery.dataMap;
+  dataMap[imagePatch.image_id] = { ...dataMap[imagePatch.image_id], ...imagePatch };
+  return { ...gallery, images: updatedImages, dataMap };
+};
+
+const gallery = (state: Object = INITIAL_STATE, action: any) => {
   switch (action.type) {
+    case actionTypes.REMOVE_IMAGE_FROM_ALBUM:
+      return applyToEach(state, removeImageFromGalleryImageAlbums, action);
+    case actionTypes.RENAME_ALBUM:
+      return applyToEach(state, renameAlbumsToGallery, action);
+    case actionTypes.SET_ALBUM_COVER_IMAGE:
+      return applyToEach(state, setAlbumsCoverImageUrlToGallery, action);
+    case actionTypes.DELETE_ALBUM_GALLERIES:
+      return applyToEach(state, removeAlbumFromGallery, action);
+    case actionTypes.ADD_ALBUM_TO_IMAGE:
+      return applyToEach(state, addAlbumToGalleryImage, action);
+    case actionTypes.UPDATE_IMAGE:
+      return applyToEach(state, updateGalleryImage, action);
     case actionTypes.FAVORITE_IMAGE:
       const updatedFavoriteGallery = action.image.favorite
         ? uploadImages(state[FAVORITE_GALLERY], [action.image])

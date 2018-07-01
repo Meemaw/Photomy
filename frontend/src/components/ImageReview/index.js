@@ -2,13 +2,16 @@
 import React from 'react';
 import Gallery from '../Gallery';
 import { Checkbox } from 'semantic-ui-react';
-import type { Image } from '../../meta/types/Image';
+import type { ImageIdentityMatch } from '../../meta/types/ImageIdentityMatch';
 
-type Props = { imageReviews: Array<Image>, setImageReviews: (Array<Image>) => void };
+type Props = {
+  imageReviews: Array<ImageIdentityMatch>,
+  setImageReviews: (Array<ImageIdentityMatch>) => void,
+};
 type State = {};
 
 class ImageReview extends React.Component<Props, State> {
-  renderImage = (image: Image) => {
+  renderImage = (image: ImageIdentityMatch) => {
     const { imageReviews, setImageReviews } = this.props;
     return (
       <div>

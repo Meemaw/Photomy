@@ -44,13 +44,15 @@ class MobileContainer extends React.PureComponent<Props, State> {
             visible={sidebarOpened}
           >
             <Divider />
-            <Menu.Item as={Link} to={rootPath} onClick={this.closeSidebar}>
-              TODO 2
+            <Menu.Item
+              as={Link}
+              to={rootPath}
+              onClick={this.closeSidebar}
+              active={window.location.pathname === rootPath}
+            >
+              Home
             </Menu.Item>
 
-            <Menu.Item as={Link} to={rootPath} onClick={this.closeSidebar}>
-              TODO 2
-            </Menu.Item>
             <AuthMenuItem closeSidebar={this.closeSidebar} location={location} />
           </StyledSidebar>
 

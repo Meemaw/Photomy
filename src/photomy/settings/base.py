@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'storages',
+    'corsheaders',
     'authentication.apps.AuthenticationConfig',
     'gallery.apps.GalleryConfig',
     'identifier.apps.IdentifierConfig',
@@ -123,6 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 2621440 * 8  # 20 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 2621440 * 8  # 20 MB
 AUTH_USER_MODEL = 'authentication.User'
 
 ACCOUNT_EMAIL_REQUIRED = True

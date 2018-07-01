@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator
 from django.db import models
+from .constants import ProcessingStatus
 
 
 class Image(models.Model):
@@ -16,9 +17,16 @@ class Image(models.Model):
     favorite = models.BooleanField(default=False)
     width = models.IntegerField()
     height = models.IntegerField()
+    location = models.CharField(max_length=100, null=True, blank=True)
+    description = models.CharField(max_length=100, null=True, blank=True)
+
+    processing_status = models.CharField(
+        max_length=30, choices=[(tag, tag.value) for tag in ProcessingStatus], default=ProcessingStatus.INITIAL)
 
     uploaded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    taken_on = models.DateTimeField(null=True)
+
     face_locations = ArrayField(
         ArrayField(
             models.IntegerField(validators=[MinValueValidator(0)]),
@@ -53,4 +61,6 @@ class Album(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=50, blank=True)
-    images = models.ManyToManyField(Image, blank=True)
+    images = models.ManyToManyField(Image, blank=True, related_name="albums")
+    cover_image = models.ForeignKey(
+        Image, null=True, on_delete=models.SET_NULL, related_name='covered_albums')

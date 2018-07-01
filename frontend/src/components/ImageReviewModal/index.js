@@ -3,16 +3,16 @@ import * as React from 'react';
 import BaseModal from '../common/BaseModal';
 import ClickableSpan from '../common/ClickableSpan';
 import ImageReview from '../ImageReview';
-import type { Image } from '../../meta/types/Image';
+import type { ImageIdentityMatch } from '../../meta/types/ImageIdentityMatch';
 import { Divider, Modal, Button } from 'semantic-ui-react';
 import { IdentityMatchApi } from '../../services';
 
 type Props = {
-  unreviewedImages: Array<Image>,
-  addConfirmations: (Array<Image>) => void,
+  unreviewedImages: Array<ImageIdentityMatch>,
+  addConfirmations: (Array<ImageIdentityMatch>) => void,
   identity: Object,
 };
-type State = { imageReviews: Array<Image>, loading: boolean };
+type State = { imageReviews: Array<ImageIdentityMatch>, loading: boolean };
 
 class ImageReviewModal extends React.PureComponent<Props, State> {
   state = {
@@ -34,7 +34,7 @@ class ImageReviewModal extends React.PureComponent<Props, State> {
     return null;
   }
 
-  setImageReviews = (imageReviews: Array<Image>) => this.setState({ imageReviews });
+  setImageReviews = (imageReviews: Array<ImageIdentityMatch>) => this.setState({ imageReviews });
 
   renderTrigger = (handleOpen: void => void) => {
     return (
@@ -47,7 +47,7 @@ class ImageReviewModal extends React.PureComponent<Props, State> {
     );
   };
 
-  reviewImages = async (imageReviews: Array<Image>, handleClose: void => void) => {
+  reviewImages = async (imageReviews: Array<ImageIdentityMatch>, handleClose: void => void) => {
     const confirmed = imageReviews.filter(image => image.confirmed);
 
     const rejected = imageReviews.filter(image => !image.confirmed);

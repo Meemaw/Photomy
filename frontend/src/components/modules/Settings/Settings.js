@@ -3,6 +3,7 @@ import React from 'react';
 import ContentContainer from '../../common/ContentContainer';
 import { Menu, Segment, Header, Container, Divider } from 'semantic-ui-react';
 import {
+  GALLERY_SETTINGS_MENU_ITEMS,
   GENERAL_SETTINGS_MENU_ITEMS,
   MENU_UI_NAME_MAP,
   MENU_UI_NAME_ICON_MAP,
@@ -16,9 +17,8 @@ class Settings extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    let menuItem = GENERAL_SETTINGS_MENU_ITEMS.find(
-      menuItem => menuItem.to.search === props.search,
-    );
+    const allItems = [...GALLERY_SETTINGS_MENU_ITEMS, ...GENERAL_SETTINGS_MENU_ITEMS];
+    let menuItem = allItems.find(menuItem => menuItem.to.search === props.search);
     if (!menuItem) {
       menuItem = GENERAL_SETTINGS_MENU_ITEMS[0];
     }
@@ -44,6 +44,26 @@ class Settings extends React.Component<Props, State> {
 
               <Menu.Menu>
                 {GENERAL_SETTINGS_MENU_ITEMS.map(menuItem => {
+                  return (
+                    <Menu.Item
+                      as={Link}
+                      to={menuItem.to}
+                      key={menuItem.name}
+                      name={menuItem.name}
+                      content={menuItem.content}
+                      onClick={this.handleMenuTabClick}
+                      active={activeItem === menuItem.name}
+                    />
+                  );
+                })}
+              </Menu.Menu>
+            </Menu.Item>
+
+            <Menu.Item style={{ marginRight: '-7px' }}>
+              <Menu.Header>Gallery</Menu.Header>
+              <Menu.Menu>
+                {GALLERY_SETTINGS_MENU_ITEMS.map(menuItem => {
+                  console.log(menuItem.to);
                   return (
                     <Menu.Item
                       as={Link}

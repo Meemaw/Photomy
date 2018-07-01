@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import styled from 'styled-components';
 import AddImagesOptions from '../AddImagesOptions';
 import AddImagesDropzone from '../AddImagesDropzone';
 import { Modal } from 'semantic-ui-react';
@@ -20,6 +21,11 @@ type Props = {
   setAlbumQuality: Function,
   setAlbumName: Function,
   albumName: string,
+  photosTakenOn: ?Date,
+  isCustomDate: boolean,
+  setIsCustomDate: Function,
+  handleDateSelection: Function,
+  setLocation: Function,
 };
 
 const AddAlbum = ({
@@ -38,9 +44,14 @@ const AddAlbum = ({
   setAlbumName,
   highQuality,
   albumName,
+  photosTakenOn,
+  isCustomDate,
+  setIsCustomDate,
+  handleDateSelection,
+  setLocation,
 }: Props) => {
   return (
-    <Modal.Content style={{ display: 'flex' }}>
+    <StyledContent className="AddAlbumContent">
       <AddImagesOptions
         setUploadWithLink={setUploadWithLink}
         uploadWithLink={uploadWithLink}
@@ -50,7 +61,12 @@ const AddAlbum = ({
         highQuality={highQuality}
         setAlbumQuality={setAlbumQuality}
         setAlbumName={setAlbumName}
+        photosTakenOn={photosTakenOn}
         albumName={albumName}
+        isCustomDate={isCustomDate}
+        setIsCustomDate={setIsCustomDate}
+        handleDateSelection={handleDateSelection}
+        setLocation={setLocation}
       />
       <AddImagesDropzone
         acceptedImages={acceptedImages}
@@ -61,8 +77,49 @@ const AddAlbum = ({
         uploadedStatuses={uploadedStatuses}
         isUploading={isUploading}
       />
-    </Modal.Content>
+    </StyledContent>
   );
 };
+
+const StyledContent = styled(Modal.Content)`
+  &&& {
+    .AcceptedImages {
+      width: 100%;
+      margin: 0px;
+    }
+
+    .AcceptedImageContainer {
+      position: relative;
+      background: #f6f7f9;
+      margin: 5px;
+      padding: 25px 0px 25px 0px;
+    }
+
+    div.ui.segment {
+      width: calc(100% - 265px);
+      margin-top: 0px;
+      margin-left: 15px;
+    }
+
+    @media only screen and (max-width: 600px) {
+      div.ui.segment {
+        width: calc(100% - 40px) !important;
+        margin-top: 20px !important;
+      }
+
+      .FileUpload,
+      .Dropzone,
+      .AcceptedImageContainer,
+      .AcceptedImage,
+      .LinkUpload {
+        width: 100% !important;
+      }
+    }
+
+    @media only screen and (min-width: 600px) {
+      display: flex !important;
+    }
+  }
+`;
 
 export default AddAlbum;

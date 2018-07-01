@@ -18,11 +18,12 @@ type State = {};
 class Favorite extends React.Component<Props, State> {
   renderImage = (image: Image): React.Node => {
     const imageIx = this.props.dataMap[image.image_id].ix;
+    const images: Array<Image> = Object.values(this.props.dataMap);
 
     return (
       <ImageHighlightModal
         imageIx={imageIx}
-        images={Object.values(this.props.dataMap)}
+        images={images}
         initialImage={image}
         deleteImage={this.props.deleteImage}
         favoriteImage={this.props.favoriteImage}

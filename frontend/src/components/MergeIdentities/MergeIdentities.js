@@ -2,9 +2,9 @@
 import * as React from 'react';
 import Gallery from '../Gallery';
 import SaveButton from '../common/SaveButton';
-import { Modal, Icon, Button } from 'semantic-ui-react';
+import { Modal, Icon, Button, Message } from 'semantic-ui-react';
 import { IdentityApi, IdentityMatchApi } from '../../services';
-import type { Image } from '../../meta/types/Image';
+import type { ImageIdentityMatch } from '../../meta/types/ImageIdentityMatch';
 import type { Identity } from '../../meta/types/Identity';
 
 type Props = { identity: Identity, addMergedImages: Function, handleClose: Function };
@@ -18,7 +18,7 @@ type State = {
 class MergeIdentities extends React.Component<Props, State> {
   state = { loadingIdentities: true, results: [], join_identity_id: null, merging: false };
 
-  renderImage = (image: Image) => {
+  renderImage = (image: ImageIdentityMatch) => {
     return (
       <Gallery.Image
         src={image.preview_url}
@@ -77,22 +77,26 @@ class MergeIdentities extends React.Component<Props, State> {
           <Icon name="user" />Merge identities with
         </Modal.Header>
         <Modal.Content>
-          {results.map((identityMatches, ix) => {
-            const sectionHeader = identityMatches[0].image_identity || `Unknown identity`;
-            const key = identityMatches[0].identity_group_id;
-            const isSelected = key === join_identity_id;
-            return (
-              <Gallery.Section
-                renderImage={this.renderImage}
-                sectionHeader={sectionHeader}
-                isSelected={isSelected}
-                key={key}
-                images={identityMatches}
-                isSticky={false}
-                minImageWidth={90}
-              />
-            );
-          })}
+          {results.length === 0 ? (
+            <Message content="No identities to merge with" />
+          ) : (
+            results.map((identityMatches, ix) => {
+              const sectionHeader = identityMatches[0].image_identity || `Unknown identity`;
+              const key = identityMatches[0].identity_group_id;
+              const isSelected = key === join_identity_id;
+              return (
+                <Gallery.Section
+                  renderImage={this.renderImage}
+                  sectionHeader={sectionHeader}
+                  isSelected={isSelected}
+                  key={key}
+                  images={identityMatches}
+                  isSticky={false}
+                  minImageWidth={90}
+                />
+              );
+            })
+          )}
         </Modal.Content>
         <Modal.Actions>
           <Button content="Cancel" icon="remove" onClick={handleClose} />

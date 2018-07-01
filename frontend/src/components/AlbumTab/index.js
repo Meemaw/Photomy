@@ -3,9 +3,9 @@ import React from 'react';
 import SavableTab from '../common/SavableTab';
 import { AlbumsApi } from '../../services';
 import { connect } from 'react-redux';
-import { setAlbum } from '../../actions';
+import { renameAlbum } from '../../actions';
 
-type Props = { album: Object, setAlbum: Function };
+type Props = { album: Object, renameAlbum: Function };
 type State = { savingAlbum: boolean };
 
 class AlbumTabContainer extends React.Component<Props, State> {
@@ -23,9 +23,9 @@ class AlbumTabContainer extends React.Component<Props, State> {
     }
 
     const updatedAlbum = { ...album, name: albumName };
-    return AlbumsApi.patch(updatedAlbum)
+    return AlbumsApi.patch({ ...updatedAlbum, albumId: updatedAlbum.id })
       .then(resp => {
-        this.props.setAlbum({ ...album, albumName });
+        this.props.renameAlbum(updatedAlbum);
         this.setSavingAlbum(false);
       })
       .catch(err => console.log(err));
@@ -40,7 +40,7 @@ class AlbumTabContainer extends React.Component<Props, State> {
         savingValue={savingAlbum}
         setSavingValue={this.setSavingAlbum}
         loading={loading}
-        value={album.albumName}
+        value={album.name}
         saveValue={this.saveAlbum}
         defaultValue="Untitled album"
       />
@@ -49,7 +49,7 @@ class AlbumTabContainer extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = {
-  setAlbum,
+  renameAlbum,
 };
 
 export default connect(

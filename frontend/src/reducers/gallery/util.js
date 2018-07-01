@@ -17,7 +17,7 @@ export const deleteImage = (gallery: Gallery, deletedImage: Image) => {
   return { ...gallery, dataMap, images, count: images.length, isEmpty };
 };
 
-export const uploadImages = (gallery: Gallery, uploadedImages: Image) => {
+export const uploadImages = (gallery: Gallery, uploadedImages: Array<Image>) => {
   const images = [...uploadedImages, ...gallery.images];
   const dataMap = buildDataMap(images);
   return { ...gallery, dataMap, images, count: images.length, isEmpty: false };

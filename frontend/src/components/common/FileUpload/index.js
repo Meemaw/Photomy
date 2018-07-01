@@ -1,60 +1,27 @@
 // @flow
 import * as React from 'react';
-import Dropzone from 'react-dropzone';
+import Dropzone from '../Dropzone';
 import styled from 'styled-components';
-import { Icon } from 'semantic-ui-react';
 
 type Props = {
   disabled?: boolean,
-  accept: string,
+  accept?: string,
   error?: string,
   handleAcceptedFiles: Function,
 };
 
-type State = {
-  error: ?string,
+const FileUpload = ({ disabled, error, accept, handleAcceptedFiles }: Props) => {
+  return (
+    <DropzoneStyle className="FileUpload">
+      <Dropzone
+        disabled={disabled}
+        handleAcceptedFiles={handleAcceptedFiles}
+        accept={accept}
+        error={error}
+      />
+    </DropzoneStyle>
+  );
 };
-
-class FileUpload extends React.PureComponent<Props, State> {
-  state = {
-    error: null,
-  };
-
-  static defaultProps = {
-    disabled: false,
-    accept: 'image/jpeg, image/png',
-  };
-
-  handleDrop = (accepted: Array<any>, rejected: Array<any>) => {
-    const { accept, handleAcceptedFiles } = this.props;
-
-    if (accepted.length > 0) {
-      handleAcceptedFiles(accepted);
-      this.setState({
-        error: null,
-      });
-    } else {
-      this.setState({ error: `Supported file formats: [${accept}]` });
-    }
-  };
-
-  render() {
-    const { disabled, error, accept } = this.props;
-    const actualError = this.state.error || error;
-
-    return (
-      <DropzoneStyle className="FileUpload">
-        <Dropzone disabled={disabled} onDrop={this.handleDrop} accept={accept} className="Dropzone">
-          {actualError ? (
-            <p style={{ color: 'red' }}>{actualError}</p>
-          ) : (
-            <Icon name="plus" style={{ width: '100%' }} size="large" />
-          )}
-        </Dropzone>
-      </DropzoneStyle>
-    );
-  }
-}
 
 const DropzoneStyle = styled.section`
   display: flex;
