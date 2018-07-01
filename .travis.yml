@@ -1,52 +1,7 @@
 dist: trusty
 sudo: required
 matrix:
-  include:
-    - stage: test
-      language: python
-      python:
-        - "3.6"
-      cache:
-        directories:
-          - $HOME/.cache/pip
-      services: 
-        - postgresql
-        - redis-server
-        - docker
-      env:
-        global:
-        - DJANGO_SETTINGS_MODULE=photomy.settings.travis
-        - PYTHONPATH="/home/travis/build/meemaw/photomy"
-        - PIP_USE_MIRRORS=true
-      install:
-        - pip install -U pip wheel
-        - pip install -r config/requirements.txt
-      before_script:
-        - psql -c "CREATE DATABASE travisci;" -U postgres
-        - cd src
-        - python manage.py migrate --noinput --settings=photomy.settings.travis
-      script:
-        - pytest --cov --ds=photomy.settings.travis
-      after_success:
-        - bash <(curl -s https://codecov.io/bash) -F python -t $CODECOV_UPLOAD_TOKEN
-        
-    - stage: test
-      language: node_js
-      node_js:
-        - "node"
-      before_script:
-        - cd frontend
-        - yarn install
-      cache:
-        yarn: true
-        directories:
-          - $HOME/.npm
-      script:
-        - yarn lint
-        - yarn test-coverage
-      after_success:
-        - codecov -F javascript -t $CODECOV_UPLOAD_TOKEN
-    
+  include:    
     - stage: test
       language: java
       addons:
@@ -55,8 +10,7 @@ matrix:
           - google-chrome
         packages:
           - google-chrome-stable
-      jdk:
-        - oraclejdk8
+      jdk: oraclejdk8
       node_js:
         - 6
       before_install:
