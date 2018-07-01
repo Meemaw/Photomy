@@ -22,12 +22,11 @@ matrix:
         - cd frontend
         - yarn install
         - BROWSER=none yarn start  2>&1 > /dev/null &
-        - export MY_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+        - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
         - cd e2etests
         - yarn install
       script:
-        - export PHOTOMY_URL="http://$MY_ADDRESS:3000/"
-        - echo $PHOTOMY_URL
+        - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
         - yarn test
 
     - stage: build
