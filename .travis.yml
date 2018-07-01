@@ -47,6 +47,33 @@ matrix:
       after_success:
         - codecov -F javascript -t $CODECOV_UPLOAD_TOKEN
 
+    - stage: test
+      language: node_js
+      node_js:
+        - "node"
+      cache:
+        yarn: true
+        directories:
+          - $HOME/e2etests/.npm
+      before_install:
+        - export CHROME_BIN=/usr/bin/google-chrome
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - sudo apt-get update
+        - sudo apt-get install -y libappindicator1 fonts-liberation
+        - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        - sudo dpkg -i google-chrome*.deb
+      install:
+        - cd frontend
+        - yarn install
+        - BROWSER=none yarn start  2>&1 > /dev/null &
+        - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+        - cd e2etests
+        - yarn install
+      script:
+        - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
+        - yarn test
+
     - stage: build
       if: branch = master
       language: bash
@@ -95,4 +122,3 @@ stages:
   - test
   - build
   - deploy
-  
