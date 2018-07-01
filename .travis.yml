@@ -6,6 +6,10 @@ matrix:
       language: node_js
       node_js:
         - "node"
+      cache:
+        yarn: true
+        directories:
+          - $HOME/.npm
       before_install:
         - export CHROME_BIN=/usr/bin/google-chrome
         - export DISPLAY=:99.0
@@ -14,10 +18,11 @@ matrix:
         - sudo apt-get install -y libappindicator1 fonts-liberation
         - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         - sudo dpkg -i google-chrome*.deb
-        - export MY_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
-        - cd frontend
-        - BROWSER=none yarn start
       install:
+        - cd frontend
+        - yarn install
+        - BROWSER=none yarn start  2>&1 > /dev/null &
+        - export MY_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
         - cd e2etests
         - yarn install
       script:
