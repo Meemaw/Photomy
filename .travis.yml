@@ -9,7 +9,7 @@ matrix:
       cache:
         yarn: true
         directories:
-          - $HOME/.npm
+          - $HOME/e2etests/.npm
       before_install:
         - export CHROME_BIN=/usr/bin/google-chrome
         - export DISPLAY=:99.0
