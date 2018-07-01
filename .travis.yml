@@ -16,7 +16,7 @@ matrix:
         - sudo dpkg -i google-chrome*.deb
         - export MY_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
         - cd frontend
-        - BROWSER=none yarn start  2>&1 > /dev/null &
+        - BROWSER=none yarn start
       install:
         - cd e2etests
         - yarn install
