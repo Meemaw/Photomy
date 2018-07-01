@@ -1,8 +1,10 @@
 {
   "name": "e2etests",
-  "version": "1.0.0",
+  "private": true,
+  "homepage": "https://photomy.si",
   "scripts": {
-    "test": "nightwatch -o /tmp/nwreports"
+    "test": "nightwatch -o /tmp/nwreports",
+    "test:prod": "PHOTOMY_URL='https://www.photomy.si' nightwatch -o /tmp/nwreports"
   },
   "dependencies": {
     "nightwatch": "^0.9.9"
