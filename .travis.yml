@@ -14,14 +14,15 @@ matrix:
         - sudo apt-get install -y libappindicator1 fonts-liberation
         - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         - sudo dpkg -i google-chrome*.deb
-        - cd frontend
         - export MY_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
-        - echo $MY_ADDRESS
-        - BROWSER=none yarn start &
+        - cd frontend
+        - BROWSER=none yarn start  2>&1 > /dev/null &
       install:
         - cd e2etests
         - yarn install
       script:
+        - export PHOTOMY_URL="http://$MY_ADDRESS:3000/"
+        - echo $PHOTOMY_URL
         - yarn test
 
     - stage: build
