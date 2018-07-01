@@ -18,6 +18,8 @@ matrix:
         - export DISPLAY=:99.0
         - sh -e /etc/init.d/xvfb start
       script:
+        - npm install -g nightwatch
+        - cd frontend/e2etests
         - PHOTOMY_URL="https://www.photomy.si/" nightwatch . -o /tmp/nwreports
 
     - stage: build
