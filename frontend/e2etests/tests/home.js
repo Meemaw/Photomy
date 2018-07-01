@@ -9,12 +9,10 @@ module.exports = {
     const homePage = browser.page.home();
     homePage.navigate();
 
+    // TODO href selectors
     browser
       .waitForElementVisible(homePage.elements.getStartedButton.selector, 30000)
-      .assert.containsText(homePage.elements.registerButton.selector, 'Sign Up')
-      .assert.containsText(homePage.elements.getStartedButton.selector, 'Get Started')
-      .assert.containsText(homePage.elements.loginButton.selector, 'Log in')
-      .assert.containsText(homePage.elements.homeButton.selector, 'Photomy');
+      .assert.containsText(homePage.elements.getStartedButton.selector, 'Get Started');
 
     browser.click(homePage.elements.getStartedButton.selector).pause(1000);
 

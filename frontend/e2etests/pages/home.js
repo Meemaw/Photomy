@@ -1,7 +1,5 @@
 const homeCommands = {
   testThat() {
-    if (this.api) {
-    }
     return this;
   },
 };

@@ -16,10 +16,11 @@
 *.ipynb
 
 ### Frontend ###
-*/node_modules/*
+*node_modules*
 */yarn-error.log
 */build/*
 */package-lock.json
+*selenium*
 
 
 ### OTHER ###

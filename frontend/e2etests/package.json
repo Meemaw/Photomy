@@ -1,0 +1,15 @@
+{
+  "name": "e2etests",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "nightwatch -o /tmp/nwreports"
+  },
+  "dependencies": {
+    "nightwatch": "^0.9.9"
+  },
+  "devDependencies": {
+    "chromedriver": "^2.33.2",
+    "env2": "^2.1.1",
+    "selenium-server": "^3.8.1"
+  }
+}

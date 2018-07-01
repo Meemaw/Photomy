@@ -1,11 +1,9 @@
 const registerCommands = {
   checkForFields() {
-    if (this.api) {
-      const browser = this.api;
-      browser.assert.elementPresent(elements.emailField.selector);
-      browser.assert.elementPresent(elements.passwordField.selector);
-      browser.assert.elementPresent(elements.tocCheckbox.selector);
-    }
+    const browser = this.api;
+    browser.assert.elementPresent(elements.emailField.selector);
+    browser.assert.elementPresent(elements.passwordField.selector);
+    browser.assert.elementPresent(elements.tocCheckbox.selector);
 
     return this;
   },
