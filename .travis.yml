@@ -46,6 +46,9 @@ matrix:
         - cd e2etests
         - yarn install
       script:
+        - curl http://localhost:8000/rest-auth/login/
+        - curl http://127.0.0.1:8000/rest-auth/login/
+        - curl http://0.0.0.0:8000/rest-auth/login/
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
         - yarn test
 
