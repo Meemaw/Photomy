@@ -10,7 +10,7 @@ matrix:
         - "node"
       services: 
         - redis-server
-        - docker
+        - postgresql
       cache:
         yarn: true
         directories:
