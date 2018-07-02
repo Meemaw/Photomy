@@ -36,13 +36,16 @@ matrix:
         - cd src
         - python manage.py migrate --noinput --settings=photomy.settings.travis
         - python manage.py populate_test_users --settings=photomy.settings.travis
-        - python manage.py runserver --settings=photomy.settings.travis
+        - python manage.py runserver --settings=photomy.settings.travis &
         - cd ../frontend
         - yarn install
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+        - gulp setDev
         - BROWSER=none yarn start  2>&1 > /dev/null &
         - cd e2etests
         - yarn install
+        - lsof -i :3000 | grep LISTEN
+        - lsof -i :8000 | grep LISTEN
       script:
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
         - yarn test
