@@ -32,7 +32,7 @@ module.exports = {
     browser
       .setValue(loginPage.elements.passwordField.selector, 'wrongpassword123')
       .click(loginPage.elements.submitButton.selector)
-      .pause(500);
+      .pause(2000);
 
     browser.assert.containsText(
       'div.ui.icon.negative.message > div.content > div.header',
