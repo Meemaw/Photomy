@@ -34,12 +34,12 @@ matrix:
         - pip install -r config/requirements.txt
         - psql -c "CREATE DATABASE travisci;" -U postgres
         - cd src
+        - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
         - python manage.py migrate --noinput --settings=photomy.settings.travis
         - python manage.py populate_test_users --settings=photomy.settings.travis
-        - python manage.py runserver 0.0.0.0:8000 --settings=photomy.settings.travis 2>&1 > /dev/null &
+        - python manage.py runserver $CONTAINNER_ADDRESS:8000 --settings=photomy.settings.travis 2>&1 > /dev/null &
         - cd ../frontend
         - yarn install
-        - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
         - node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js setTravis
         - sed -i "s/localhost/$CONTAINNER_ADDRESS/g" ./src/environments/travis.json
         - cat ./src/environments/travis.json
