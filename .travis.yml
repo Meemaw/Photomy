@@ -6,10 +6,19 @@ matrix:
       language: python
       node_js:
         - "node"
+      services: 
+        - redis-server
+        - docker
       cache:
         yarn: true
         directories:
           - $HOME/e2etests/.npm
+          - $HOME/.cache/pip  
+      env:
+        global:
+        - DJANGO_SETTINGS_MODULE=photomy.settings.travis
+        - PYTHONPATH="/home/travis/build/meemaw/photomy"
+        - PIP_USE_MIRRORS=true
       before_install:
         - export CHROME_BIN=/usr/bin/google-chrome
         - export DISPLAY=:99.0
@@ -19,13 +28,20 @@ matrix:
         - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         - sudo dpkg -i google-chrome*.deb
       install:
+        - pip install -U pip wheel
+        - pip install -r config/requirements.txt
         - cd frontend
         - yarn install
         - BROWSER=none yarn start  2>&1 > /dev/null &
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
         - cd e2etests
         - yarn install
+      before_script:
+        - psql -c "CREATE DATABASE travisci;" -U postgres
+        - cd ../../src
+        - python manage.py migrate --noinput --settings=photomy.settings.travis
       script:
+        - cd frontend/e2etests
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
         - yarn test
 
