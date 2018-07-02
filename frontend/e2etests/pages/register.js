@@ -1,5 +1,5 @@
 const registerCommands = {
-  checkForFields() {
+  inputFieldsPresent() {
     const browser = this.api;
     browser.assert.elementPresent(elements.emailField.selector);
     browser.assert.elementPresent(elements.passwordField.selector);
@@ -16,7 +16,9 @@ const elements = {
 };
 
 module.exports = {
-  url: '/register',
+  url() {
+    return `${this.api.globals.photomy_url}/register`;
+  },
   commands: [registerCommands],
   elements,
 };

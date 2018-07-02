@@ -1,8 +1,4 @@
-const homeCommands = {
-  testThat() {
-    return this;
-  },
-};
+const homeCommands = {};
 
 module.exports = {
   url() {
