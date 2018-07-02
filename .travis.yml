@@ -39,8 +39,6 @@ matrix:
         - python manage.py runserver 0.0.0.0:8000 --settings=photomy.settings.travis 2>&1 > /dev/null &
         - cd ../frontend
         - yarn install
-        - curl http://localhost:8000
-        - curl http://127.0.0.1:8000
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
         - node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js setTravis
         - sed -i "s/localhost/$CONTAINNER_ADDRESS/g" ./src/environments/travis.json
