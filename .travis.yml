@@ -42,13 +42,12 @@ matrix:
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
         - node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js setTravis
         - sed -i "s/localhost/$CONTAINNER_ADDRESS/g" ./src/environments/travis.json
+        - cat ./src/environments/travis.json
         - BROWSER=none yarn start  2>&1 > /dev/null &
         - cd e2etests
         - yarn install
       script:
-        - curl http://localhost:8000/rest-auth/login/
-        - curl http://127.0.0.1:8000/rest-auth/login/
-        - curl http://0.0.0.0:8000/rest-auth/login/
+        - curl http://$CONTAINNER_ADDRESS:8000/
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
         - yarn test
 
