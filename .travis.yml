@@ -35,6 +35,8 @@ matrix:
         - psql -c "CREATE DATABASE travisci;" -U postgres
         - cd src
         - python manage.py migrate --noinput --settings=photomy.settings.travis
+        - python manage.py populate_test_users
+        - python manage.py runserver &
         - cd ../frontend
         - yarn install
         - BROWSER=none yarn start  2>&1 > /dev/null &
