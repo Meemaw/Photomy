@@ -1,7 +1,7 @@
 from .test import *
 
 SECRET_KEY = "SecretKeyForUseOnTravis"
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = ['*']
 
