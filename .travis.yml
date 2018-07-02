@@ -46,7 +46,7 @@ matrix:
         - yarn install
         - lsof -i :3000 | grep LISTEN
         - lsof -i :8000 | grep LISTEN
-         - cat /tmp/django.log
+        - cat /tmp/django.log
       script:
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
         - yarn test
