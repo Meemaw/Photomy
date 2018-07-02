@@ -40,16 +40,15 @@ matrix:
         - cd ../frontend
         - yarn install
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
-        - sed -i "s/127.0.0.1/$CONTAINNER_ADDRESS/g" ./src/environments/dev.json
-        - node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js setDev
+        - node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js setTravis
         - BROWSER=none yarn start  2>&1 > /dev/null &
         - cd e2etests
         - yarn install
         - lsof -i :3000 | grep LISTEN
         - lsof -i :8000 | grep LISTEN
+         - cat /tmp/django.log
       script:
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
-        - cat /tmp/django.log
         - yarn test
         - cat /tmp/django.log
 

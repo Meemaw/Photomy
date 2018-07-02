@@ -9,6 +9,7 @@ const ENVIRONMENTS = {
   DEV: 'dev',
   TEST: 'test',
   PROD: 'prod',
+  TRAVIS: 'travis',
 };
 
 gulp.task('clean', function() {
@@ -35,6 +36,14 @@ gulp.task('setTest', () =>
   gulp
     .src('./templates/.env.template')
     .pipe(template({ env: ENVIRONMENTS.TEST }))
+    .pipe(rename('.env'))
+    .pipe(gulp.dest('./')),
+);
+
+gulp.task('setTravis', () =>
+  gulp
+    .src('./templates/.env.template')
+    .pipe(template({ env: ENVIRONMENTS.TRAVIS }))
     .pipe(rename('.env'))
     .pipe(gulp.dest('./')),
 );
