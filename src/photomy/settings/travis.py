@@ -3,6 +3,7 @@ from .test import *
 SECRET_KEY = "SecretKeyForUseOnTravis"
 DEBUG = False
 TEMPLATE_DEBUG = True
+ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {
