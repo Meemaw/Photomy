@@ -4,6 +4,8 @@ matrix:
   include:
     - stage: test
       language: python
+      python:
+        - "3.6"
       node_js:
         - "node"
       services: 
