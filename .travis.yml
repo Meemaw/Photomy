@@ -46,9 +46,8 @@ matrix:
         - BROWSER=none yarn start  2>&1 > /dev/null &
         - cd e2etests
         - yarn install
-        - node --version
       script:
-        - curl http://$CONTAINNER_ADDRESS:8000/
+        - curl http://$CONTAINNER_ADDRESS:8000/rest-auth
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
         - yarn test
 
