@@ -32,16 +32,15 @@ matrix:
       install:
         - pip install -U pip wheel
         - pip install -r config/requirements.txt
-        - cd frontend
+        - psql -c "CREATE DATABASE travisci;" -U postgres
+        - cd src
+        - python manage.py migrate --noinput --settings=photomy.settings.travis
+        - cd ../frontend
         - yarn install
         - BROWSER=none yarn start  2>&1 > /dev/null &
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
         - cd e2etests
         - yarn install
-      before_script:
-        - psql -c "CREATE DATABASE travisci;" -U postgres
-        - cd ../../src
-        - python manage.py migrate --noinput --settings=photomy.settings.travis
       script:
         - cd frontend/e2etests
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
