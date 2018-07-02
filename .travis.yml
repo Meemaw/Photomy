@@ -36,7 +36,7 @@ matrix:
         - cd src
         - python manage.py migrate --noinput --settings=photomy.settings.travis
         - python manage.py populate_test_users --settings=photomy.settings.travis
-        - python manage.py runserver --settings=photomy.settings.travis &
+        - python manage.py runserver --settings=photomy.settings.travis > /tmp/django.log &
         - cd ../frontend
         - yarn install
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
@@ -49,6 +49,7 @@ matrix:
       script:
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
         - yarn test
+        - cat /tmp/django.log
 
   
 
