@@ -2,6 +2,7 @@ from .test import *
 
 SECRET_KEY = "SecretKeyForUseOnTravis"
 DEBUG = True
+CORS_ORIGIN_ALLOW_ALL = True
 TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = ['*']
 

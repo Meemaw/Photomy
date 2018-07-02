@@ -51,8 +51,6 @@ matrix:
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
         - yarn test
 
-  
-
 stages:
   - test
   - build
