@@ -7,7 +7,7 @@ matrix:
       python:
         - "3.6"
       node_js:
-        - "8"
+        - "9.8"
       services: 
         - redis-server
         - postgresql
@@ -46,6 +46,7 @@ matrix:
         - BROWSER=none yarn start  2>&1 > /dev/null &
         - cd e2etests
         - yarn install
+        - node --version
       script:
         - curl http://$CONTAINNER_ADDRESS:8000/
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
