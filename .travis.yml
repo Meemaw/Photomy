@@ -40,8 +40,6 @@ matrix:
         - cd ../frontend
         - yarn install
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
-        - sed -i "s/127.0.0.1/$CONTAINNER_ADDRESS/g" ./src/environments/dev.json
-        - cat ./src/environments/dev.json
         - BROWSER=none yarn start  2>&1 > /dev/null &
         - cd e2etests
         - yarn install
