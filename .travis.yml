@@ -6,6 +6,51 @@ matrix:
       language: python
       python:
         - "3.6"
+      cache:
+        directories:
+          - $HOME/.cache/pip
+      services: 
+        - postgresql
+        - redis-server
+        - docker
+      env:
+        global:
+        - DJANGO_SETTINGS_MODULE=photomy.settings.travis
+        - PYTHONPATH="/home/travis/build/meemaw/photomy"
+        - PIP_USE_MIRRORS=true
+      install:
+        - pip install -U pip wheel
+        - pip install -r config/requirements.txt
+      before_script:
+        - psql -c "CREATE DATABASE travisci;" -U postgres
+        - cd src
+        - python manage.py migrate --noinput --settings=photomy.settings.travis
+      script:
+        - pytest --cov --ds=photomy.settings.travis
+      after_success:
+        - bash <(curl -s https://codecov.io/bash) -F python -t $CODECOV_UPLOAD_TOKEN
+        
+    - stage: test
+      language: node_js
+      node_js:
+        - "node"
+      before_script:
+        - cd frontend
+        - yarn install
+      cache:
+        yarn: true
+        directories:
+          - $HOME/.npm
+      script:
+        - yarn lint
+        - yarn test-coverage
+      after_success:
+        - codecov -F javascript -t $CODECOV_UPLOAD_TOKEN
+
+    - stage: test
+      language: python
+      python:
+        - "3.6"
       node_js:
         - "9.8"
       services: 
@@ -42,7 +87,6 @@ matrix:
         - yarn install
         - node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js setTravis
         - sed -i "s/localhost/$CONTAINNER_ADDRESS/g" ./src/environments/travis.json
-        - cat ./src/environments/travis.json
         - BROWSER=none yarn start  2>&1 > /dev/null &
         - cd e2etests
         - yarn install
@@ -50,6 +94,50 @@ matrix:
         - curl http://$CONTAINNER_ADDRESS:8000/rest-auth
         - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
         - yarn test
+
+    - stage: build
+      if: branch = master
+      language: bash
+      script:
+        - docker build . -t meemaw/photomy:latest
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push meemaw/photomy:latest
+
+    - stage: build
+      if: tag IS present AND tag =~ ^backend-v.*$
+      language: bash
+      script:
+        - RELEASE_TAG=$(echo $TRAVIS_TAG | cut -d 'v' -f 2)
+        - echo "Building docker image version:" $RELEASE_TAG
+        - docker build . -t meemaw/photomy:$RELEASE_TAG
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - echo "Pushing docker image version:" $RELEASE_TAG
+        - docker push meemaw/photomy:$RELEASE_TAG
+
+    - stage: deploy
+      if: tag IS present AND tag =~ ^frontend-v.*$
+      language: node_js
+      node_js:
+        - "node"
+      before_script:
+        - RELEASE_TAG=$(echo $TRAVIS_TAG | cut -d 'v' -f 2)
+        - echo "Deploying frontend version:" $RELEASE_TAG
+        - cd frontend
+        - 'echo "export const VERSION_INFO = { tag: ''$RELEASE_TAG'', branch: ''$TRAVIS_BRANCH'', commit: ''$TRAVIS_COMMIT'' }" > ./src/version.js'
+        - yarn install
+        - sudo pip install --upgrade pip
+        - sudo pip install awscli
+      cache:
+        yarn: true
+        directories:
+          - $HOME/.npm
+      script:
+        - gulp setProd
+        - yarn build
+        - aws s3 sync build s3://photomy.si --delete
+      after_success:
+        - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
+      
 
 stages:
   - test
