@@ -63,7 +63,7 @@ matrix:
           - $HOME/.cache/pip  
       env:
         global:
-        - DJANGO_SETTINGS_MODULE=photomy.settings.test.travis
+        - DJANGO_SETTINGS_MODULE=photomy.settings.test.travise2e
         - PYTHONPATH="/home/travis/build/meemaw/photomy"
         - PIP_USE_MIRRORS=true
       before_install:
