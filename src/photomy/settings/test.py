@@ -9,7 +9,6 @@ ALLOWED_HOSTS = ['*']
 
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
 
