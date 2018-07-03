@@ -13,6 +13,7 @@ const AccountSettings = ({ authUser, width }: Props) => {
   return (
     <section className="UserSettings">
       <SettingsTab
+        className="BaseSettings"
         renderTitle={() => (
           <React.Fragment>
             <List.Header>Base settings</List.Header>
@@ -23,6 +24,7 @@ const AccountSettings = ({ authUser, width }: Props) => {
       />
 
       <SettingsTab
+        className="AvatarSettings"
         renderTitle={() => (
           <React.Fragment>
             <List.Header>Avatar</List.Header>

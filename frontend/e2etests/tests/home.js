@@ -20,7 +20,7 @@ module.exports = {
     browser.click(homePage.elements.getStartedButton.selector).pause(100);
 
     const registerPage = browser.page.register();
-    registerPage.inputFieldsPresent();
+    registerPage.assertInputFieldsPresent();
 
     browser.assert
       .cssClassPresent('body', 'Oveflow-Hidden')
@@ -28,7 +28,7 @@ module.exports = {
       .pause(100);
 
     browser.click(homePage.elements.registerButton.selector).pause(1000);
-    registerPage.inputFieldsPresent();
+    registerPage.assertInputFieldsPresent();
 
     browser.end();
   },

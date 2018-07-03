@@ -1,8 +1,17 @@
 from .base import *
 
 
+DEBUG = True
+CORS_ORIGIN_ALLOW_ALL = True
+TEMPLATE_DEBUG = True
+ALLOWED_HOSTS = ['*']
+
+
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
+
 
 DEFAULT_FILE_STORAGE = 'gallery.storage_backends.TestStorage'
 

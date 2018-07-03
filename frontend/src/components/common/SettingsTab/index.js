@@ -16,12 +16,12 @@ class SettingsTab extends React.Component<Props, State> {
 
   render() {
     const { open } = this.state;
-    const { renderTitle, renderContent, icon } = this.props;
+    const { renderTitle, renderContent, icon, ...rest } = this.props;
 
     return (
       <React.Fragment>
         <Divider style={{ marginTop: '0px', paddingTop: '0px', marginBottom: '4px' }} />
-        <Accordion>
+        <Accordion {...rest}>
           <Accordion.Title active={open} style={{ cursor: 'auto' }}>
             <List divided relaxed>
               <List.Item>

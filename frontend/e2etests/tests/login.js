@@ -34,16 +34,9 @@ module.exports = {
       .click(loginPage.elements.submitButton.selector)
       .pause(500);
 
-    browser.assert.containsText(
-      'div.ui.icon.negative.message > div.content > div.header',
-      'Something went wrong',
-    );
+    loginPage.assertLoginFailed();
 
-    browser.assert
-      .containsText(
-        'div.ui.icon.negative.message > div.content > ul.list > li.content',
-        'Your email or password was entered incorrectly.',
-      )
+    browser
       .clearValue(loginPage.elements.passwordField.selector)
       .pause(100)
       .setValue(loginPage.elements.passwordField.selector, 'test12345')
