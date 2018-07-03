@@ -1,4 +1,4 @@
-from .base import *
+from photomy.settings.base import *
 
 
 DEBUG = True

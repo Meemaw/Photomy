@@ -4,12 +4,12 @@ const accountSettingsCommands = {
     const browser = this.api;
 
     browser
-      .pause(150)
+      .pause(350)
       .click(elements.editBaseSettingsButton.selector)
-      .pause(150)
+      .pause(350)
       .assert.elementPresent(elements.deleteUserButton.selector)
       .click(elements.deleteUserButton.selector)
-      .pause(150);
+      .pause(350);
 
     browser.expect.element(elements.modal.selector).to.be.visible;
     browser.click(elements.confirmDeleteButton.selector).pause(500);

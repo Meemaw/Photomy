@@ -24,7 +24,7 @@ const registerCommands = {
 
   submit() {
     const browser = this.api;
-    browser.click(elements.registerButton.selector).pause(350);
+    browser.click(elements.registerButton.selector).pause(750);
     return this;
   },
 

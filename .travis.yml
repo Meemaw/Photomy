@@ -15,7 +15,7 @@ matrix:
         - docker
       env:
         global:
-        - DJANGO_SETTINGS_MODULE=photomy.settings.travis
+        - DJANGO_SETTINGS_MODULE=photomy.settings.test.travis
         - PYTHONPATH="/home/travis/build/meemaw/photomy"
         - PIP_USE_MIRRORS=true
       install:
@@ -24,9 +24,9 @@ matrix:
       before_script:
         - psql -c "CREATE DATABASE travisci;" -U postgres
         - cd src
-        - python manage.py migrate --noinput --settings=photomy.settings.travis
+        - python manage.py migrate --noinput --settings=photomy.settings.test.travis
       script:
-        - pytest --cov --ds=photomy.settings.travis
+        - pytest --cov --ds=photomy.settings.test.travis
       after_success:
         - bash <(curl -s https://codecov.io/bash) -F python -t $CODECOV_UPLOAD_TOKEN
         
@@ -63,7 +63,7 @@ matrix:
           - $HOME/.cache/pip  
       env:
         global:
-        - DJANGO_SETTINGS_MODULE=photomy.settings.travis
+        - DJANGO_SETTINGS_MODULE=photomy.settings.test.travis
         - PYTHONPATH="/home/travis/build/meemaw/photomy"
         - PIP_USE_MIRRORS=true
       before_install:
@@ -80,9 +80,9 @@ matrix:
         - psql -c "CREATE DATABASE travisci;" -U postgres
         - cd src
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
-        - python manage.py migrate --noinput --settings=photomy.settings.travise2e 
-        - python manage.py populate_test_users --settings=photomy.settings.travise2e 
-        - python manage.py runserver $CONTAINNER_ADDRESS:8000 --settings=photomy.settings.travise2e 2>&1 > /dev/null &
+        - python manage.py migrate --noinput --settings=photomy.settings.test.travise2e 
+        - python manage.py populate_test_users --settings=photomy.settings.test.travise2e 
+        - python manage.py runserver $CONTAINNER_ADDRESS:8000 --settings=photomy.settings.test.travise2e 2>&1 > /dev/null &
         - cd ../frontend
         - yarn install
         - node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js setTravis
