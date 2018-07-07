@@ -8,8 +8,10 @@ module.exports = {
   'Test register': browser => {
     const registerPage = browser.page.register();
     const loginPage = browser.page.login();
+    const homePage = browser.page.home();
     const accountSettingsPage = browser.page.accountSettings();
-    registerPage.navigate().assertInputFieldsPresent();
+
+    browser.click(homePage.elements.getStartedButton.selector).pause(100);
 
     registerPage
       .setEmailField('test-register@gmail.com')
