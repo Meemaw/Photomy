@@ -82,16 +82,15 @@ matrix:
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
         - python manage.py migrate --noinput --settings=photomy.settings.test.travise2e 
         - python manage.py populate_test_users --settings=photomy.settings.test.travise2e 
-        - python manage.py runserver $CONTAINNER_ADDRESS:8000 --settings=photomy.settings.test.travise2e 2>&1 > /dev/null &
+        - python manage.py runserver --settings=photomy.settings.test.travise2e 2>&1 > /dev/null &
         - cd ../frontend
         - yarn install
         - node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js setTravis
-        - sed -i "s/localhost/$CONTAINNER_ADDRESS/g" ./src/environments/travis.json
         - BROWSER=none yarn start  2>&1 > /dev/null &
         - cd e2etests
         - yarn install
       script:
-        - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
+        - export PHOTOMY_URL="http://localhost:3000/"
         - yarn test
 
     - stage: build
