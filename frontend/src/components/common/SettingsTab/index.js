@@ -26,7 +26,7 @@ class SettingsTab extends React.Component<Props, State> {
             <List divided relaxed>
               <List.Item>
                 <List.Content floated="right">
-                  <Button basic onClick={this.handleClick}>
+                  <Button basic onClick={this.handleClick} className="EditButton">
                     Edit
                   </Button>
                 </List.Content>

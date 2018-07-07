@@ -5,7 +5,7 @@ const accountSettingsCommands = {
     const loginPage = browser.page.login();
 
     browser
-      .waitForElementVisible(elements.editBaseSettingsButton.selector, 3000)
+      .waitForElementVisible(elements.editBaseSettingsButton.selector, 10000)
       .pause(350)
       .click(elements.editBaseSettingsButton.selector)
       .pause(350)
@@ -15,18 +15,17 @@ const accountSettingsCommands = {
 
     browser.expect.element(elements.modal.selector).to.be.visible;
     browser.click(elements.confirmDeleteButton.selector);
-    browser.waitForElementVisible(loginPage.elements.emailField.selector, 3000).pause(350);
+    browser.waitForElementVisible(loginPage.elements.emailField.selector, 10000).pause(350);
     return this;
   },
 };
 
 const elements = {
   editBaseSettingsButton: {
-    selector: 'div.BaseSettings > div > div > div > div > button.ui.basic.button',
+    selector: 'div.BaseSettings button.ui.basic.button.EditButton',
   },
   deleteUserButton: {
-    selector:
-      'div.BaseSettings > div.content.active > section > form > div.ui.buttons > button.ui.red.button',
+    selector: 'div.BaseSettings button.ui.red.button',
   },
 
   modal: {
