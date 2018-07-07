@@ -8,8 +8,15 @@ const loginCommands = {
       .clearValue(elements.passwordField.selector)
       .setValue(elements.passwordField.selector, password)
       .click(elements.submitButton.selector)
-      .pause(350);
+      .pause(200);
 
+    return this;
+  },
+
+  assertLoginSucceded() {
+    const browser = this.api;
+    browser.waitForElementVisible('section.MainContent', 3000);
+    browser.pause(100);
     return this;
   },
 

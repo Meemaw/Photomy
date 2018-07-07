@@ -10,7 +10,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for user in USERS:
-            user = User.objects.create_user(
-                email=user.get('email'), password=user.get('password'))
-            EmailAddress.objects.create(
-                email=user.email, verified=True, primary=True, user_id=user.id)
+            if not User.objects.filter(email=user.get("email")).exists():
+                user = User.objects.create_user(
+                    email=user.get('email'), password=user.get('password'))
+                EmailAddress.objects.create(
+                    email=user.email, verified=True, primary=True, user_id=user.id)

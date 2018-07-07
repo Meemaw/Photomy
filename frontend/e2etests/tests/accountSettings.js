@@ -9,7 +9,7 @@ module.exports = {
     const accountSettingsPage = browser.page.accountSettings();
     const loginPage = browser.page.login();
     loginPage.navigate();
-    loginPage.login('test_delete@gmail.com', 'testdelete');
+    loginPage.login('test_delete@gmail.com', 'testdelete').assertLoginSucceded();
 
     accountSettingsPage.navigate();
 
@@ -17,7 +17,7 @@ module.exports = {
     const baseSettingEditSelector = accountSettingsPage.elements.editBaseSettingsButton.selector;
 
     browser
-      .waitForElementVisible(baseSettingEditSelector, 5000)
+      .waitForElementVisible(baseSettingEditSelector, 300)
       .assert.elementNotPresent(deleteSelector);
 
     accountSettingsPage.deleteAccount();

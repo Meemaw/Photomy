@@ -2,6 +2,7 @@ const accountSettingsCommands = {
   deleteAccount() {
     this.navigate();
     const browser = this.api;
+    const loginPage = browser.page.login();
 
     browser
       .pause(350)
@@ -12,7 +13,8 @@ const accountSettingsCommands = {
       .pause(350);
 
     browser.expect.element(elements.modal.selector).to.be.visible;
-    browser.click(elements.confirmDeleteButton.selector).pause(500);
+    browser.click(elements.confirmDeleteButton.selector);
+    browser.waitForElementVisible(loginPage.elements.emailField.selector, 3000).pause(350);
     return this;
   },
 };
