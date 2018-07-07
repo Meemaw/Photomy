@@ -16,7 +16,7 @@ const loginCommands = {
   assertLoginSucceded() {
     const browser = this.api;
     browser.waitForElementVisible('section.MainContent', 3000);
-    browser.pause(100);
+    browser.pause(350);
     return this;
   },
 
