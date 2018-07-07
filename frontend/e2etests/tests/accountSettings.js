@@ -17,7 +17,7 @@ module.exports = {
     const baseSettingEditSelector = accountSettingsPage.elements.editBaseSettingsButton.selector;
 
     browser
-      .waitForElementVisible(baseSettingEditSelector, 300)
+      .waitForElementVisible(baseSettingEditSelector, 3000)
       .assert.elementNotPresent(deleteSelector);
 
     accountSettingsPage.deleteAccount();

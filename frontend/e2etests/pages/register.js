@@ -1,7 +1,7 @@
 const registerCommands = {
   assertInputFieldsPresent() {
     const browser = this.api;
-    browser.waitForElementVisible(elements.emailField.selector, 3000).pause(350);
+    browser.waitForElementVisible(elements.emailField.selector, 3000).pause(500);
     browser.assert.elementPresent(elements.emailField.selector);
     browser.assert.elementPresent(elements.passwordField.selector);
     browser.assert.elementPresent(elements.tocCheckbox.selector);
