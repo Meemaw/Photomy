@@ -5,7 +5,7 @@ const accountSettingsCommands = {
     const loginPage = browser.page.login();
 
     browser
-      .pause(350)
+      .pause(750)
       .click(elements.editBaseSettingsButton.selector)
       .pause(350)
       .assert.elementPresent(elements.deleteUserButton.selector)
