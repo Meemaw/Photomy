@@ -8,11 +8,9 @@ module.exports = {
   'Test register': browser => {
     const registerPage = browser.page.register();
     const loginPage = browser.page.login();
-    const homePage = browser.page.home();
     const accountSettingsPage = browser.page.accountSettings();
-    const navbar = browser.page.navbar();
 
-    browser.click(homePage.elements.getStartedButton.selector).pause(100);
+    registerPage.navigate();
 
     registerPage
       .setEmailField('test-register@gmail.com')
@@ -28,7 +26,6 @@ module.exports = {
     loginPage.login('test-register@gmail.com', 'password12345').assertLoginSucceded();
     browser.waitForElementVisible('section.MainContent', 1000);
 
-    navbar.goToSettings();
     accountSettingsPage.deleteAccount();
 
     browser.end();
