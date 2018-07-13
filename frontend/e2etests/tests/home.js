@@ -11,20 +11,43 @@ module.exports = {
 
     browser
       .waitForElementVisible(homePage.elements.getStartedButton.selector, 30000)
+      .assert.cssClassNotPresent('body', 'Oveflow-Hidden')
       .assert.containsText(homePage.elements.registerButton.selector, 'Sign Up')
       .assert.containsText(homePage.elements.loginButton.selector, 'Log in')
       .assert.containsText(homePage.elements.homeButton.selector, 'Photomy')
       .assert.containsText(homePage.elements.getStartedButton.selector, 'Get Started');
 
-    browser.click(homePage.elements.getStartedButton.selector).pause(1000);
+    browser.click(homePage.elements.getStartedButton.selector).pause(100);
 
     const registerPage = browser.page.register();
-    registerPage.checkForFields();
+    registerPage.assertInputFieldsPresent();
 
-    browser.click(homePage.elements.homeButton.selector).pause(1000);
+    browser.assert
+      .cssClassPresent('body', 'Oveflow-Hidden')
+      .click(homePage.elements.homeButton.selector)
+      .pause(100);
 
     browser.click(homePage.elements.registerButton.selector).pause(1000);
-    registerPage.checkForFields();
+    registerPage.assertInputFieldsPresent();
+
+    browser.end();
+  },
+
+  'Test auth buttons hamburger menu': browser => {
+    browser.resizeWindow(800, 600);
+
+    const homePage = browser.page.home();
+    homePage.navigate();
+
+    browser.waitForElementVisible(homePage.elements.getStartedButton.selector, 30000);
+
+    browser.expect.element(homePage.elements.loginButton.selector).to.not.be.visible;
+    browser.expect.element(homePage.elements.registerButton.selector).to.not.be.visible;
+
+    browser.click('div.right.menu > a.item').pause(100);
+
+    browser.expect.element(homePage.elements.loginButton.selector).to.be.visible;
+    browser.expect.element(homePage.elements.registerButton.selector).to.be.visible;
 
     browser.end();
   },

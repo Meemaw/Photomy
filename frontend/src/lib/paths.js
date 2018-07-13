@@ -1,6 +1,9 @@
 // @flow
 export const rootPath = '/';
 
+// Other
+export const tosPath = '/terms-of-service';
+
 // Gallery paths
 export const galleryPath = '/gallery';
 export const albumsPath = '/albums';

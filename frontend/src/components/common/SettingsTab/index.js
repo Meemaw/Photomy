@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Accordion, Button, List, Divider } from 'semantic-ui-react';
 
-type Props = { renderTitle: Function, renderContent: Function, icon: string };
+type Props = { renderTitle: Function, renderContent: Function, icon: string, editId?: string };
 type State = { open: boolean };
 
 class SettingsTab extends React.Component<Props, State> {
@@ -16,17 +16,22 @@ class SettingsTab extends React.Component<Props, State> {
 
   render() {
     const { open } = this.state;
-    const { renderTitle, renderContent, icon } = this.props;
+    const { renderTitle, renderContent, icon, editId, ...rest } = this.props;
 
     return (
       <React.Fragment>
         <Divider style={{ marginTop: '0px', paddingTop: '0px', marginBottom: '4px' }} />
-        <Accordion>
+        <Accordion {...rest}>
           <Accordion.Title active={open} style={{ cursor: 'auto' }}>
             <List divided relaxed>
               <List.Item>
                 <List.Content floated="right">
-                  <Button basic onClick={this.handleClick}>
+                  <Button
+                    basic
+                    onClick={this.handleClick}
+                    className="EditButton"
+                    id={editId || null}
+                  >
                     Edit
                   </Button>
                 </List.Content>
