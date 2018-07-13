@@ -1,6 +1,6 @@
 // @flow
 import PasswordChangeForm from './PasswordChangeForm';
-import { UserAuthApi } from '../../services';
+import { AuthApi } from '../../services';
 import { withFormik } from 'formik';
 import { connect } from 'react-redux';
 import { logout } from '../../actions';
@@ -21,10 +21,8 @@ const PasswordChangeFormContainer = withFormik({
   },
 
   handleSubmit: (values, { props, setSubmitting, setErrors }) => {
-    UserAuthApi.changePassword(values)
-      .then(resp => {
-        props.logout();
-      })
+    AuthApi.changePassword(values)
+      .then(resp => props.logout())
       .catch(err => {
         setSubmitting(false);
         setErrors(err.body);

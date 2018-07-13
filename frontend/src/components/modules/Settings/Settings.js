@@ -46,11 +46,9 @@ class Settings extends React.Component<Props, State> {
                 {GENERAL_SETTINGS_MENU_ITEMS.map(menuItem => {
                   return (
                     <Menu.Item
-                      as={Link}
-                      to={menuItem.to}
+                      {...menuItem}
                       key={menuItem.name}
-                      name={menuItem.name}
-                      content={menuItem.content}
+                      as={Link}
                       onClick={this.handleMenuTabClick}
                       active={activeItem === menuItem.name}
                     />
@@ -66,11 +64,9 @@ class Settings extends React.Component<Props, State> {
                   console.log(menuItem.to);
                   return (
                     <Menu.Item
-                      as={Link}
-                      to={menuItem.to}
+                      {...menuItem}
                       key={menuItem.name}
-                      name={menuItem.name}
-                      content={menuItem.content}
+                      as={Link}
                       onClick={this.handleMenuTabClick}
                       active={activeItem === menuItem.name}
                     />

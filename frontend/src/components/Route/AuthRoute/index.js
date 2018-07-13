@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { loginPath } from '../../../lib/paths';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { AuthApi } from '../../../services';
+import { LambdaApi } from '../../../services';
 import { authorize } from '../../../actions';
 import type { User } from '../../../meta/types/User';
 
@@ -36,7 +36,7 @@ class AuthRoute extends React.Component<Props, State> {
     if (!isAuthorized) {
       const { id } = authUser;
 
-      AuthApi.authorize({ userId: id })
+      LambdaApi.authorize({ userId: id })
         .then(resp => authorize())
         .catch(err => {
           authorize();
