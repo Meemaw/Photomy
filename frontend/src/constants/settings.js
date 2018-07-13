@@ -30,7 +30,6 @@ export const GENERAL_SETTINGS_MENU_ITEMS = [
     to: { pathname: settingsPath, search: ACCOUNT_TAB },
     name: ACCOUNT_TAB_NAME,
     content: ACCOUNT_TAB_CONTENT,
-    id: "Account-Settings"
   },
 
   {
