@@ -82,6 +82,7 @@ matrix:
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
         - python manage.py migrate --noinput --settings=photomy.settings.test.travise2e 
         - python manage.py populate_test_users --settings=photomy.settings.test.travise2e 
+        - python manage.py populate_test_images --settings=photomy.settings.test.travise2e 
         - python manage.py runserver --settings=photomy.settings.test.travise2e 2>&1 > /dev/null &
         - cd ../frontend
         - yarn install

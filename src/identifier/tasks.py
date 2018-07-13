@@ -2,25 +2,21 @@ from __future__ import absolute_import, unicode_literals
 
 import itertools
 import logging
-import os
 
-import PIL.Image
 import face_recognition
 import numpy as np
-import requests
-
 
 from photomy.celeryconf import app
 from django.conf import settings
 from gallery.constants import ProcessingStatus
 from .models import Image, ImageIdentityMatch, IdentityGroup
+from .util import get_photomy_cdn_image
 
 STRICT_SIMILARITY_THRESHOLD = 0.52
 REVIEW_SIMILARITY_THRESHOLD = 0.6
-CDN_SECRET_KEY = os.environ['AWS_LAMBDA_SECRET_APP_KEY']
-CDN_SECRET_VALUE = os.environ['AWS_LAMBDA_SECRET_APP_VALUE']
 
 logger = logging.getLogger(__name__)
+
 
 @app.task
 def reidify_identity_match(identity_match_id):
@@ -115,10 +111,7 @@ def create_new_identity(image, face_index, existing_match=None):
 
 
 def encode_image_faces(image):
-    raw_image = PIL.Image.open(requests.get(
-        image.image_upload.url, stream=True,
-        headers={CDN_SECRET_KEY: CDN_SECRET_VALUE}).raw)
-
+    raw_image = get_photomy_cdn_image(image.image_upload)
     return _encode_image_faces(image, raw_image)
 
 

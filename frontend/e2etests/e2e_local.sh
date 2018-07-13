@@ -13,6 +13,7 @@ python3 manage.py migrate --noinput --settings=photomy.settings.test.e2e
 python3 manage.py populate_test_users --settings=photomy.settings.test.e2e 
 
 echo "Populating test database..."
+python3 manage.py populate_test_images --settings=photomy.settings.test.e2e
 python3 manage.py populate_test_users --settings=photomy.settings.test.e2e
 
 echo "Starting django server..."

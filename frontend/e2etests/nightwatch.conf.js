@@ -5,7 +5,6 @@ const chromedriver = require('chromedriver');
 const config = {
   src_folders: ['./tests'],
   page_objects_path: './pages',
-  custom_assertions_path: ['./custom-assertions'],
   globals_path: './env',
   selenium: {
     start_process: true,

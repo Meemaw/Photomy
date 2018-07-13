@@ -1,5 +1,6 @@
 import logging
 import uuid
+import os
 
 import PIL.Image
 import requests
@@ -13,6 +14,7 @@ from rest_framework.response import Response
 from identifier.models import ImageIdentityMatch, IdentityGroup
 from identifier.serializers import ImageIdentityMatchSerializer, IdentitySerializer
 from identifier.tasks import reidify_identity_match
+from identifier.util import get_photomy_cdn_image
 from .constants import ALBUM_ID, JPEG, PK, AVATAR, RECOGNIZE_PEOPLE, ProcessingStatus, LOCATION
 
 from .models import Image, Album
@@ -267,12 +269,17 @@ def upload_image_file(request):
 def upload_url(request):
     logger.info("upload_url")
     image_url = request.data.get('image_url', '')
+    return _upload_url_user(image_url, request.user, request.POST)
+
+
+def _upload_url_user(image_url, user, extra_data):
     try:
-        image = PIL.Image.open(requests.get(image_url, stream=True).raw)
+        image = PIL.Image.open(requests.get(
+            image_url, stream=True).raw)
     except OSError as e:
         logger.debug(e)
         return Response(status=status.HTTP_400_BAD_REQUEST)
-    return handle_image_upload(image, request.user, request.POST)
+    return handle_image_upload(image, user, extra_data)
 
 
 def handle_image_upload(image, user, extra_data):
