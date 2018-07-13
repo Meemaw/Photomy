@@ -581,10 +581,6 @@ lodash.clone@3.0.3:
     lodash._bindcallback "^3.0.0"
     lodash._isiterateecall "^3.0.0"
 
-lodash.clonedeep@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
-
 lodash.create@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/lodash.create/-/lodash.create-3.1.1.tgz#d7f2849f0dbda7e04682bb8cd72ab022461debe7"
@@ -858,12 +854,6 @@ raw-body@2:
     http-errors "1.6.3"
     iconv-lite "0.4.23"
     unpipe "1.0.0"
-
-react-particles-js@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-particles-js/-/react-particles-js-2.2.0.tgz#a95b994d9f781e7b498b5dc8ce7165fbdbdc7880"
-  dependencies:
-    lodash.clonedeep "^4.5.0"
 
 readable-stream@1.1.x:
   version "1.1.14"

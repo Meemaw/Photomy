@@ -1,6 +1,7 @@
 const accountSettingsCommands = {
   deleteAccount() {
     const browser = this.api;
+    this.navigate();
 
     browser
       .waitForElementVisible(elements.sideMenu.selector, 3000)
