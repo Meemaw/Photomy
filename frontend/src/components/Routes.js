@@ -13,9 +13,14 @@ import {
   confirmationSentPath,
   galleryPath,
   albumsPath,
+  tosPath,
 } from '../lib/paths';
 import { Switch } from 'react-router-dom';
 import Loadable from './common/Loadable';
+
+const AsyncTermsOfService = Loadable({
+  loader: () => import('./modules/TermsOfService'),
+});
 
 const AsyncAlbum = Loadable({
   loader: () => import('./modules/Album'),
@@ -61,6 +66,7 @@ export default () => {
   return (
     <Switch>
       <BaseRoute exact path={rootPath} component={withTracker(AsyncHome)} />
+      <BaseRoute exact path={tosPath} component={withTracker(AsyncTermsOfService)} />
 
       <BaseRoute exact path={loginPath} component={withTracker(AsyncLogin)} />
       <BaseRoute exact path={registerPath} component={withTracker(AsyncRegister)} />

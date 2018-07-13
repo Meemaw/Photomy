@@ -1,7 +1,9 @@
 import React from 'react';
 import HomepageHeading from './Heading';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { Divider, Grid, Header, Segment, List, Container, Icon } from 'semantic-ui-react';
+import { tosPath } from '../../../lib/paths';
 
 const HomepageLayout = () => (
   <div style={{ display: 'flex', flexDirection: 'column', width: '100%', minWidth: '100%' }}>
@@ -53,6 +55,9 @@ const HomepageLayout = () => (
               <List link inverted>
                 <List.Item as="a" href="mailto:support@photomy.si">
                   <Icon name="mail" /> Contact us
+                </List.Item>
+                <List.Item as={Link} to={tosPath}>
+                  <Icon name="drivers license" /> Terms of Service
                 </List.Item>
               </List>
             </Grid.Column>

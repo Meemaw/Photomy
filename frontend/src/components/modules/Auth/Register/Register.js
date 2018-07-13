@@ -2,7 +2,7 @@ import React from 'react';
 import AuthFormWrapper from '../AuthFormWrapper';
 import Link from '../../../common/Link';
 import FormInputField, { EmailFormField, PasswordFormField } from '../../../common/FormInputField';
-import { loginPath } from '../../../../lib/paths';
+import { loginPath, tosPath } from '../../../../lib/paths';
 import { Button, Form, Grid, Segment } from 'semantic-ui-react';
 import FormErrors from '../../../common/FormErrors';
 
@@ -53,7 +53,11 @@ const Register = ({
 
         <Form.Checkbox
           style={{ fontSize: '0.82em', textAlign: 'left' }}
-          label="I agree to the User Agreement and Privacy Policy."
+          label={
+            <p>
+              I agree to the <Link to={tosPath}>Terms of Service and Privacy Policy.</Link>
+            </p>
+          }
           onChange={(e, { checked }) => setFieldValue('toc', checked)}
           checked={toc}
         />

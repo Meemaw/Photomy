@@ -2,14 +2,14 @@
 import React from 'react';
 import DesktopContainer from './Desktop';
 import MobileContainer from './Mobile';
-import { rootPath } from '../../../lib/paths';
+import { rootPath, tosPath } from '../../../lib/paths';
 
 type Props = { children: any, location: Object };
 type State = {};
 
 class Navbar extends React.Component<Props, State> {
   toggleOverflow() {
-    if (window.location.pathname === rootPath) {
+    if (window.location.pathname === rootPath || window.location.pathname === tosPath) {
       document.body.classList.remove('Oveflow-Hidden');
     } else {
       document.body.classList.add('Oveflow-Hidden');
