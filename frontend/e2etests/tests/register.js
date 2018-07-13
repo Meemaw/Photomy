@@ -10,7 +10,7 @@ module.exports = {
     const loginPage = browser.page.login();
     const accountSettingsPage = browser.page.accountSettings();
 
-    registerPage.navigate();
+    registerPage.navigate().assertInputFieldsPresent();
 
     registerPage
       .setEmailField('test-register@gmail.com')
