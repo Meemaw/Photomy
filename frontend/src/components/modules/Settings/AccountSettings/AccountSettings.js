@@ -14,6 +14,7 @@ const AccountSettings = ({ authUser, width }: Props) => {
     <section className="UserSettings">
       <SettingsTab
         className="BaseSettings"
+        editId="Base-Settings-Edit"
         renderTitle={() => (
           <React.Fragment>
             <List.Header>Base settings</List.Header>

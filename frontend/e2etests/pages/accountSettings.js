@@ -22,7 +22,7 @@ const accountSettingsCommands = {
 
 const elements = {
   editBaseSettingsButton: {
-    selector: 'div.BaseSettings button.ui.basic.button.EditButton',
+    selector: '#Base-Settings-Edit',
   },
   deleteUserButton: {
     selector: 'div.BaseSettings button.ui.red.button',
