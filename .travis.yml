@@ -93,6 +93,8 @@ matrix:
       script:
         - export PHOTOMY_URL="http://localhost:3000"
         - yarn test
+        - cd ../../src
+        - python manage.py clean_images --settings=photomy.settings.test.travise2e ## To delete images from s3
 
     - stage: build
       if: branch = master
