@@ -7,6 +7,7 @@ const GALLERY_API_BASE_URL = `${CONFIG.services.baseUrl}/gallery`;
 const AUTHENTICATION_API_BASE_URL = `${CONFIG.services.baseUrl}/rest-auth`;
 const AUTH_INFO_API_BASE_URL = `${CONFIG.services.baseUrl}/auth`;
 const ALBUMS_API_BASE_URL = `${GALLERY_API_BASE_URL}/albums`;
+const IDENTITY_MATCH_API_BASE_URL = `${GALLERY_API_BASE_URL}/identity_match`;
 
 export const ImagesApi = {
   list: GET(`${GALLERY_API_BASE_URL}/matches`),
@@ -21,10 +22,10 @@ export const ImagesApi = {
 };
 
 export const IdentityMatchApi = {
-  patch: PATCH(`${GALLERY_API_BASE_URL}/identity_match/:identity_match_id`),
-  reject: GET(`${GALLERY_API_BASE_URL}/identity_match/:identity_match_id/reject`),
+  patch: PATCH(`${IDENTITY_MATCH_API_BASE_URL}/:identity_match_id`),
+  reject: GET(`${IDENTITY_MATCH_API_BASE_URL}/:identity_match_id/reject`),
   mergeIdentities: GET(
-    `${GALLERY_API_BASE_URL}/identity_match/merge_identities/:base_identity_id/:join_identity_id`,
+    `${IDENTITY_MATCH_API_BASE_URL}/merge_identities/:base_identity_id/:join_identity_id`,
   ),
 };
 
