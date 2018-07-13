@@ -2,9 +2,10 @@ import React from 'react';
 import AuthFormWrapper from '../AuthFormWrapper';
 import Link from '../../../common/Link';
 import FormInputField, { EmailFormField, PasswordFormField } from '../../../common/FormInputField';
-import { loginPath } from '../../../../lib/paths';
-import { Button, Form, Grid, Segment } from 'semantic-ui-react';
+import { loginPath, tosPath } from '../../../../lib/paths';
+import { Button, Form, Grid, Segment, Checkbox } from 'semantic-ui-react';
 import FormErrors from '../../../common/FormErrors';
+import FormLabel from '../../../common/FormLabel';
 
 const Register = ({
   handleSubmit,
@@ -51,14 +52,27 @@ const Register = ({
           fieldName="password1"
         />
 
-        <Form.Checkbox
-          style={{ fontSize: '0.82em', textAlign: 'left' }}
-          label="I agree to the User Agreement and Privacy Policy."
-          onChange={(e, { checked }) => setFieldValue('toc', checked)}
-          checked={toc}
-        />
+        <Form.Field>
+          <Checkbox
+            onChange={(e, { checked }) => {
+              setFieldValue('toc', checked);
+            }}
+            checked={toc}
+          />
 
-        <Button color="blue" fluid size="large" loading={isSubmitting} type="submit">
+          <FormLabel>
+            I agree to the <Link to={tosPath}>Terms of Service and Privacy Policy.</Link>
+          </FormLabel>
+        </Form.Field>
+
+        <Button
+          color="blue"
+          fluid
+          size="large"
+          loading={isSubmitting}
+          type="submit"
+          id="Register-Button"
+        >
           Create Account
         </Button>
       </Segment>

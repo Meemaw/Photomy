@@ -15,7 +15,7 @@ matrix:
         - docker
       env:
         global:
-        - DJANGO_SETTINGS_MODULE=photomy.settings.travis
+        - DJANGO_SETTINGS_MODULE=photomy.settings.test.travis
         - PYTHONPATH="/home/travis/build/meemaw/photomy"
         - PIP_USE_MIRRORS=true
       install:
@@ -24,9 +24,9 @@ matrix:
       before_script:
         - psql -c "CREATE DATABASE travisci;" -U postgres
         - cd src
-        - python manage.py migrate --noinput --settings=photomy.settings.travis
+        - python manage.py migrate --noinput --settings=photomy.settings.test.travis
       script:
-        - pytest --cov --ds=photomy.settings.travis
+        - pytest --cov --ds=photomy.settings.test.travis
       after_success:
         - bash <(curl -s https://codecov.io/bash) -F python -t $CODECOV_UPLOAD_TOKEN
         
@@ -48,13 +48,24 @@ matrix:
         - codecov -F javascript -t $CODECOV_UPLOAD_TOKEN
 
     - stage: test
-      language: node_js
+      language: python
+      python:
+        - "3.6"
       node_js:
-        - "node"
+        - "9.8"
+      services: 
+        - redis-server
+        - postgresql
       cache:
         yarn: true
         directories:
           - $HOME/e2etests/.npm
+          - $HOME/.cache/pip  
+      env:
+        global:
+        - DJANGO_SETTINGS_MODULE=photomy.settings.test.travise2e
+        - PYTHONPATH="/home/travis/build/meemaw/photomy"
+        - PIP_USE_MIRRORS=true
       before_install:
         - export CHROME_BIN=/usr/bin/google-chrome
         - export DISPLAY=:99.0
@@ -64,14 +75,22 @@ matrix:
         - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         - sudo dpkg -i google-chrome*.deb
       install:
-        - cd frontend
-        - yarn install
-        - BROWSER=none yarn start  2>&1 > /dev/null &
+        - pip install -U pip wheel
+        - pip install -r config/requirements.txt
+        - psql -c "CREATE DATABASE travisci;" -U postgres
+        - cd src
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+        - python manage.py migrate --noinput --settings=photomy.settings.test.travise2e 
+        - python manage.py populate_test_users --settings=photomy.settings.test.travise2e 
+        - python manage.py runserver --settings=photomy.settings.test.travise2e 2>&1 > /dev/null &
+        - cd ../frontend
+        - yarn install
+        - node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js setTravis
+        - BROWSER=none yarn start  2>&1 > /dev/null &
         - cd e2etests
         - yarn install
       script:
-        - export PHOTOMY_URL="http://$CONTAINNER_ADDRESS:3000/"
+        - export PHOTOMY_URL="http://localhost:3000"
         - yarn test
 
     - stage: build

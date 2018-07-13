@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model, authenticate
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers, exceptions
+
 
 User = get_user_model()
 
@@ -20,7 +22,7 @@ class LoginSerializer(serializers.Serializer):
             raise exceptions.ValidationError(msg)
 
         email_address = user.emailaddress_set.get(email=user.email)
-        if not email_address.verified:
+        if not email_address.verified and not settings.ACCOUNT_EMAIL_VERIFICATION == "none":
             raise serializers.ValidationError(_('E-mail is not verified.'))
 
         attrs['user'] = user

@@ -1,0 +1,15 @@
+{
+  "GoogleAnalytics": {
+    "debug": true,
+    "trackingId": "UA-115091334-1"
+  },
+  "services": {
+    "baseUrl": "http://localhost:8000",
+    "cdnBaseUrl": "https://test.cdn.photomy.si"
+  },
+  "sentry": {
+    "dsn": "https://c1ed9a5bae464c6bb70d7ebd26ac9344@sentry.io/1218374",
+    "env": "travis",
+    "enable": false
+  }
+}

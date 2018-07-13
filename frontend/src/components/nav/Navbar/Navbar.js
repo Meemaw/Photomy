@@ -118,6 +118,7 @@ const Navbar = ({
               <Dropdown.Item
                 text="Settings"
                 icon="settings"
+                className="SettingsItem"
                 onClick={() => setMenu(settingsPath)}
                 active={pathname === settingsPath}
               />

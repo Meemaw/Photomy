@@ -38,7 +38,7 @@ class Settings extends React.Component<Props, State> {
       <ContentContainer className="Settings">
         <Divider style={{ marginTop: '0px', paddingTop: '0px' }} />
         <Container style={{ display: 'flex' }}>
-          <Menu pointing secondary vertical style={{ height: '100%' }}>
+          <Menu pointing secondary vertical style={{ height: '100%' }} className="SettingsSideMenu">
             <Menu.Item style={{ marginRight: '-7px' }}>
               <Menu.Header>General</Menu.Header>
 
