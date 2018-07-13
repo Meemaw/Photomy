@@ -1,10 +1,9 @@
 const accountSettingsCommands = {
   deleteAccount() {
-    this.navigate();
     const browser = this.api;
 
     browser
-      .waitForElementVisible(elements.sideMenu.selector)
+      .waitForElementVisible(elements.sideMenu.selector, 3000)
       .click(elements.editBaseSettingsButton.selector)
       .pause(350)
       .assert.elementPresent(elements.deleteUserButton.selector)
@@ -14,7 +13,7 @@ const accountSettingsCommands = {
     browser.expect.element(elements.modal.selector).to.be.visible;
     browser.click(elements.confirmDeleteButton.selector);
     const loginPage = browser.page.login();
-    browser.waitForElementVisible(loginPage.elements.emailField.selector, 10000).pause(350);
+    browser.waitForElementVisible(loginPage.elements.emailField.selector, 3000).pause(350);
     return this;
   },
 };
