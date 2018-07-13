@@ -29,7 +29,7 @@ const SectionRow = ({
       : num_items_per_row;
 
   return (
-    <Grid.Row width="equal" textAlign="left">
+    <Grid.Row width="equal" textAlign="left" className="Section-Row">
       {Array.from(Array(n_columns).keys()).map(columnIndex => {
         const image = images[startingIndex + columnIndex];
         return (

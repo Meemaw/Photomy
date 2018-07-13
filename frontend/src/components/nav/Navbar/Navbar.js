@@ -67,10 +67,11 @@ const Navbar = ({
           ) : peoplePage ? (
             <IdentityTab identity={identity} />
           ) : (
-            <Button.Group size="tiny">
+            <Button.Group size="tiny" className="GalleryTabs">
               {isGallery ? (
                 GALLERY_TYPES.map(gallery => (
                   <Button
+                    id={`${gallery.galleryType}-Tab`}
                     key={gallery.galleryType}
                     icon={gallery.icon}
                     content={width > NAVBAR_GALLERY_TYPE_BREAKPOINT ? gallery.niceName : null}

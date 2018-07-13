@@ -31,6 +31,7 @@ const GallerySection = ({
   minImageWidth,
   dataMap,
   isSelected,
+  ...rest
 }: Props) => {
   let num_items_per_row = Math.floor(width / minImageWidth);
   if (num_items_per_row < 1) {
@@ -49,13 +50,14 @@ const GallerySection = ({
       )}
 
       <Grid
+        {...rest}
         key={sectionHeader}
         textAlign="left"
         padded
         style={isSelected ? { border: 'solid black 1px' } : {}}
       >
         {sectionHeader && (
-          <Grid.Row columns={1} style={{ padding: '0px' }}>
+          <Grid.Row columns={1} style={{ padding: '0px' }} className="Section-Header">
             <Grid.Column>
               {isSticky ? (
                 <StickyTopMenu>

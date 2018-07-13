@@ -13,7 +13,7 @@ type Props = {
 
 const FooterInfo = ({ count, updatedAt, ofWhat, inWhat }: Props) => {
   return count ? (
-    <FooterStyle>
+    <FooterStyle className="FooterInfo">
       <div>{`${count} ${ofWhat} in ${inWhat}`}</div>
       <div className="SubInfo">Updated at: {toFormatedDate(updatedAt)}</div>
     </FooterStyle>

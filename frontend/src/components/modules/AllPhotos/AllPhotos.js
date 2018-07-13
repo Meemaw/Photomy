@@ -96,6 +96,7 @@ class AllPhotos extends React.PureComponent<Props, State> {
             key={section}
             context={this.contextRef}
             onUpdate={(e, data) => this.handleUpdate(e, data, section)}
+            className="VisibilityWrapper"
           >
             <Gallery.Section
               renderImage={this.renderImage}
@@ -104,6 +105,7 @@ class AllPhotos extends React.PureComponent<Props, State> {
               isSticky={stickySection === section}
               dataMap={dataMap}
               minImageWidth={ALL_PHOTOS_IMAGE_HEIGHT}
+              id={`Section-${section}`}
             />
           </Visibility>
         ))}

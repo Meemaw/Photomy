@@ -10,4 +10,5 @@ DATABASES = {
     }
 }
 
+DEFAULT_FILE_STORAGE = 'gallery.storage_backends.MediaStorage'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
