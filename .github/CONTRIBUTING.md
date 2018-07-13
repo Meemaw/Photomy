@@ -114,3 +114,14 @@ Code coverage is reported to [codecov][5].
 [5]: https://codecov.io/gh/Meemaw/Photomy
 [.env]: https://github.com/Meemaw/Photomy/blob/master/src/.env
 [cdn]: https://en.wikipedia.org/wiki/Content_delivery_network
+
+
+### Deploy
+
+#### Frontend
+
+Web app will automatically be deployes on tags of form ```frontend-vX.X.X```
+
+#### Backend
+
+Release docker image will be pushed to docker hub: ```meemaw/photomy:$RELEASE_TAG``` on every tag of form ```backend-vX.X.X```. Backend has to be redeployed manually.
