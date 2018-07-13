@@ -5,6 +5,7 @@ const registerCommands = {
     browser.assert.elementPresent(elements.emailField.selector);
     browser.assert.elementPresent(elements.passwordField.selector);
     browser.assert.elementPresent(elements.tocCheckbox.selector);
+    browser.assert.elementPresent(elements.registerButton.selector);
 
     return this;
   },
@@ -40,7 +41,7 @@ const elements = {
   emailField: { selector: 'input[name="email"]' },
   passwordField: { selector: 'input[name="password1"]' },
   tocCheckbox: { selector: 'div.ui.checkbox' },
-  registerButton: { selector: 'button.ui.large.fluid.button' },
+  registerButton: { selector: '#Register-Button' },
 };
 
 module.exports = {

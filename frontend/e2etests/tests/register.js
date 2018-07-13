@@ -33,6 +33,7 @@ module.exports = {
 
   'Test register alredy used email': browser => {
     const registerPage = browser.page.register();
+    const loginPage = browser.page.login();
     registerPage.navigate().assertInputFieldsPresent();
     registerPage
       .setEmailField('test_user1@gmail.com')
@@ -41,7 +42,7 @@ module.exports = {
       .submit();
 
     browser.assert.containsText(
-      'div.ui.red.pointing.below.basic.label',
+      loginPage.elements.errorLabel.selector,
       'A user is already registered with this e-mail address.',
     );
 

@@ -40,7 +40,7 @@ const elements = {
   emailField: { selector: 'input[name="email"]' },
   passwordField: { selector: 'input[name="password"]' },
   submitButton: { selector: 'button[type="submit"]' },
-  errorLabel: { selector: 'div.ui.red.pointing.below.basic.label' },
+  errorLabel: { selector: 'div.ui.red.pointing.below.label' },
 };
 
 module.exports = {

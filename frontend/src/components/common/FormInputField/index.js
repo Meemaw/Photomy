@@ -19,7 +19,7 @@ const FormInputField = ({
   return (
     <Form.Field error={errors[fieldName] ? true : false} style={{ textAlign: 'left' }}>
       {errors[fieldName] && (
-        <Label basic color="red" pointing="below">
+        <Label color="red" pointing="below">
           {errors[fieldName]}
         </Label>
       )}
