@@ -10,6 +10,7 @@ module.exports = {
     const loginPage = browser.page.login();
     const homePage = browser.page.home();
     const accountSettingsPage = browser.page.accountSettings();
+    const navbar = browser.page.navbar();
 
     browser.click(homePage.elements.getStartedButton.selector).pause(100);
 
@@ -26,6 +27,8 @@ module.exports = {
 
     loginPage.login('test-register@gmail.com', 'password12345').assertLoginSucceded();
     browser.waitForElementVisible('section.MainContent', 1000);
+
+    navbar.goToSettings();
     accountSettingsPage.deleteAccount();
 
     browser.end();
