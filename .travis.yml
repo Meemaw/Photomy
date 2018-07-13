@@ -90,7 +90,7 @@ matrix:
         - cd e2etests
         - yarn install
       script:
-        - export PHOTOMY_URL="http://localhost:3000/"
+        - export PHOTOMY_URL="http://localhost:3000"
         - yarn test
 
     - stage: build

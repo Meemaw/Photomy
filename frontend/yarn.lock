@@ -6574,6 +6574,12 @@ react-loadable@^5.4.0:
   dependencies:
     prop-types "^15.5.0"
 
+react-particles-js@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-particles-js/-/react-particles-js-2.2.0.tgz#a95b994d9f781e7b498b5dc8ce7165fbdbdc7880"
+  dependencies:
+    lodash.clonedeep "^4.5.0"
+
 react-places-autocomplete@^7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/react-places-autocomplete/-/react-places-autocomplete-7.1.2.tgz#b3c63ccc325a179c3853e546429269a8aa3c9ede"

@@ -4,16 +4,18 @@ import { Container, Header, Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { registerPath } from '../../../../lib/paths';
 
-const HomepageHeading = ({ mobile }) => (
-  <Style text textAlign="center">
-    <Header as="h1" content="Photomy" inverted />
-    <Header as="h2" content="Keep all your photos in one place and organized." inverted />
-    <Button primary size="huge" as={Link} to={registerPath}>
-      Get Started
-      <Icon name="right arrow" />
-    </Button>
-  </Style>
-);
+const HomepageHeading = ({ mobile }) => {
+  return (
+    <Style text textAlign="center">
+      <Header as="h1" content="Photomy" inverted />
+      <Header as="h2" content="Keep all your photos in one place and organized." inverted />
+      <Button primary size="huge" as={Link} to={registerPath}>
+        Get Started
+        <Icon name="right arrow" />
+      </Button>
+    </Style>
+  );
+};
 
 const Style = styled(Container)`
   h1.ui.header {
@@ -21,6 +23,11 @@ const Style = styled(Container)`
     font-weight: normal;
     margin-bottom: 0px;
     margin-top: 2.5em;
+  }
+
+  .Particles {
+    height: 100%;
+    width: 100%;
   }
 
   h2.ui.header {
