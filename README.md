@@ -31,6 +31,10 @@
     <img src="https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square" />
   </a>
 
+  <a href="https://opensource.org/">
+    <img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103"/>
+  </a>
+
 </span>
 
 ### [About][about]
