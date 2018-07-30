@@ -15,8 +15,8 @@ sam local invoke ResizeLambda -e event_file.json
 > resize-lambda uses sharp which has to be built on the same architecture/platform as used at run time.
 
 ```sh
-docker build . -t resize-lambda
-docker run --rm -ti -v ${PWD}:/project resize-lambda /bin/bash -c "cd project && npm install"
+docker build . -t amazonlinux:node8.x
+docker run --rm -ti -v ${PWD}:/project amazonlinux:node8.x /bin/bash -c "cd project && npm install"
 ```
 
 ## Zip
