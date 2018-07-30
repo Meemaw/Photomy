@@ -1,6 +1,6 @@
 # Resize Lambda@Edge
 
-Written following excellent [blog post][https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/] from AWS team.
+Written following excellent [blog post][resizing-blog-post] from AWS team.
 
 ## Building
 
