@@ -7,25 +7,22 @@ import { ConnectedRouter } from 'react-router-redux';
 
 const store = configureStore();
 
-function renderApp() {
+function renderApp(Component) {
   render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <App />
+        <Component />
       </ConnectedRouter>
     </Provider>,
     document.getElementById('root'),
   );
 }
 
-renderApp();
+renderApp(App);
 
 if (module.hot) {
-  module.hot.accept(['./components/App'], () => {
-    renderApp();
-  });
-
-  module.hot.accept(['./stores/'], () => {
-    renderApp();
+  module.hot.accept('./components/App', () => {
+    const NextApp = require('./components/App').default;
+    renderApp(NextApp);
   });
 }

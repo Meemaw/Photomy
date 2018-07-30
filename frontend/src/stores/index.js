@@ -25,6 +25,14 @@ export default function initStore(initialState: Object = {}) {
 
   const store = createStore(rootReducer, initialState, composedEnhancers);
 
+  if (process.env.NODE_ENV !== 'production') {
+    if (module.hot) {
+      module.hot.accept('../reducers', () => {
+        store.replaceReducer(rootReducer);
+      });
+    }
+  }
+
   api.on('401', url => {
     store.dispatch(logout());
   });

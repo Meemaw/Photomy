@@ -37,8 +37,8 @@ type Props = {
   album: Object,
 };
 
-const AVATAR_SIZE = 32;
-const AVATAR_SIZE_PX = `${AVATAR_SIZE}px`;
+const AVATAR_SIZE = 64;
+const AVATAR_SIZE_PX = `${AVATAR_SIZE / 2}px`;
 
 const Navbar = ({
   galleryType,
