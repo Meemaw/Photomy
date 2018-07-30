@@ -6,11 +6,21 @@
     "name": "Meemaw"
   },
   "homepage": "https://photomy.si",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom --maxWorkers=1",
+    "test-coverage": "react-scripts test --env=jsdom --color --coverage --maxWorkers=1",
+    "lint": "yarn run lint-eslint && yarn run lint-prettier",
+    "lint-eslint": "eslint --ext .js --ext .jsx --max-warnings 0 src/",
+    "lint-prettier": "prettier --config .prettierrc -l 'src/**/*.js*' || (echo \nThese files are not formatted correctly && false)",
+    "prettier": "prettier --config .prettierrc --write 'src/**/*.js*'"
+  },
   "dependencies": {
     "date-fns": "^1.29.0",
-    "formik": "^1.0.1",
+    "formik": "^1.0.2",
     "jwt-decode": "^2.2.0",
-    "raven-js": "^3.26.3",
+    "raven-js": "^3.26.4",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-dropzone": "^4.2.13",
@@ -25,18 +35,8 @@
     "recompose": "^0.27.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",
-    "semantic-ui-react": "^0.82.0",
+    "semantic-ui-react": "^0.82.1",
     "styled-components": "^3.3.3"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom --maxWorkers=1",
-    "test-coverage": "react-scripts test --env=jsdom --color --coverage --maxWorkers=1",
-    "lint": "yarn run lint-eslint && yarn run lint-prettier",
-    "lint-eslint": "eslint --ext .js --ext .jsx --max-warnings 0 src/",
-    "lint-prettier": "prettier --config .prettierrc -l 'src/**/*.js*' || (echo \nThese files are not formatted correctly && false)",
-    "prettier": "prettier --config .prettierrc --write 'src/**/*.js*'"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -45,19 +45,19 @@
     "dirty-chai": "^2.0.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "fetch-mock": "^6.4.4",
-    "flow-bin": "^0.76.0",
+    "fetch-mock": "^6.5.2",
+    "flow-bin": "^0.77.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.4.0",
     "gulp-notify": "^3.2.0",
-    "gulp-rename": "^1.3.0",
+    "gulp-rename": "^1.4.0",
     "gulp-run": "^1.7.1",
     "gulp-template": "^5.0.0",
-    "prettier": "^1.13.7",
+    "prettier": "^1.14.0",
     "prop-types": "^15.6.2",
     "redux-mock-store": "^1.5.3",
     "run-sequence": "^2.2.1",
-    "sinon": "^6.1.3",
+    "sinon": "^6.1.4",
     "sinon-chai": "^3.2.0"
   },
   "jest": {
