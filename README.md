@@ -30,25 +30,23 @@
   <a href="https://github.com/Meemaw/Photomy#contributors">
     <img src="https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square" />
   </a>
-  
-
 
 </span>
 
 ### [About][about]
 
-Photomy is scalable, secure and private photo gallery that recognizes people in your images and groups them together. 
+Photomy is scalable, secure and private photo gallery that recognizes people in your images and groups them together.
 
 ### [Technologies][technologies]
 
-* [React][react] for frontend interface
-* [Django][django] for backend REST API
-* [Celery][celery] as distributed task queue
-* [Redis][redis] as message broker
-* [Amazon CloudFront][cloudfront] for content delivery
-* [Amazon S3][s3] for storage
-* [Amazon Lambda][lambda] for authorization
-* [dlib][dlib] for face recognition
+- [React][react] for frontend interface
+- [Django][django] for backend REST API
+- [Celery][celery] as distributed task queue
+- [Redis][redis] as message broker
+- [Amazon CloudFront][cloudfront] as content delivery network
+- [Amazon S3][s3] for storage
+- [Lambda@Edge][lambda@edge] for CDN authentication and [image resizing][image-resizing]
+- [dlib][dlib] for face recognition
 
 ### [Contributing][contributing]
 
@@ -79,8 +77,9 @@ Contributions of any kind welcome!
 [dlib]: http://dlib.net/
 [cloudfront]: https://aws.amazon.com/cloudfront/
 [s3]: https://aws.amazon.com/s3/
-[lambda]: https://aws.amazon.com/lambda/
+[lambda@edge]: https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html
 [django]: https://www.djangoproject.com/
 [react]: https://reactjs.org/
 [celery]: http://www.celeryproject.org/
 [redis]: https://redis.io/
+[image-resizing]: https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/

@@ -1,0 +1,121 @@
+{
+  "Records": [
+    {
+      "cf": {
+        "config": {
+          "distributionDomainName": "d41bgd9jwkoy1.cloudfront.net",
+          "distributionId": "EVDKPKQPAWC43",
+          "eventType": "origin-response"
+        },
+        "request": {
+          "clientIp": "86.58.19.114",
+          "headers": {
+            "accept-encoding": [
+              {
+                "key": "Accept-Encoding",
+                "value": "gzip"
+              }
+            ],
+            "cache-control": [
+              {
+                "key": "Cache-Control",
+                "value": "no-cache"
+              }
+            ],
+            "host": [
+              {
+                "key": "Host",
+                "value": "resizing.bucket.s3.amazonaws.com"
+              }
+            ],
+            "pragma": [
+              {
+                "key": "Pragma",
+                "value": "no-cache"
+              }
+            ],
+            "upgrade-insecure-requests": [
+              {
+                "key": "Upgrade-Insecure-Requests",
+                "value": "1"
+              }
+            ],
+            "user-agent": [
+              {
+                "key": "User-Agent",
+                "value": "Amazon CloudFront"
+              }
+            ],
+            "via": [
+              {
+                "key": "Via",
+                "value":
+                  "1.1 6207b951a11da0467241aea4294b753b.cloudfront.net (CloudFront)"
+              }
+            ],
+            "x-forwarded-for": [
+              {
+                "key": "X-Forwarded-For",
+                "value": "86.58.19.114"
+              }
+            ]
+          },
+          "method": "GET",
+          "origin": {
+            "s3": {
+              "authMethod": "none",
+              "customHeaders": {},
+              "domainName": "resizing.bucket.s3.amazonaws.com",
+              "path": ""
+            }
+          },
+          "querystring": "",
+          "uri": "/media/64x64/image.png"
+        },
+        "response": {
+          "headers": {
+            "content-type": [
+              {
+                "key": "Content-Type",
+                "value": "application/xml"
+              }
+            ],
+            "date": [
+              {
+                "key": "Date",
+                "value": "Sun, 29 Jul 2018 07:25:21 GMT"
+              }
+            ],
+            "server": [
+              {
+                "key": "Server",
+                "value": "AmazonS3"
+              }
+            ],
+            "transfer-encoding": [
+              {
+                "key": "Transfer-Encoding",
+                "value": "chunked"
+              }
+            ],
+            "x-amz-id-2": [
+              {
+                "key": "x-amz-id-2",
+                "value":
+                  "pySijqSw7Hn2yAYFlCauJxMgvg3jyu928tJIKRfT74JhKcf8glwxVtOBoDNclbUT5BeBJJmOOYA="
+              }
+            ],
+            "x-amz-request-id": [
+              {
+                "key": "x-amz-request-id",
+                "value": "9AEBCE65FE419D8F"
+              }
+            ]
+          },
+          "status": "404",
+          "statusDescription": "Forbidden"
+        }
+      }
+    }
+  ]
+}

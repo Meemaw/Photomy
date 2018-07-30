@@ -13,6 +13,7 @@ import { withWidth } from '../../../hocs';
 import { NAVBAR_GALLERY_TYPE_BREAKPOINT } from '../../../constants/breakpoints';
 import { VERSION_INFO } from '../../../version';
 import { GITHUB_RELEASES } from '../../../constants/links';
+import { withDimensions } from '../../../lib/image';
 import type { User } from '../../../meta/types/User';
 
 const VERSION_CONTENT = VERSION_INFO.tag
@@ -35,6 +36,9 @@ type Props = {
   albumPage: boolean,
   album: Object,
 };
+
+const AVATAR_SIZE = 32;
+const AVATAR_SIZE_PX = `${AVATAR_SIZE}px`;
 
 const Navbar = ({
   galleryType,
@@ -92,9 +96,9 @@ const Navbar = ({
             trigger={
               user.avatar ? (
                 <GalleryImage
-                  src={user.avatar}
-                  width="30px"
-                  height="30px"
+                  src={withDimensions(user.avatar, AVATAR_SIZE * 2, AVATAR_SIZE * 2)}
+                  width={AVATAR_SIZE_PX}
+                  height={AVATAR_SIZE_PX}
                   rounded
                   style={{ objectFit: 'initial' }}
                 />

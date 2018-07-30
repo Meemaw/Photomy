@@ -1,0 +1,12 @@
+{
+  "name": "photomy-image-resize",
+  "version": "1.0.0",
+  "description": "Serverless image resizing",
+  "readme": "Serverless image resizing",
+  "repository": "https://github.com/Meemaw/Photomy",
+  "license": "MIT License",
+  "main": "index.js",
+  "dependencies": {
+    "sharp": "^0.20.5"
+  }
+}
