@@ -19,4 +19,8 @@ zip -r9 lambda.zip node_modules index.js
 
 You can upload zip thorugh AWS Lambda user interface or with [aws-cli][update-lambda].
 
+```sh
+aws lambda update-function-code --function-name ResizeLambda --zip-file fileb://lambda.zip  --profile YourProfileWithPermissions
+```
+
 [update-lambda]: https://docs.aws.amazon.com/cli/latest/reference/lambda/update-function-code.html
