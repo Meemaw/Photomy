@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Address = props => {
   return (
     <address>
-      E-mail: <a href="mailto:support@photomy.si">suppoty@photomy.si</a>.<br />
+      E-mail: <a href="mailto:support@photomy.si">support@photomy.si</a>.<br />
       Visit us at:
       <Link to="www.photomy.si"> www.photomy.si</Link>
       <br />
