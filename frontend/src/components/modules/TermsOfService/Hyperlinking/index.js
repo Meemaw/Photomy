@@ -71,7 +71,8 @@ const Hyperlinking = props => {
         to our website, you must notify us by sending an e-mail to{' '}
         <a href="mailto:support@photomy.si" title="send an email to support@photomy.si">
           support@photomy.si
-        </a>. Please include your name, your organization name, contact information (such as a phone
+        </a>
+        . Please include your name, your organization name, contact information (such as a phone
         number and/or e-mail address) as well as the URL of your site, a list of any URLs from which
         you intend to link to our Web site, and a list of the URL(s) on our site to which you would
         like to link. Allow 2-3 weeks for a response.

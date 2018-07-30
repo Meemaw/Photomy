@@ -12,7 +12,9 @@ const FormErrors = ({ errors }: Props) => {
         <Message.Header style={{ textAlign: 'left' }}>Something went wrong</Message.Header>
 
         <Message.List>
-          {errors.map((error, ix) => <Message.Item key={ix}>{error}</Message.Item>)}
+          {errors.map((error, ix) => (
+            <Message.Item key={ix}>{error}</Message.Item>
+          ))}
         </Message.List>
       </Message.Content>
     </Message>

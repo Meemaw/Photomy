@@ -74,7 +74,8 @@ class MergeIdentities extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <Modal.Header>
-          <Icon name="user" />Merge identities with
+          <Icon name="user" />
+          Merge identities with
         </Modal.Header>
         <Modal.Content>
           {results.length === 0 ? (

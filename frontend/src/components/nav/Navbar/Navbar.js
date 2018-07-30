@@ -61,7 +61,8 @@ const Navbar = ({
           <Header as="h4">
             {(peoplePage || albumPage) && (
               <Icon name="chevron left" style={{ fontSize: '1rem', height: '100%' }} />
-            )}Photomy
+            )}
+            Photomy
           </Header>
         </Grid.Column>
 

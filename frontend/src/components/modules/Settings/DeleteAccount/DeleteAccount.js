@@ -21,7 +21,8 @@ const DeleteAccount = ({ handleClose, deleting, handleDelete }: Props) => {
       </Modal.Content>
       <Modal.Actions>
         <Button onClick={handleClose}>
-          <Icon name="remove" />Cancel
+          <Icon name="remove" />
+          Cancel
         </Button>
         <Button color="red" onClick={handleDelete} loading={deleting}>
           <Icon name="trash" /> Yes, delete profile
