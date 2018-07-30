@@ -1,0 +1,9 @@
+{
+  "name": "photomy-viewer-lambda",
+  "version": "1.0.0",
+  "description": "Photomy viewer lambda",
+  "readme": "Photomy viever lambda",
+  "repository": "https://github.com/Meemaw/Photomy",
+  "license": "MIT License",
+  "main": "index.js"
+}
