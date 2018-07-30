@@ -1,4 +1,6 @@
-# Resize Lambda
+# Resize Lambda@Edge
+
+Written following excellent [blog post][https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/] from AWS team.
 
 ## Building
 
@@ -24,3 +26,4 @@ aws lambda update-function-code --function-name ResizeLambda --zip-file fileb://
 ```
 
 [update-lambda]: https://docs.aws.amazon.com/cli/latest/reference/lambda/update-function-code.html
+[resizing-blog-post]: https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/
