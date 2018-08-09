@@ -3,8 +3,9 @@ import { onlyUpdateForKeys } from 'recompose';
 import { Image as SemanticImage, Ref } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import PLACEHOLDER from '../../../images/gallery_placeholder.png';
 import ProgressiveImage from '../../common/ProgressiveImage';
+
+const PLACEHOLDER = require('../../../images/gallery_placeholder.png');
 
 type Props = {
   src: string | null;

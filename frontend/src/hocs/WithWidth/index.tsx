@@ -22,7 +22,7 @@ const withWidth = <P, S>(WrappedComponent: HOC<P, WidthState>) => {
       const { width } = this.state;
       return (
         <Visibility onUpdate={this.handleUpdate} fireOnMount={true}>
-          {width && <WrappedComponent {...this.props} width={width} />}
+          {width !== undefined ? <WrappedComponent {...this.props} width={width} /> : null}
         </Visibility>
       );
     }

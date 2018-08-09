@@ -6,7 +6,7 @@ import AvatarUpload from '../../../AvatarUpload';
 import SettingsTab from '../../../common/SettingsTab';
 import UserForm from '../../../UserForm';
 
-type Props = { authUser: User | null; width?: number };
+type Props = { authUser: User | null; width: number };
 
 const AccountSettings = ({ authUser, width }: Props) => {
   return (
@@ -48,7 +48,7 @@ const AvatarSettingsContent = ({ authUser }: { authUser: User | null }) => {
 const BaseSettingsContent = ({ authUser, width }: Props) => {
   return (
     <section className="BaseSettings">
-      <UserForm user={authUser!} />
+      <UserForm user={authUser!} width={width} />
     </section>
   );
 };
