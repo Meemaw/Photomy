@@ -66,5 +66,13 @@
     "sinon": "^6.1.4",
     "sinon-chai": "^3.2.0",
     "typescript": "^3.0.1"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/actions/**",
+      "src/components/**",
+      "src/hocs/**",
+      "src/reducers/**"
+    ]
   }
 }
