@@ -3,7 +3,7 @@ import { AuthState } from '../../meta/types/Store';
 import { User } from '../../meta/types/User';
 
 export const INITIAL_STATE: AuthState = {
-  user: null,
+  user: undefined,
   isLoggedIn: false,
   tokenChecked: false,
   isAuthorized: false,

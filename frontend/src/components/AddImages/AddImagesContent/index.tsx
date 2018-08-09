@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import AddImagesDropzone from '../AddImagesDropzone';
 import AddImagesOptions from '../AddImagesOptions';
 
-type Props = {
+interface Props {
   isUploading: boolean;
   acceptedImages: any[];
   uploadedStatuses: boolean[];
@@ -26,7 +26,7 @@ type Props = {
   setIsCustomDate: any;
   handleDateSelection: any;
   setLocation: any;
-};
+}
 
 const AddAlbum = ({
   acceptedImages,

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-const Licence = (props: object) => (
+const Licence = () => (
   <React.Fragment>
     <h2>License</h2>
     <p>

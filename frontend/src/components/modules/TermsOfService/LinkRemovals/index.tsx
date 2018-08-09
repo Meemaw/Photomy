@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const LinkRemovals = (props: object) => (
+const LinkRemovals = () => (
   <React.Fragment>
     <h2>Removal of links from our website</h2>
     <p>

@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { Album } from '../../meta/types/Album';
+import { HandleClose } from '../../meta/types/Function';
 import { Image } from '../../meta/types/Image';
 import { AlbumsState } from '../../meta/types/Store';
 import AlbumsList from '../AlbumsList';
@@ -9,9 +11,9 @@ import NewAlbum from '../NewAlbum';
 
 type Props = {
   albumsState: AlbumsState;
-  handleClose: any;
+  handleClose: HandleClose;
   image: Image;
-  addToAlbum: any;
+  addToAlbum: (album: Album) => void;
 };
 
 const AddToAlbum = ({ handleClose, albumsState, image, addToAlbum }: Props) => {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-const Address = (props: object) => (
+const Address = () => (
   <address>
     E-mail: <a href="mailto:support@photomy.si">support@photomy.si</a>.<br />
     Visit us at:

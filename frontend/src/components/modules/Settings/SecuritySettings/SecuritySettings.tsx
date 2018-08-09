@@ -4,7 +4,7 @@ import { List } from 'semantic-ui-react';
 import SettingsTab from '../../../common/SettingsTab';
 import PasswordChangeForm from '../../../PasswordChangeForm';
 
-const SecuritySettings = (props: object) => (
+const SecuritySettings = () => (
   <React.Fragment>
     <SettingsTab
       renderTitle={() => (

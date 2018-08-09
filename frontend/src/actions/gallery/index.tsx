@@ -92,6 +92,8 @@ export const uploadImages = (images: Image[]): IUploadImages => {
   };
 };
 
+export type UploadImages = typeof uploadImages;
+
 export const deleteImage = (image: Image, galleryType: GalleryType): IDeleteImage => {
   return {
     galleryType,

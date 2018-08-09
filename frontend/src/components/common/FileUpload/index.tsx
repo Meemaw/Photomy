@@ -1,13 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
+import { ImageFile } from '../../../../node_modules/@types/react-dropzone';
 import Dropzone from '../Dropzone';
 
 type Props = {
   disabled?: boolean;
   accept?: string;
   error?: string;
-  handleAcceptedFiles: any;
+  handleAcceptedFiles: (imageFiles: ImageFile[]) => void;
 };
 
 const FileUpload = ({ disabled, error, accept, handleAcceptedFiles }: Props) => {

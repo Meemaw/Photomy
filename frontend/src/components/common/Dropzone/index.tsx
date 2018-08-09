@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Icon } from 'semantic-ui-react';
 
+import { ImageFile } from '../../../../node_modules/@types/react-dropzone';
+
 let Dropzone = require('react-dropzone');
 if ('default' in Dropzone) {
   Dropzone = Dropzone.default;
@@ -10,7 +12,7 @@ type Props = {
   renderDropzone?: any;
   renderError?: any;
   accept?: string;
-  handleAcceptedFiles: any;
+  handleAcceptedFiles: (imageFiles: ImageFile[]) => void;
   multiple?: boolean;
   disabled?: boolean;
   error?: string;
@@ -43,7 +45,7 @@ class DropzoneContainer extends React.Component<Props, State> {
     return <Icon name="plus" style={{ width: '100%' }} size="large" />;
   };
 
-  handleDrop = (accepted: any[], rejected: any[]) => {
+  handleDrop = (accepted: ImageFile[], rejected: ImageFile[]) => {
     const { accept, handleAcceptedFiles, multiple } = this.props;
 
     if ((multiple && accepted.length > 0) || (!multiple && accepted.length === 1)) {

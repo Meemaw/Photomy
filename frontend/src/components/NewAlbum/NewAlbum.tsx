@@ -2,10 +2,10 @@ import * as React from 'react';
 import { List } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { ElementClick } from '../../meta/types/Function';
+import { AnchorClick } from '../../meta/types/Function';
 import LoadingIcon from '../common/LoadingIcon';
 
-type Props = { handleClick: ElementClick; creatingAlbum: boolean };
+type Props = { handleClick: AnchorClick; creatingAlbum: boolean };
 
 const NewAlbum = ({ handleClick, creatingAlbum }: Props) => {
   return (

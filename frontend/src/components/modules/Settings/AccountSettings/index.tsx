@@ -6,7 +6,7 @@ import { StoreState } from '../../../../meta/types/Store';
 import { User } from '../../../../meta/types/User';
 import AccountSettings from './AccountSettings';
 
-type Props = { authUser: User | null; width?: number };
+type Props = { authUser?: User; width?: number };
 
 const AcccountSettingsContainer = ({ authUser, width }: Props) => (
   <AccountSettings authUser={authUser} width={width!} />

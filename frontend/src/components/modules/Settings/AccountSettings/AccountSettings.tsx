@@ -6,7 +6,7 @@ import AvatarUpload from '../../../AvatarUpload';
 import SettingsTab from '../../../common/SettingsTab';
 import UserForm from '../../../UserForm';
 
-type Props = { authUser: User | null; width: number };
+type Props = { authUser?: User; width: number };
 
 const AccountSettings = ({ authUser, width }: Props) => {
   return (
@@ -31,13 +31,13 @@ const AccountSettings = ({ authUser, width }: Props) => {
           </React.Fragment>
         )}
         icon="image"
-        renderContent={() => <AvatarSettingsContent authUser={authUser} />}
+        renderContent={() => <AvatarSettingsContent authUser={authUser!} />}
       />
     </section>
   );
 };
 
-const AvatarSettingsContent = ({ authUser }: { authUser: User | null }) => {
+const AvatarSettingsContent = ({ authUser }: { authUser?: User }) => {
   return (
     <section className="AvatarSettings">
       <AvatarUpload authUser={authUser!} />

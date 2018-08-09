@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const ReservationOfRights = (props: object) => (
+const ReservationOfRights = () => (
   <React.Fragment>
     <h2>Reservation of Rights</h2>
     <p>

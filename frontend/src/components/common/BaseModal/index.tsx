@@ -4,8 +4,8 @@ import * as React from 'react';
 import { Modal, ModalProps } from 'semantic-ui-react';
 
 interface Props extends ModalProps {
-  children: (handleClose: (e: React.SyntheticEvent<any>) => void) => React.ReactNode;
-  trigger: (handleOpen: (e: React.SyntheticEvent<any>) => void) => React.ReactNode;
+  children?: (handleClose: (e: React.SyntheticEvent<any>) => void) => React.ReactNode;
+  trigger?: (handleOpen: (e: React.SyntheticEvent<any>) => void) => React.ReactNode;
   handleKeyDown?: (e: React.KeyboardEvent<any>) => void;
 }
 
@@ -51,7 +51,7 @@ class BaseModalContainer extends React.PureComponent<Props, State> {
     const { children, trigger } = this.props;
     const { open } = this.state;
 
-    const triggerNode = trigger(this.handleOpen);
+    const triggerNode = trigger!(this.handleOpen);
 
     return (
       <Modal
@@ -60,7 +60,7 @@ class BaseModalContainer extends React.PureComponent<Props, State> {
         open={open}
         onClose={this.handleClose}
       >
-        {children(this.handleClose)}
+        {children!(this.handleClose)}
       </Modal>
     );
   }

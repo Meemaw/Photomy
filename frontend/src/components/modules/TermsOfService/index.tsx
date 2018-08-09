@@ -11,7 +11,7 @@ import Licence from './Licence';
 import LinkRemovals from './LinkRemovals';
 import ReservationOfRights from './ReservationOfRights';
 
-const TermsOfService = (props: object) => (
+const TermsOfService = () => (
   <Container text className="TermsOfService" style={{ marginTop: '25px' }}>
     <h1>Welcome to Photomy</h1>
     <p>

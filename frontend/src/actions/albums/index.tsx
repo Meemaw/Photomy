@@ -88,6 +88,8 @@ export const addAlbumToImage = (album: Album, image: Image): IAddAlbumToImage =>
   };
 };
 
+export type AddAlbumToImage = typeof addAlbumToImage;
+
 export const setAlbumsFetching = (albumsFetching: boolean): ISetAlbumsFetching => {
   return {
     albumsFetching,
@@ -110,3 +112,5 @@ export const fetchAlbums = () => {
     dispatch(setAlbumsFetching(false));
   };
 };
+
+export type FetchAlbums = typeof fetchAlbums;

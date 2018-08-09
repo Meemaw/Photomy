@@ -1,6 +1,7 @@
+import { mount, shallow } from 'enzyme';
 import * as React from 'react';
+
 import BaseModal from '../../../components/common/BaseModal';
-import { shallow, mount } from 'enzyme';
 
 describe('BaseModal', () => {
   it('renders closed', () => {

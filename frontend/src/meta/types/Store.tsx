@@ -8,7 +8,7 @@ export type IdentityState = { identity: Identity | null };
 export type GalleryState = {};
 
 export type AuthState = {
-  user: null | User;
+  user?: User;
   isLoggedIn: boolean;
   tokenChecked: boolean;
   isAuthorized: boolean;

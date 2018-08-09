@@ -1,15 +1,11 @@
 import * as React from 'react';
 import { onlyUpdateForKeys } from 'recompose';
 
-import { ButtonClick } from '../../../meta/types/Function';
-import AddImagesFooter from './AddImagesFooter';
+import AddImagesFooter, { Props as AddImagesFooterProps } from './AddImagesFooter';
 
-type Props = {
-  isAlbum: boolean;
-  isUploading: boolean;
-  uploadImagesToServer: ButtonClick;
+export interface Props extends AddImagesFooterProps {
   acceptedImages: any[];
-};
+}
 
 const AddAlbumFooterContainer = ({
   isAlbum,
@@ -22,7 +18,7 @@ const AddAlbumFooterContainer = ({
     <AddImagesFooter
       isAlbum={isAlbum}
       isUploading={isUploading}
-      uploadPhotos={uploadImagesToServer}
+      uploadImagesToServer={uploadImagesToServer}
       disabled={disabled}
     />
   );

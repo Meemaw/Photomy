@@ -2,6 +2,7 @@ import * as React from 'react';
 import { onlyUpdateForKeys } from 'recompose';
 import { Segment } from 'semantic-ui-react';
 
+import { Uploadable } from '../../../meta/types/Interfaces';
 import FileUpload from '../../common/FileUpload';
 import ImageLinkUpload from '../../common/ImageLinkUpload';
 import AcceptedImages from '../AcceptedImages';
@@ -10,7 +11,7 @@ type Props = {
   isUploading: boolean;
   acceptedImages: any[];
   uploadedStatuses: boolean[];
-  addAcceptedImages: any;
+  addAcceptedImages: (imageFiles: Uploadable[]) => void;
   removeFile: (fileIx: number) => void;
   uploadWithLink: boolean;
   isDuplicated: any;

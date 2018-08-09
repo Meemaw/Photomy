@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const Cookies = (props: object) => (
+const Cookies = () => (
   <React.Fragment>
     <h2>Cookies</h2>
     <p>

@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 
 import { HOC } from '../../meta/types/Hoc';
 
+export type Push = typeof push;
+
 interface PropsWithPush {
-  push: any;
+  push: Push;
 }
 
 function withPush<P, S>(WrappedComponent: HOC<P, PropsWithPush>) {

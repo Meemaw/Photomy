@@ -1,6 +1,8 @@
-import * as React from 'react';
-import { App } from '../../../components/App';
+import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import * as React from 'react';
+
+import { App } from '../../../components/App';
 
 jest.mock('react-ga');
 

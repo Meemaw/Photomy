@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { ButtonClick } from '../../../meta/types/Function';
+
+import { ButtonClick, HandleClose } from '../../../meta/types/Function';
 import AddImagesContent from '../AddImagesContent';
 import AddImagesFooter from '../AddImagesFooter';
 import AddImagesHeader from '../AddImagesHeader';
 
 type Props = {
-  handleClose: any;
+  handleClose: HandleClose;
   uploadImages: any;
   setIsAlbum: any;
   isAlbum: boolean;

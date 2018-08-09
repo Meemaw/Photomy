@@ -8,7 +8,7 @@ import GalleryImage from '../../Gallery/GalleryImage';
 interface IProps {
   uploadedStatuses: boolean[];
   acceptedImages: object[];
-  children: any;
+  children: React.ReactNode;
   isUploading: boolean;
   width?: number;
   removeFile: (fileIx: number) => void;

@@ -5,28 +5,17 @@ import { uploadImages } from '../../../actions';
 import withPush from '../../../hocs/Router';
 import withWidth from '../../../hocs/WithWidth';
 import { StoreState } from '../../../meta/types/Store';
-import AddImagesModal from './AddImagesModal';
+import { User } from '../../../meta/types/User';
+import AddImagesModal, { Props as AddImagesModalProps } from './AddImagesModal';
 
-type Props = {
-  uploadImages: any;
+interface Props extends AddImagesModalProps {
   width?: number;
-  authUser: any;
-  push: any;
-};
+  authUser?: User;
+}
 
-const AddImagesModalContainer = ({
-  uploadImages: uploadImagesAction,
-  width,
-  authUser,
-  push,
-}: Props) => {
+const AddImagesModalContainer = ({ uploadImages: uploadImagesA, width, authUser, push }: Props) => {
   return (
-    <AddImagesModal
-      uploadImages={uploadImagesAction}
-      width={width!}
-      userId={authUser.id}
-      push={push}
-    />
+    <AddImagesModal uploadImages={uploadImagesA} width={width!} userId={authUser!.id} push={push} />
   );
 };
 

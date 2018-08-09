@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const Disclaimer = (props: object) => (
+const Disclaimer = () => (
   <React.Fragment>
     <h2>Disclaimer</h2>
     <p>

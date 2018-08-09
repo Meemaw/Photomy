@@ -2,9 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { addAlbumToImage, fetchAlbums } from '../../actions';
+import { AddAlbumToImage, FetchAlbums } from '../../actions/albums';
 import { albumsPath } from '../../constants/paths';
-import withPush from '../../hocs/Router';
+import withPush, { Push } from '../../hocs/Router';
 import { Album } from '../../meta/types/Album';
+import { HandleClose } from '../../meta/types/Function';
 import { Image } from '../../meta/types/Image';
 import { AlbumsState, StoreState } from '../../meta/types/Store';
 import { AlbumsApi } from '../../services';
@@ -12,11 +14,11 @@ import AddToAlbum from './AddToAlbum';
 
 type Props = {
   albumsState: AlbumsState;
-  handleClose: any;
-  fetchAlbums: any;
+  handleClose: HandleClose;
+  fetchAlbums: FetchAlbums;
   image: Image;
-  push: any;
-  addAlbumToImage: any;
+  push: Push;
+  addAlbumToImage: AddAlbumToImage;
 };
 
 class AddToAlbumContainer extends React.Component<Props, object> {

@@ -1,13 +1,18 @@
 import * as React from 'react';
 import ImageLinkUpload from './ImageLinkUpload';
 
-type Props = { addAcceptedImages: any; isDuplicated: any };
+type Props = { addAcceptedImages: (imageFileLinks: LinkImageFile[]) => void; isDuplicated: any };
 type State = {
   linkVerified: boolean;
   error?: string;
   src: string;
   veryfing: boolean;
 };
+
+export interface LinkImageFile {
+  isLink: boolean;
+  preview?: string;
+}
 
 class ImageLinkUploadContainner extends React.PureComponent<Props, State> {
   state = { linkVerified: false, src: '', veryfing: false };

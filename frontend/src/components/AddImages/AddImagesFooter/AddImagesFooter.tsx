@@ -4,18 +4,21 @@ import { Modal } from 'semantic-ui-react';
 import { ButtonClick } from '../../../meta/types/Function';
 import SaveButton from '../../common/SaveButton';
 
-type Props = {
+export interface Props {
   isAlbum: boolean;
   isUploading: boolean;
-  uploadPhotos: ButtonClick;
-  disabled: boolean;
-};
+  uploadImagesToServer: ButtonClick;
+}
 
-const AddImagesFooter = ({ isAlbum, isUploading, uploadPhotos, disabled }: Props) => {
+interface IProps extends Props {
+  disabled: boolean;
+}
+
+const AddImagesFooter = ({ isAlbum, isUploading, uploadImagesToServer, disabled }: IProps) => {
   return (
     <Modal.Actions>
       <SaveButton
-        onClick={uploadPhotos}
+        onClick={uploadImagesToServer}
         loading={isUploading}
         icon="upload"
         disabled={disabled}

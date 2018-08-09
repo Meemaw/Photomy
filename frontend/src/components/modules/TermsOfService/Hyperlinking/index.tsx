@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const Hyperlinking = (props: object) => (
+const Hyperlinking = () => (
   <React.Fragment>
     <h2>Hyperlinking to our Content</h2>
     <ol>

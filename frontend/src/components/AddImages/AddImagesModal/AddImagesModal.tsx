@@ -1,24 +1,26 @@
 import * as React from 'react';
 import { Button } from 'semantic-ui-react';
 
+import { UploadImages } from '../../../actions/gallery';
+import { RoutePusher, WidthMeasured } from '../../../meta/types/Interfaces';
 import BaseModal from '../../common/BaseModal';
 import AddImages from '../AddImages';
 
-type Props = {
-  uploadImages: any;
-  width: number;
-  userId: string;
-  push: any;
-};
+export interface Props extends RoutePusher {
+  uploadImages: UploadImages;
+}
 
-class AddImagesModal extends React.PureComponent<Props, object> {
+interface IProps extends Props, WidthMeasured {
+  userId: string;
+}
+
+class AddImagesModal extends React.PureComponent<IProps, object> {
   renderTrigger = (handleOpen: (e: React.SyntheticEvent<any>) => void) => {
-    const { width } = this.props;
     return (
       <div style={docsButtonStyle}>
         <Button
           color="green"
-          content={width > 450 ? 'Add Photo' : null}
+          content={this.props.width > 450 ? 'Add Photo' : null}
           icon="plus"
           onClick={handleOpen}
           style={buttonStyle}

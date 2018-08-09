@@ -15,8 +15,14 @@ export type RefFunction =
   | React.RefObject<HTMLDivElement>
   | undefined;
 
-export type SpanClick = (e: React.MouseEvent<HTMLSpanElement>) => void;
+export type ElementClick<T> = (e: React.MouseEvent<T>) => void;
 
-export type DivClick = (e: React.MouseEvent<HTMLDivElement>) => void;
+export type SpanClick = ElementClick<HTMLSpanElement>;
 
-export type ElementClick = (e: React.MouseEvent<HTMLAnchorElement>) => void;
+export type DivClick = ElementClick<HTMLDivElement>;
+
+export type AnchorClick = ElementClick<HTMLAnchorElement>;
+
+export type HandleClose = (e: React.SyntheticEvent<any>) => void;
+
+export type HandleOpen = HandleClose;

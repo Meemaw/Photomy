@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const Iframes = (props: object) => (
+const Iframes = () => (
   <React.Fragment>
     <h2>Iframes</h2>
     <p>

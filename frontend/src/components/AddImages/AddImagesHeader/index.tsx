@@ -2,9 +2,13 @@ import * as React from 'react';
 import { onlyUpdateForKeys } from 'recompose';
 import { Icon, Menu } from 'semantic-ui-react';
 
+import { InModal } from '../../../meta/types/Interfaces';
 import ClickableIcon from '../../common/ClickableIcon';
 
-type Props = { isAlbum: boolean; handleClose: any; setIsAlbum: any };
+interface Props extends InModal {
+  isAlbum: boolean;
+  setIsAlbum: (isAlbum: boolean) => void;
+}
 
 const AlbumModalHeader = ({ handleClose, setIsAlbum, isAlbum }: Props) => {
   return (

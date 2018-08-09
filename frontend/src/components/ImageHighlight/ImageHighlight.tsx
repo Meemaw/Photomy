@@ -6,7 +6,7 @@ import { withHover } from '../../hocs';
 import { toReadableHighlightDate } from '../../lib/date';
 import { enterFullscren } from '../../lib/document';
 import { isAlbumPath } from '../../lib/paths';
-import { DivClick, ElementClick } from '../../meta/types/Function';
+import { AnchorClick, DivClick } from '../../meta/types/Function';
 import { Image } from '../../meta/types/Image';
 import AddToAlbum from '../AddToAlbumModal';
 import LoadingIcon from '../common/LoadingIcon';
@@ -24,7 +24,7 @@ type Props = {
   highlightHeaderProvider: () => string;
   deleting: boolean;
   handleDelete: (e: any) => void;
-  handleFavorite: ElementClick;
+  handleFavorite: AnchorClick;
   favoriting: boolean;
   handleRef: any;
   imgRef?: React.ReactNode;
@@ -188,7 +188,6 @@ const ImageHighlight = ({
                       )}
 
                       <AddToAlbum
-                        open={addToAlbumOpen}
                         handleClose={handleAddToAlbumClose}
                         handleOpen={handleAddToAlbumOpen}
                         image={highlightedImage}

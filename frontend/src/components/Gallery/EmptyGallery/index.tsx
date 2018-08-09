@@ -13,6 +13,7 @@ type Props = {
   uploadImages: any;
   setGalleryType: any;
 };
+
 type State = { uploading: boolean };
 
 class EmptyGallery extends React.Component<Props, State> {

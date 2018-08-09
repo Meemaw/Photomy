@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const ContentLiability = (props: object) => (
+const ContentLiability = () => (
   <React.Fragment>
     <h2>Content Liability</h2>
     <p>
