@@ -13,4 +13,7 @@ COPY ./src /src
 COPY ./scripts/run_web.sh /src
 COPY ./scripts/run_celery.sh /src
 
+RUN chmod +x /src/run_web.sh
+RUN chmod +x /src/run_celery.sh
+
 WORKDIR /src
