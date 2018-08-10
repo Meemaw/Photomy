@@ -21,7 +21,7 @@ type Props = {
   handleClose: (e: any) => void;
   count: number;
   imageSelectedIx: number;
-  highlightHeaderProvider: () => string;
+  highlightHeaderProvider: () => React.ReactNode;
   deleting: boolean;
   handleDelete: (e: any) => void;
   handleFavorite: AnchorClick;

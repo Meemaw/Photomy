@@ -54,7 +54,12 @@ const Register = ({
             handleChange={handleChange}
           />
         </Form.Group>
-        <EmailFormField handleChange={handleChange} value={email} errors={errors} />
+        <EmailFormField
+          handleChange={handleChange}
+          value={email}
+          errors={errors}
+          fieldName="email"
+        />
         <PasswordFormField
           value={password1}
           errors={errors}

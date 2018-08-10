@@ -39,6 +39,7 @@ const AddImagesOptions = ({
   handleDateSelection,
   setLocation,
 }: Props) => {
+  console.log(albumName);
   return (
     <Form style={{ width: '250px' }}>
       {isAlbum && (
@@ -47,9 +48,9 @@ const AddImagesOptions = ({
           <FormInputField
             fluid={true}
             placeholder="Summer in Miami..."
-            fieldName="album_name"
+            fieldName="albumName"
             value={albumName}
-            onChange={(_: any, { value }: any) => setAlbumName(value)}
+            handleChange={(_: any, { value }: any) => setAlbumName(value)}
           />
         </React.Fragment>
       )}

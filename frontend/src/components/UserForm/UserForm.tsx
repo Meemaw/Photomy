@@ -52,7 +52,7 @@ const UserForm = ({
         />
       </Form.Group>
 
-      <EmailFormField fluid value={email} errors={errors} readOnly />
+      <EmailFormField fluid value={email} errors={errors} readOnly fieldName="email" />
       <ProgressiveButtons narrowThreshold={300} width={width!}>
         <SaveButton loading={isSubmitting} type="submit" onClick={handleSubmit} />
         <DeleteAccount />

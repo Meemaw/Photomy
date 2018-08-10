@@ -1,10 +1,24 @@
 import * as React from 'react';
-import { Form, Label } from 'semantic-ui-react';
+import { Form, Label, SemanticICONS } from 'semantic-ui-react';
 
-// TODO
-type AnyProps = any;
+interface Props {
+  errors?: object;
+  fieldName: string;
+  value?: string;
+  fieldLabel?: string;
+  readOnly?: boolean;
+  placeholder?: string;
+  loading?: boolean;
+  type?: string;
+  handleChange?: any;
+  fluid?: boolean;
+  autoComplete?: string;
+  icon?: SemanticICONS;
+  iconPosition?: 'left';
+  label?: string;
+}
 
-const FormInputField = ({
+const FormInputField: React.StatelessComponent<Props> = ({
   errors,
   fieldName,
   value,
@@ -15,32 +29,30 @@ const FormInputField = ({
   loading,
   type,
   ...rest
-}: AnyProps) => {
-  return (
-    <Form.Field error={errors[fieldName] ? true : false} style={{ textAlign: 'left' }}>
-      {errors[fieldName] && (
-        <Label color="red" pointing="below">
-          {errors[fieldName]}
-        </Label>
-      )}
+}: Props) => (
+  <Form.Field error={errors![fieldName] ? true : false} style={{ textAlign: 'left' }}>
+    {errors![fieldName] && (
+      <Label color="red" pointing="below">
+        {errors![fieldName]}
+      </Label>
+    )}
 
-      <Form.Input
-        label={fieldLabel}
-        placeholder={placeholder || fieldLabel}
-        value={value}
-        onChange={handleChange}
-        name={fieldName}
-        readOnly={readOnly}
-        loading={loading}
-        type={type}
-        step="0.0000001"
-        {...rest}
-      />
-    </Form.Field>
-  );
-};
+    <Form.Input
+      label={fieldLabel}
+      placeholder={placeholder || fieldLabel}
+      value={value}
+      onChange={handleChange}
+      name={fieldName}
+      readOnly={readOnly}
+      loading={loading}
+      type={type}
+      step="0.0000001"
+      {...rest}
+    />
+  </Form.Field>
+);
 
-export const EmailFormField = (props: AnyProps) => {
+export const EmailFormField = (props: Props) => {
   return (
     <FormInputField
       fluid
@@ -56,7 +68,7 @@ export const EmailFormField = (props: AnyProps) => {
   );
 };
 
-export const PasswordFormField = (props: AnyProps) => {
+export const PasswordFormField = (props: Props) => {
   return (
     <FormInputField
       fluid
@@ -69,6 +81,10 @@ export const PasswordFormField = (props: AnyProps) => {
       {...props}
     />
   );
+};
+
+FormInputField.defaultProps = {
+  errors: {},
 };
 
 export default FormInputField;

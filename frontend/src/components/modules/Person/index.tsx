@@ -123,12 +123,13 @@ class PersonContainer extends React.Component<Props, State> {
 
   renderImage = (image: Image): React.ReactNode => {
     const imageIx = this.dataMap[image.image_id].ix;
+    const { identity } = this.props;
 
     return (
       <ImageHighlightModal
         imageIx={imageIx}
         triggerImageMaxHeight={PERSON_PHOTOS_IMAGE_HEIGHT}
-        highlightHeaderProvider={() => this.props.identity}
+        highlightHeaderProvider={() => (identity ? identity.identity : '')}
         images={Object.values(this.dataMap)}
         initialImage={image}
       />

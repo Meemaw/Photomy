@@ -47,7 +47,7 @@ const Login = ({
             fieldName="email"
             autoComplete="email"
             handleChange={handleChange}
-            values={email}
+            value={email}
             errors={errors}
           />
           <FormInputField

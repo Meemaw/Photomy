@@ -20,7 +20,7 @@ type Props = {
   hovered?: boolean;
   count: number;
   imageSelectedIx: number;
-  highlightHeaderProvider: any;
+  highlightHeaderProvider: () => React.ReactNode;
 };
 
 type State = {

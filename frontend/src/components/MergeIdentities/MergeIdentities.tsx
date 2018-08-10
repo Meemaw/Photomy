@@ -82,6 +82,8 @@ class MergeIdentities extends React.Component<Props, State> {
     const { results, loadingIdentities, join_identity_id, merging } = this.state;
     const loading = loadingIdentities || merging;
 
+    const noIdentities = results.length === 0;
+
     return (
       <React.Fragment>
         <Modal.Header>
@@ -89,7 +91,7 @@ class MergeIdentities extends React.Component<Props, State> {
           Merge identities with
         </Modal.Header>
         <Modal.Content>
-          {results.length === 0 ? (
+          {noIdentities ? (
             <Message content="No identities to merge with" />
           ) : (
             results.map((identityMatches, ix) => {
@@ -112,13 +114,15 @@ class MergeIdentities extends React.Component<Props, State> {
         </Modal.Content>
         <Modal.Actions>
           <Button content="Cancel" icon="remove" onClick={handleClose} />
-          <SaveButton
-            content="Merge identities"
-            icon="yc"
-            loading={loading}
-            onClick={this.handleMergeClick}
-            disabled={join_identity_id === null}
-          />
+          {!noIdentities && (
+            <SaveButton
+              content="Merge identities"
+              icon="checkmark"
+              loading={loading}
+              onClick={this.handleMergeClick}
+              disabled={join_identity_id === null}
+            />
+          )}
         </Modal.Actions>
       </React.Fragment>
     );

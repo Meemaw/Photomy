@@ -29,7 +29,12 @@ const PasswordResetTrigger = ({
         <Segment stacked>
           <FormErrors errors={errors.non_field_errors} />
 
-          <EmailFormField handleChange={handleChange} errors={errors} value={email} />
+          <EmailFormField
+            handleChange={handleChange}
+            errors={errors}
+            value={email}
+            fieldName="email"
+          />
 
           <Button color="blue" fluid size="large" loading={isSubmitting} type="submit">
             Reset Password
