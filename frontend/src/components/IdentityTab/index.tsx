@@ -7,23 +7,19 @@ import { IdentityApi } from '../../services';
 import SavableTab from '../common/SavableTab';
 
 type State = { savingIdentity: boolean };
-type Props = { identity: Identity; setIdentity: any };
+type Props = { identity?: Identity; setIdentity: any };
 
 class IdentityTabContainer extends React.PureComponent<Props, State> {
   state = { savingIdentity: false };
 
-  static defaultProps = {
-    identity: {},
-  };
-
   componentWillUnmount() {
-    this.props.setIdentity({});
+    this.props.setIdentity(undefined);
   }
 
   setSavingIdentity = (savingIdentity: boolean) => this.setState({ savingIdentity });
 
   saveIdentity = (name: string): Promise<any> => {
-    const identityName = this.props.identity.identity;
+    const identityName = this.props.identity!.identity;
 
     if (identityName === name) {
       this.setState({ savingIdentity: false });
@@ -45,9 +41,9 @@ class IdentityTabContainer extends React.PureComponent<Props, State> {
   render() {
     const { identity } = this.props;
     const { savingIdentity } = this.state;
-    const identityName = identity.identity;
 
-    const identityLoading = Object.keys(identity).length === 0;
+    const identityName = identity ? identity.identity : undefined;
+    const identityLoading = identity === undefined;
 
     return (
       <SavableTab

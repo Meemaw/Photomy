@@ -3,7 +3,7 @@ import { GalleryType } from './GalleryType';
 import { Identity } from './Identity';
 import { User } from './User';
 
-export type IdentityState = { identity: Identity | null };
+export type IdentityState = { identity?: Identity };
 
 export type GalleryState = {};
 

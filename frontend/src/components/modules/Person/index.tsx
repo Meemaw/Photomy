@@ -4,6 +4,7 @@ import { Divider } from 'semantic-ui-react';
 
 import { setIdentity } from '../../../actions';
 import { PERSON_PHOTOS_IMAGE_HEIGHT } from '../../../constants/gallerySizes';
+import { Identity } from '../../../meta/types/Identity';
 import { Image, mapImages } from '../../../meta/types/Image';
 import { StoreState } from '../../../meta/types/Store';
 import { buildDataMap } from '../../../reducers/gallery/util';
@@ -26,7 +27,7 @@ type State = {
 
 type Props = {
   setIdentity: any;
-  identity: any;
+  identity?: Identity;
   match: any;
 };
 
@@ -66,7 +67,7 @@ class PersonContainer extends React.Component<Props, State> {
       count: mergedConfirmedImages.length,
     });
     const { identity } = this.props;
-    if (identity.identity !== newConfirmedImages[0].image_identity) {
+    if (identity && identity.identity !== newConfirmedImages[0].image_identity) {
       this.props.setIdentity({
         ...identity,
         identity: newConfirmedImages[0].image_identity,
@@ -102,7 +103,7 @@ class PersonContainer extends React.Component<Props, State> {
     const { identity_id } = this.props.match.params;
 
     if (identity_id !== prevState.identity_id) {
-      this.props.setIdentity({});
+      this.props.setIdentity(undefined);
       this.loadIdentity(identity_id);
     }
   }
@@ -127,7 +128,7 @@ class PersonContainer extends React.Component<Props, State> {
       <ImageHighlightModal
         imageIx={imageIx}
         triggerImageMaxHeight={PERSON_PHOTOS_IMAGE_HEIGHT}
-        highlightHeaderProvider={() => this.props.identity.identity}
+        highlightHeaderProvider={() => this.props.identity}
         images={Object.values(this.dataMap)}
         initialImage={image}
       />
@@ -155,8 +156,11 @@ class PersonContainer extends React.Component<Props, State> {
   render() {
     const { unconfirmedImages, count, updatedAt, friends, images } = this.state;
     const { identity } = this.props;
-
     const isEmpty = images.length === 0 && updatedAt !== null;
+
+    if (!identity) {
+      return null;
+    }
 
     return (
       <Gallery isEmpty={isEmpty}>

@@ -10,6 +10,6 @@ describe('Identity reducer', () => {
       type: actionTypes.SET_IDENTITY,
       identity: TEST_IDENTITY,
     });
-    expect(state).to.deep.equal(TEST_IDENTITY);
+    expect(state).to.deep.equal({ identity: TEST_IDENTITY });
   });
 });

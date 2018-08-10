@@ -18,13 +18,13 @@ services:
       - redis
     depends_on:
       - db
-    entrypoint: /src/run_web.sh
+    entrypoint: /scripts/run_web.sh
   worker:
     build:
       context: .
       dockerfile: Dockerfile
     env_file: .env
-    entrypoint: /src/run_celery.sh
+    entrypoint: /scripts/run_celery.sh
     links:
       - db
       - redis

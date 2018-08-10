@@ -77,9 +77,7 @@ class ImageReviewModal extends React.PureComponent<Props, State> {
     const { identity } = this.props;
     const { imageReviews, loading } = this.state;
 
-    const modalHeader = identity.identity
-      ? `Is this ${identity.identity} on the photos?`
-      : 'Confirm photos';
+    const modalHeader = identity ? `Is this ${identity.identity} on the photos?` : 'Confirm photos';
 
     return (
       <BaseModal size="large" trigger={this.renderTrigger}>

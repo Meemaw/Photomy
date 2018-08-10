@@ -207,6 +207,9 @@ const gallery = (state: GalleryState = INITIAL_STATE, action: GalleryAction) => 
     case actionTypes.LOGOUT:
       return INITIAL_STATE;
     case actionTypes.SET_IDENTITY:
+      if (action.identity === undefined) {
+        return state;
+      }
       return {
         ...state,
         [GalleryType.PEOPLE_GALLERY]: updateIdentity(

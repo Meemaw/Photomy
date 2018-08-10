@@ -111,7 +111,7 @@ def create_new_identity(image, face_index, existing_match=None):
 
 
 def encode_image_faces(image):
-    raw_image = get_photomy_cdn_image(image.image_upload)
+    raw_image = get_photomy_cdn_image(image.image_upload.url)
     return _encode_image_faces(image, raw_image)
 
 

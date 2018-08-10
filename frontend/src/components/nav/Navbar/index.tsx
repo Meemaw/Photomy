@@ -8,6 +8,7 @@ import { ISetGalleryType } from '../../../actions/ui';
 import { albumsPath, galleryPath, peoplePath } from '../../../constants/paths';
 import withPush from '../../../hocs/Router';
 import { GalleryType } from '../../../meta/types/GalleryType';
+import { Identity } from '../../../meta/types/Identity';
 import { StoreState } from '../../../meta/types/Store';
 import { AuthApi } from '../../../services';
 import Navbar from './Navbar';
@@ -17,7 +18,7 @@ interface Props extends RouteComponentProps<any> {
   galleryType: string;
   logout: () => void;
   album: any;
-  identity: any;
+  identity?: Identity;
   push: any;
   user: any;
   location: Location;
@@ -60,7 +61,7 @@ class NavbarContainer extends React.Component<Props, object> {
 function mapStateToProps(state: StoreState) {
   return {
     galleryType: state.ui.galleryType,
-    identity: state.identity,
+    identity: state.identity.identity,
     user: state.auth.user,
     album: state.album.album,
   };

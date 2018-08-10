@@ -17,7 +17,7 @@ type Props = {
 };
 
 const Person = ({ images, count, updatedAt, identity, friends, renderImage }: Props) => {
-  const ofWhat = `Images of ${identity.identity || 'Person'}`;
+  const ofWhat = `Images of ${identity ? identity.identity! : 'Person'}`;
 
   const friendsData: any = {
     images: friends.results || [],
