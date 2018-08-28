@@ -23,11 +23,11 @@ interface Props extends FormikProps<any> {
 
 const PasswordResetContainer = withFormik({
   validateOnChange: false,
-  mapPropsToValues: (props: Props) => {
+  mapPropsToValues: (_: Props) => {
     return { new_password1: '', new_password2: '' };
   },
 
-  validate: (values: Values, props) => {
+  validate: (values: Values, _) => {
     const errors: Errors = {};
 
     const { new_password1, new_password2 } = values;
@@ -51,10 +51,9 @@ const PasswordResetContainer = withFormik({
       .catch(err => {
         if (err.status === 400) {
           if (err.body.token) {
-            const errors: Errors = {
+            setErrors({
               non_field_errors: ['It looks like this link expired'],
-            };
-            setErrors(errors);
+            } as any);
           } else {
             setErrors(err.body);
           }
