@@ -28,7 +28,7 @@ const PasswordResetContainer = withFormik({
   },
 
   validate: (values: Values, props) => {
-    const errors: Errors = {};
+    const errors: any = {};
 
     const { new_password1, new_password2 } = values;
 
@@ -51,7 +51,7 @@ const PasswordResetContainer = withFormik({
       .catch(err => {
         if (err.status === 400) {
           if (err.body.token) {
-            const errors: Errors = {
+            const errors: any = {
               non_field_errors: ['It looks like this link expired'],
             };
             setErrors(errors);
