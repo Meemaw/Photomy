@@ -62,7 +62,8 @@ exports.handler = (event, context, callback) => {
         const imageName = requestMatch[2];
         const extension = requestMatch[3];
 
-        request.uri = `${prefix}/${width}x${height}/${imageName}.${extension}`;
+        const quality = params.q ? parseInt(params.q, 10) : 100;
+        request.uri = `${prefix}/${width}x${height}/q${quality}/${imageName}.${extension}`;
       }
       callback(null, request);
     } else {

@@ -1,4 +1,0 @@
-// @flow
-export const NAVBAR_GALLERY_TYPE_BREAKPOINT = 800;
-
-export const LANDING_MAIN_BREAKPOINT = 1000;

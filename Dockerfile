@@ -6,11 +6,12 @@ COPY /config/requirements.txt /config/
 RUN pip install -r /config/requirements.txt
 
 # Copy source file
-RUN mkdir /src;
+RUN mkdir /src
+RUN mkdir /srcripts
 COPY ./src /src
+COPY ./scripts /scripts
 
-# Copy deploy scripts
-COPY ./scripts/run_web.sh /src
-COPY ./scripts/run_celery.sh /src
+RUN chmod +x /scripts/run_web.sh
+RUN chmod +x /scripts/run_celery.sh
 
 WORKDIR /src

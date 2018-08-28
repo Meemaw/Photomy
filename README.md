@@ -43,7 +43,7 @@ Photomy is scalable, secure and private photo gallery that recognizes people in 
 
 ### [Technologies][technologies]
 
-- [React][react] for frontend interface
+- [React][react] with [Typescript][typescript] for frontend interface
 - [Django][django] for backend REST API
 - [Celery][celery] as distributed task queue
 - [Redis][redis] as message broker
@@ -71,6 +71,7 @@ Thanks goes to these people ([emoji key][emojis]):
 This project follows the [all-contributors][all-contributors] specification.
 Contributions of any kind welcome!
 
+[typescript]: https://www.typescriptlang.org/
 [contributing]: https://github.com/Meemaw/Photomy/blob/master/.github/CONTRIBUTING.md
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
