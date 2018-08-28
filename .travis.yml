@@ -9,15 +9,15 @@ matrix:
       cache:
         directories:
           - $HOME/.cache/pip
-      services: 
+      services:
         - postgresql
         - redis-server
         - docker
       env:
         global:
-        - DJANGO_SETTINGS_MODULE=photomy.settings.test.travis
-        - PYTHONPATH="/home/travis/build/meemaw/photomy"
-        - PIP_USE_MIRRORS=true
+          - DJANGO_SETTINGS_MODULE=photomy.settings.test.travis
+          - PYTHONPATH="/home/travis/build/meemaw/photomy"
+          - PIP_USE_MIRRORS=true
       install:
         - pip install -U pip wheel
         - pip install -r config/requirements.txt
@@ -29,7 +29,7 @@ matrix:
         - pytest --cov --ds=photomy.settings.test.travis
       after_success:
         - bash <(curl -s https://codecov.io/bash) -F python -t $CODECOV_UPLOAD_TOKEN
-        
+
     - stage: test
       language: node_js
       node_js:
@@ -53,19 +53,19 @@ matrix:
         - "3.6"
       node_js:
         - "9.8"
-      services: 
+      services:
         - redis-server
         - postgresql
       cache:
         yarn: true
         directories:
           - $HOME/e2etests/.npm
-          - $HOME/.cache/pip  
+          - $HOME/.cache/pip
       env:
         global:
-        - DJANGO_SETTINGS_MODULE=photomy.settings.test.travise2e
-        - PYTHONPATH="/home/travis/build/meemaw/photomy"
-        - PIP_USE_MIRRORS=true
+          - DJANGO_SETTINGS_MODULE=photomy.settings.test.travise2e
+          - PYTHONPATH="/home/travis/build/meemaw/photomy"
+          - PIP_USE_MIRRORS=true
       before_install:
         - export CHROME_BIN=/usr/bin/google-chrome
         - export DISPLAY=:99.0
@@ -80,9 +80,9 @@ matrix:
         - psql -c "CREATE DATABASE travisci;" -U postgres
         - cd src
         - export CONTAINNER_ADDRESS=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
-        - python manage.py migrate --noinput --settings=photomy.settings.test.travise2e 
-        - python manage.py populate_test_users --settings=photomy.settings.test.travise2e 
-        - python manage.py populate_test_images --settings=photomy.settings.test.travise2e 
+        - python manage.py migrate --noinput --settings=photomy.settings.test.travise2e
+        - python manage.py populate_test_users --settings=photomy.settings.test.travise2e
+        - python manage.py populate_test_images --settings=photomy.settings.test.travise2e
         - python manage.py runserver --settings=photomy.settings.test.travise2e 2>&1 > /dev/null &
         - cd ../frontend
         - yarn install
@@ -100,6 +100,19 @@ matrix:
       if: branch = master
       language: bash
       script:
+        - echo "AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\"
+          AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\"
+          DJANGO_SECRET_KEY=\"$DJANGO_SECRET_KEY\"
+          AWS_CLOUDFRONT_DOMAIN=\"$AWS_CLOUDFRONT_DOMAIN\"
+          TEST_AWS_CLOUDFRONT_DOMAIN=\"$TEST_AWS_CLOUDFRONT_DOMAIN\"
+          AWS_LAMBDA_SECRET_APP_KEY=\"$AWS_LAMBDA_SECRET_APP_KEY\"
+          AWS_LAMBDA_SECRET_APP_VALUE=\"$AWS_LAMBDA_SECRET_APP_VALUE\"
+          EMAIL_HOST_PASSWORD=\"$EMAIL_HOST_PASSWORD\"
+          EMAIL_HOST_USER=\"$EMAIL_HOST_USER\"
+          AWS_STORAGE_BUCKET_NAME=\"$AWS_STORAGE_BUCKET_NAME\"
+          TEST_AWS_STORAGE_BUCKET_NAME=\"$TEST_AWS_STORAGE_BUCKET_NAME\"
+          POSTGRES_PASSWORD=\"$POSTGRES_PASSWORD\"
+          " > src/.env
         - docker build . -t meemaw/photomy:latest
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push meemaw/photomy:latest
@@ -138,7 +151,6 @@ matrix:
         - aws s3 sync build s3://photomy.si --delete
       after_success:
         - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
-      
 
 stages:
   - test
