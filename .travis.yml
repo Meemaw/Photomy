@@ -113,7 +113,6 @@ matrix:
           TEST_AWS_STORAGE_BUCKET_NAME=\"$TEST_AWS_STORAGE_BUCKET_NAME\"
           POSTGRES_PASSWORD=\"$POSTGRES_PASSWORD\"
           " > src/.env
-        - cat src/.env
         - docker build . -t meemaw/photomy:latest
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push meemaw/photomy:latest
